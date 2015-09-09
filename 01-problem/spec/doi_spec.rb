@@ -1,7 +1,4 @@
 describe "Digital object identifiers" do
-  class InvalidDOI < Exception
-  end
-
   class DOI
     def initialize doi_string
       @doi = doi_string || ""
