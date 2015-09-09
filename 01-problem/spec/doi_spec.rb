@@ -18,6 +18,10 @@ describe "Digital object identifiers" do
       return true
     end
 
+    def to_s
+      components.join("/")
+    end
+
     private
     def prefix
       components[0] || ""
@@ -29,7 +33,8 @@ describe "Digital object identifiers" do
     
     def components
       @doi.split("/").
-        collect{|component| component.strip}
+        collect{|component| component.strip}.
+        collect{|component| component.gsub(/\s+/, "")}
     end
   end
   
@@ -66,6 +71,7 @@ describe "Digital object identifiers" do
       it "is valid" do
         expect(DOI.new("10.1234/altmetric345")).to be_valid
         expect(DOI.new(" 10.1234 / altmetric421 ")).to be_valid
+        expect(DOI.new("10. 1234/altmetric876")).to be_valid
       end
     end
   end
