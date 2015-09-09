@@ -55,6 +55,9 @@ describe "ISSNs" do
     end
   end
 
-     
-                        
+  describe "an ISSN with only letter characters" do
+    it "is invalid" do
+      expect(ISSN.new("aybc-riet")).to_not be_valid
+    end
+  end                   
 end
