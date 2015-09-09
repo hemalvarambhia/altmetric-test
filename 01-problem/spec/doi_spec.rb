@@ -8,6 +8,7 @@ describe "Digital object identifiers" do
     end
 
     def valid?
+      return false if @doi.nil?
       return false if @doi.empty?
     end
   end
@@ -15,7 +16,7 @@ describe "Digital object identifiers" do
   describe "a blank DOI" do
     it "is invalid" do
       expect(DOI.new("")).to_not be_valid
-#      expect(lambda {DOI.new(nil)}).to raise_error(InvalidDOI)
+      expect(DOI.new(nil)).to_not be_valid
     end
   end
 end
