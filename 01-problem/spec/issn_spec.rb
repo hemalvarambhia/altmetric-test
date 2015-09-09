@@ -6,7 +6,7 @@ describe "ISSNs" do
 
     def valid?
       all_digits = @issn.scan(/\d/).collect{|digit| digit.to_i}
-      return false if all_digits.size == 8
+      return false if all_digits.size != 8
       digits = all_digits.first(7)
       sum = 0
       digits.each_index do |index|
@@ -50,8 +50,11 @@ describe "ISSNs" do
     context "the check digit is correct" do
       it "is valid" do
         expect(ISSN.new("0378-5955")).to be_valid
-        expect(ISSN.new(""
+        expect(ISSN.new("03785955")).to be_valid
       end
     end
   end
+
+     
+                        
 end
