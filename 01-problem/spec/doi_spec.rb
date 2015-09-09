@@ -6,17 +6,27 @@ describe "Digital object identifiers" do
 
     def valid?
       return false if @doi.empty?
-      prefix = components.fetch(0, "")
+      
       return false unless prefix.start_with?("10")
+
       # The registrant code is currently four digits long,
       # but this is not syntactically necessary
       return false unless prefix.match(/10\.\d{4}/)
-      suffix = components.fetch(1, "")
+
       return false if suffix.strip.empty?
-      true
+
+      return true
     end
 
     private
+    def prefix
+      components[0] || ""
+    end
+
+    def suffix
+      components[1] || ""
+    end
+    
     def components
       @doi.split("/")
     end
