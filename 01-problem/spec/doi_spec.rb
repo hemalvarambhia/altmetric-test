@@ -8,7 +8,8 @@ describe "Digital object identifiers" do
       return false if @doi.empty?
       return false unless @doi.start_with?("10")
       prefix, suffix = @doi.split("/")
-      return false if suffix.nil?
+      suffix ||= ""
+      return false if suffix.strip.empty?
       true
     end
   end
@@ -30,6 +31,7 @@ describe "Digital object identifiers" do
     it "is invalid" do
       expect(DOI.new("10.1234")).to_not be_valid
       expect(DOI.new("10.1234/")).to_not be_valid
+      expect(DOI.new("10.1234/ ")).to_not be_valid
     end
   end
 end
