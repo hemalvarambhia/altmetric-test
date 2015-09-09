@@ -4,11 +4,10 @@ describe "Digital object identifiers" do
 
   class DOI
     def initialize doi_string
-      @doi = doi_string
+      @doi = doi_string || ""
     end
 
     def valid?
-      return false if @doi.nil?
       return false if @doi.empty?
     end
   end
