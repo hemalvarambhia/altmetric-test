@@ -45,5 +45,11 @@ describe "Digital object identifiers" do
         expect(DOI.new("10./altmetric121")).to_not be_valid
       end
     end
+
+    context "both are correctly specified" do
+      it "is valid" do
+        expect(DOI.new("10.1234/altmetric345")).to be_valid
+      end
+    end
   end
 end
