@@ -10,6 +10,7 @@ describe "Digital object identifiers" do
       prefix, suffix = @doi.split("/")
       suffix ||= ""
       return false if suffix.strip.empty?
+      return false unless prefix.match(/10\.\d{4,}/)
       true
     end
   end
@@ -32,6 +33,14 @@ describe "Digital object identifiers" do
       expect(DOI.new("10.1234")).to_not be_valid
       expect(DOI.new("10.1234/")).to_not be_valid
       expect(DOI.new("10.1234/ ")).to_not be_valid
+    end
+  end
+
+  describe "a DOI that has a prefix and suffix" do
+    context "prefix has no registrant code" do
+      it "is invalid" do
+        expect(DOI.new("10/altmetric121")).to_not be_valid
+      end
     end
   end
 end
