@@ -67,6 +67,12 @@ describe "Digital object identifiers" do
       end
     end
 
+    context "prefix is not separated by a full-stop" do
+      it "is invalid" do
+        expect(DOI.new("10,1234/altmetric098")).to_not be_valid
+      end
+    end
+
     context "both are correctly specified" do
       it "is valid" do
         expect(DOI.new("10.1234/altmetric345")).to be_valid
