@@ -10,7 +10,9 @@ describe "Digital object identifiers" do
       prefix, suffix = @doi.split("/")
       suffix ||= ""
       return false if suffix.strip.empty?
-      return false unless prefix.match(/10\.\d{4,}/)
+      # The registrant code is currently 4 digits long,
+      # but the syntax isn't compulsory
+      return false unless prefix.match(/10\.\d{4}/)
       true
     end
   end
@@ -40,6 +42,7 @@ describe "Digital object identifiers" do
     context "prefix has no registrant code" do
       it "is invalid" do
         expect(DOI.new("10/altmetric121")).to_not be_valid
+        expect(DOI.new("10./altmetric121")).to_not be_valid
       end
     end
   end
