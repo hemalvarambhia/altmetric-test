@@ -13,7 +13,7 @@ describe "Digital object identifiers" do
       # but this is not syntactically necessary
       return false unless prefix.match(/10\.\d{4}/)
 
-      return false if suffix.strip.empty?
+      return false if suffix.empty?
 
       return true
     end
@@ -28,7 +28,8 @@ describe "Digital object identifiers" do
     end
     
     def components
-      @doi.split("/")
+      @doi.split("/").
+        collect{|component| component.strip}
     end
   end
   
@@ -64,6 +65,7 @@ describe "Digital object identifiers" do
     context "both are correctly specified" do
       it "is valid" do
         expect(DOI.new("10.1234/altmetric345")).to be_valid
+        expect(DOI.new(" 10.1234 / altmetric421 ")).to be_valid
       end
     end
   end
