@@ -6,6 +6,8 @@ describe "Digital object identifiers" do
 
     def valid?
       return false if @doi.empty?
+      return false unless @doi.start_with?("10")
+      true
     end
   end
   
@@ -13,6 +15,12 @@ describe "Digital object identifiers" do
     it "is invalid" do
       expect(DOI.new("")).to_not be_valid
       expect(DOI.new(nil)).to_not be_valid
+    end
+  end
+
+  describe "a DOI that does not start with 10" do
+    it "is not valid" do
+      expect(DOI.new("90")).to_not be_valid
     end
   end
 end
