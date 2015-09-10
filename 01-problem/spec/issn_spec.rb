@@ -16,8 +16,8 @@ describe "ISSNs" do
   
   describe "a blank ISSN" do
     it "is invalid" do
-      expect(lambda { ISSN.new("") }).to raise_error(InvalidISSN)
-      expect(lambda {ISSN.new(nil) }).to raise_error(InvalidISSN)
+      expect(lambda {ISSN.new("")}).to raise_error(InvalidISSN)
+      expect(lambda {ISSN.new(nil)}).to raise_error(InvalidISSN)
     end
   end
 
