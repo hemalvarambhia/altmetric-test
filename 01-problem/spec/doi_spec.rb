@@ -1,4 +1,6 @@
+require_relative './doi'
 describe "Digital object identifiers" do
+=begin  
   class DOI
     def initialize doi_string
       @doi = doi_string || ""
@@ -37,7 +39,7 @@ describe "Digital object identifiers" do
         collect{|component| component.gsub(/\s+/, "")}
     end
   end
-  
+=end  
   describe "a blank DOI" do
     it "is invalid" do
       expect(DOI.new("")).to_not be_valid
