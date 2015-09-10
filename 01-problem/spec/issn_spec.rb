@@ -6,11 +6,14 @@ describe "ISSNs" do
     def initialize issn_string
       @issn = issn_string || ""
       raise InvalidISSN.new("ISSN cannot be blank") if @issn.empty?
+      if digits.size != 8
+        raise InvalidISSN.new("ISSNs must consist of 8 digits")
+      end
     end
 
-    def valid?
-      all_digits = @issn.scan(/\d/).collect{|digit| digit.to_i}
-      return false if all_digits.size != 8
+    private 
+    def digits
+      @issn.scan(/\d/).collect{|digit| digit.to_i}
     end
   end
   
@@ -23,20 +26,20 @@ describe "ISSNs" do
 
   describe "an ISSN with fewer than 8 characters" do
     it "is invalid" do
-      expect(ISSN.new("1234-56")).to_not be_valid
-      expect(ISSN.new("1514")).to_not be_valid
+      expect(lambda {ISSN.new("1234-56")}).to raise_error(InvalidISSN)
+      expect(lambda {ISSN.new("1514")}).to raise_error(InvalidISSN)
     end
   end
 
   describe "an ISSN with more than 8 characters" do
     it "is invalid" do
-      expect(ISSN.new("43565-32932")).to_not be_valid
+      expect(lambda {ISSN.new("43565-32932")}).to raise_error(InvalidISSN)
     end
   end
 
   describe "an ISSN with only letter characters" do
     it "is invalid" do
-      expect(ISSN.new("aybc-riet")).to_not be_valid
+      expect(lambda {ISSN.new("aybc-riet")}).to raise_error(InvalidISSN)
     end
   end                   
 end
