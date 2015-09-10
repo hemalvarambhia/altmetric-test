@@ -24,14 +24,14 @@ describe "ISSNs" do
     end
   end
 
-  describe "an ISSN with fewer than 8 characters" do
+  describe "an ISSN with fewer than 8 digits" do
     it "is invalid" do
       expect(lambda {ISSN.new("1234-56")}).to raise_error(InvalidISSN)
       expect(lambda {ISSN.new("1514")}).to raise_error(InvalidISSN)
     end
   end
 
-  describe "an ISSN with more than 8 characters" do
+  describe "an ISSN with more than 8 digits" do
     it "is invalid" do
       expect(lambda {ISSN.new("43565-32932")}).to raise_error(InvalidISSN)
     end
