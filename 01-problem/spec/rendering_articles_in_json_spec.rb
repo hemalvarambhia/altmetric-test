@@ -107,7 +107,6 @@ describe "A JSON array of two articles" do
           journal: Journal.new(
             ISSN.new("5966-4542"),
             "Different Journal")
-
         }
        )
       ]
@@ -143,7 +142,6 @@ describe "A JSON array of many articles" do
           journal: Journal.new(
             ISSN.new("5966-4542"),
             "Different Journal")
-
         }
        ),
        Article.new(
@@ -154,7 +152,6 @@ describe "A JSON array of many articles" do
            journal: Journal.new(
              ISSN.new("6078-3332"),
              "Another Journal")
-
         }
        )
       ]
