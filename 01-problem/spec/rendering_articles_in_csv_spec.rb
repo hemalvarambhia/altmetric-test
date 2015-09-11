@@ -5,7 +5,23 @@ require_relative './journal'
 require_relative './article'
 class CSVRenderer
   def render articles
-    ["DOI", "Title", "Author", "Journal Title", "ISSN"].to_csv
+     CSV.generate do |csv|
+       csv << header
+       article = articles.all.first
+       csv << [
+          article.doi, 
+          article.title, 
+          article.author, 
+          article.journal_published_in.title,
+          article.journal_published_in.issn
+        ] if article
+     end
+  end
+
+  private
+  
+  def header
+    ["DOI", "Title", "Author", "Journal Title", "ISSN"]
   end
 
 end
@@ -22,7 +38,64 @@ describe "Rendering articles to CSV" do
   end
 
   describe "rendering 1 article to CSV" do
-    it "contains the details of the article"
+
+    it "has a header" do
+      articles = double("Articles")
+      allow(articles).to(
+         receive(:all).and_return(
+           [
+             Article.new(
+               doi: "10.1234/altmetric52",
+               title: "Title of Article",
+               author: "Name of Author",
+               journal: Journal.new(
+                  ISSN.new("3853-8766"),
+                  "Title of Journal")
+             )
+           ]
+         )
+      )
+
+      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
+      expect(parsed_csv[0]).to(
+          eq(
+             [
+               "DOI",
+               "Title",
+               "Author",
+               "Journal Title",
+               "ISSN"
+             ]))
+    end
+
+    it "contains the details of the article" do
+      articles = double("Articles")
+      allow(articles).to(
+         receive(:all).and_return(
+           [
+             Article.new(
+	       doi: "10.1234/altmetric52",
+               title: "Title of Article",
+               author: "Name of Author",
+               journal: Journal.new(
+                  ISSN.new("3853-8766"),
+                  "Title of Journal")
+             )
+           ]
+         )
+      )
+
+      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
+      expect(parsed_csv[1]).to(
+          eq(
+             [
+               "10.1234/altmetric52", 
+               "Title of Article", 
+               "Name of Author", 
+               "Title of Journal",
+               "3853-8766"
+             ]))
+    end
   end
 
   describe "rendering 2 articles to CSV" do
