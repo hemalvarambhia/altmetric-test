@@ -5,16 +5,20 @@ class ISSN
 
   def initialize issn_string
     @issn = (issn_string || "").strip
-    raise InvalidISSN.new("ISSN cannot be blank") if @issn.empty?
-
+    if @issn.empty?
+      raise InvalidISSN.new(
+          "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
+    end
     if digits.size != 8
-      raise InvalidISSN.new("ISSNs must consist of 8 digits")
+      raise InvalidISSN.new(
+            "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
     end
       
     @issn = @issn.insert(4, "-") if not @issn.include?("-")
 
     unless @issn=~/^\d{4}-\d{4}$/
-      raise InvalidISSN.new("ISSN '#{@issn}' is badly formed")
+      raise InvalidISSN.new(
+           "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
     end
   end
 
