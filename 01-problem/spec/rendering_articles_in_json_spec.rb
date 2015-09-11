@@ -3,7 +3,7 @@ require_relative './doi'
 require_relative './issn'
 require_relative './journal'
 require_relative './article'
-
+require_relative './articles'
 class JSONRenderer
   def render articles
     articles.all.collect{|article| as_hash(article)}.to_json
@@ -34,9 +34,21 @@ def as_hash articles
   }
 end
 
+def convert_to_hash articles
+  articles.all.collect{|article|
+    {
+     "doi" => article.doi,
+     "title" => article.title,
+     "author" => article.author,
+     "journal" => article.journal_published_in.title,
+     "issn" => article.journal_published_in.issn
+    }
+  }
+end
+
 describe "A JSON array of 1 article" do
    before(:each) do
-     @all_articles = [
+     @all_articles = Articles.new([
         Article.new(
         {
           doi: DOI.new("10.1234/altmetric0"),
@@ -47,15 +59,13 @@ describe "A JSON array of 1 article" do
             "Name of Journal")
         }
        )
-    ]
+    ])
    end
 
   it "contains the details of the article" do
-    articles = double("Articles")
-    allow(articles).to(receive(:all).and_return(@all_articles))
-   
-    parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(eq(as_hash(@all_articles)))
+    parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+
+    expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
   end
 end
 
