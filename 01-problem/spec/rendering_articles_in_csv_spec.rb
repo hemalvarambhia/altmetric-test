@@ -31,6 +31,22 @@ class CSVRenderer
   end
 end
 
+def as_array(articles)
+   articles.collect do |article|
+      [
+        article.doi,
+        article.title,
+        article.author,
+        article.journal_published_in.title,
+        article.journal_published_in.issn
+      ]
+   end 
+end
+
+def without_header(csv_rows)
+  csv_rows.drop(1)
+end
+
 describe "Rendering articles to CSV" do
   describe "rendering no articles to CSV" do
     it "only contains the headers" do
@@ -78,16 +94,9 @@ describe "Rendering articles to CSV" do
       allow(articles).to(
          receive(:all).and_return(@all_articles))
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv[1]).to(
-          eq(
-             [
-               "10.1234/altmetric52", 
-               "Title of Article", 
-               "Name of Author", 
-               "Title of Journal",
-               "3853-8766"
-             ]))
+      parsed_csv = without_header(
+         CSV.parse(CSVRenderer.new.render(articles)))
+      expect(parsed_csv).to(eq(as_array(@all_articles)))
     end
   end
 
@@ -118,24 +127,9 @@ describe "Rendering articles to CSV" do
       allow(articles).to(
          receive(:all).and_return(@all_articles))
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv[1]).to(
-          eq(
-             [
-               "10.1234/altmetric52",
-               "Title of Article",
-               "Name of Author",
-               "Title of Journal",
-               "3853-8766"
-             ]))
-      expect(parsed_csv[2]).to(
-             eq([
-               "10.1234/altmetric101",
-               "Different Title",
-               "Different Author", 
-               "Different Journal",
-               "6757-2931"
-             ]))
+      parsed_csv = without_header(
+         CSV.parse(CSVRenderer.new.render(articles)))
+      expect(parsed_csv).to(eq(as_array(@all_articles)))
     end
   end
 
@@ -176,32 +170,9 @@ describe "Rendering articles to CSV" do
       allow(articles).to(
          receive(:all).and_return(@all_articles))
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv[1]).to(
-          eq(
-             [
-               "10.1234/altmetric52",
-               "Title of Article",
-               "Name of Author",
-               "Title of Journal",
-               "3853-8766"
-             ]))
-      expect(parsed_csv[2]).to(
-             eq([
-               "10.1234/altmetric101",
-               "Different Title",
-               "Different Author",
-               "Different Journal",
-               "6757-2931"
-             ]))
-      expect(parsed_csv[3]).to(
-             eq([
-               "10.1234/altmetric251",
-	       "Another Title",
-	       "Another Author",
-	       "Another Journal",
-	       "7771-5323"
-               ]))
+      parsed_csv = without_header(
+          CSV.parse(CSVRenderer.new.render(articles)))
+      expect(parsed_csv).to(eq(as_array(@all_articles)))
     end
   end
 end
