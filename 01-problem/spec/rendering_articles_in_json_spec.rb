@@ -104,7 +104,7 @@ end
 
 describe "A JSON array of many articles" do
   before(:each) do
-    @all_articles = [
+    @all_articles = Articles.new([
         Article.new(
          {
            doi: DOI.new("10.1234/altmetric0"),
@@ -135,24 +135,22 @@ describe "A JSON array of many articles" do
              "Another Journal")
         }
        )
-      ]
+      ])
   end
 
   it "contains the details of all the articles" do
-    articles = double("Articles")
-    allow(articles).to(receive(:all).and_return(@all_articles))
+    parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
 
-    parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(eq(as_hash(@all_articles)))
+    expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
   end	 
 end
 
 describe "A JSON array of no articles" do
   it "contains nothing" do
-    no_articles = double("Articles")
-    allow(no_articles).to(receive(:all).and_return([]))
+    no_articles = Articles.new([])
 
     parsed_json = JSON.parse(JSONRenderer.new.render(no_articles))
+
     expect(parsed_json).to be_empty
   end
 end
