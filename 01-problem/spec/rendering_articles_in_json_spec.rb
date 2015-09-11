@@ -166,3 +166,12 @@ describe "A JSON array of many articles" do
   end	 
 end
 
+describe "A JSON array of no articles" do
+  it "contains nothing" do
+    no_articles = double("Articles")
+    allow(no_articles).to(receive(:all).and_return([]))
+
+    parsed_json = JSON.parse(JSONRenderer.new.render(no_articles))
+    expect(parsed_json).to be_empty
+  end
+end
