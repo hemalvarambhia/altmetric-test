@@ -45,7 +45,7 @@ describe "Rendering articles to CSV" do
          receive(:all).and_return(
            [
              Article.new(
-               doi: "10.1234/altmetric52",
+               doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
                author: "Name of Author",
                journal: Journal.new(
@@ -74,7 +74,7 @@ describe "Rendering articles to CSV" do
          receive(:all).and_return(
            [
              Article.new(
-	       doi: "10.1234/altmetric52",
+	       doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
                author: "Name of Author",
                journal: Journal.new(
