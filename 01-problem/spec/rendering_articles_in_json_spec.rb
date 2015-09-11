@@ -1,18 +1,8 @@
 require 'json'
 require_relative './doi'
 require_relative './issn'
+require_relative './journal'
 require_relative './article'
-class Journal
-  attr_reader :title
-  def initialize(issn, title)
-    @issn = issn
-    @title = title
-  end
-
-  def issn
-    @issn.to_s
-  end
-end
 
 class JSONRenderer
   def render articles
