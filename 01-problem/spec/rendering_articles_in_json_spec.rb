@@ -22,18 +22,6 @@ class JSONRenderer
   end
 end
 
-def as_hash articles
-  articles.collect{|article|
-    {
-     "doi" => article.doi,
-     "title" => article.title,
-     "author" => article.author,
-     "journal" => article.journal_published_in.title,
-     "issn" => article.journal_published_in.issn
-    }
-  }
-end
-
 def convert_to_hash articles
   articles.all.collect{|article|
     {
