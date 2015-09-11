@@ -14,12 +14,16 @@ class Journal
 end
 
 class Article
-  attr_reader :title, :author, :journal
+  attr_reader :title, :author
   def initialize(hash)
     @doi = hash[:doi]
     @title = hash[:title] 
     @author = hash[:author]
     @journal = hash[:journal]
+  end
+
+  def journal_published_in
+    @journal
   end
 
   def doi
@@ -39,8 +43,8 @@ class JSONRenderer
       "doi" => article.doi,
       "title" => article.title,
       "author" => article.author,
-      "journal" => article.journal.title,
-      "issn" => article.journal.issn
+      "journal" => article.journal_published_in.title,
+      "issn" => article.journal_published_in.issn
     }
   end
 end
@@ -79,3 +83,4 @@ describe "A JSON array of 1 article" do
       ))
   end
 end
+
