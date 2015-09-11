@@ -3,6 +3,7 @@ require_relative './issn'
 require_relative './doi'
 require_relative './journal'
 require_relative './article'
+
 class CSVRenderer
   def render articles
      CSV.generate do |csv|
