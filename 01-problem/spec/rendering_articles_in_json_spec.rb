@@ -49,6 +49,18 @@ class JSONRenderer
   end
 end
 
+def as_hash articles
+  articles.collect{|article|
+    {
+     "doi" => article.doi,
+     "title" => article.title,
+     "author" => article.author,
+     "journal" => article.journal_published_in.title,
+     "issn" => article.journal_published_in.issn
+    }
+  }
+end
+
 describe "A JSON array of 1 article" do
    before(:each) do
      @all_articles = [
@@ -70,18 +82,7 @@ describe "A JSON array of 1 article" do
     allow(articles).to(receive(:all).and_return(@all_articles))
    
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(
-      eq(
-        [
-          {
-            "doi" => "10.1234/altmetric0",
-            "title" => "Title of Article",
-            "author" => "Name of Author",
-            "journal" => "Name of Journal",
-            "issn" => "0378-5955"
-          }
-        ]
-      ))
+    expect(parsed_json).to(eq(as_hash(@all_articles)))
   end
 end
 
@@ -117,26 +118,7 @@ describe "A JSON array of two articles" do
     allow(articles).to(receive(:all).and_return(@all_articles))
 
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(
-      eq(
-        [
-          {
-            "doi" => "10.1234/altmetric0",
-            "title" => "Title of Article",
-            "author" => "Name of Author",
-            "journal" => "Name of Journal",
-            "issn" => "0378-5955"
-          },
-          {
-            "doi" => "10.1234/altmetric1",
-            "title" => "Different Title",
-            "author" => "Different Author",
-            "journal" => "Different Journal",
-            "issn" => "5966-4542"
-          }
-        ]
-      )
-    )
+    expect(parsed_json).to(eq(as_hash(@all_articles)))
   end
 end
 
@@ -184,34 +166,7 @@ describe "A JSON array of many articles" do
       receive(:all).and_return(@all_articles))
 
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(
-      eq(
-        [
-          {
-            "doi" => "10.1234/altmetric0",
-            "title" => "Title of Article",
-            "author" => "Name of Author",
-            "journal" => "Name of Journal",
-            "issn" => "0378-5955"
-          },
-          {
-            "doi" => "10.1234/altmetric1",
-            "title" => "Different Title",
-            "author" => "Different Author",
-            "journal" => "Different Journal",
-            "issn" => "5966-4542"
-          },
-          { 
-            "doi" => "10.1234/altmetric2",
-            "title" => "Another Title",
-            "author" => "Another Author",
-            "journal" => "Another Journal",
-            "issn" => "6078-3332"
-          }
-        ]
-      )
-    )
-
-  end
-	 
+    expect(parsed_json).to(eq(as_hash(@all_articles)))
+  end	 
 end
+
