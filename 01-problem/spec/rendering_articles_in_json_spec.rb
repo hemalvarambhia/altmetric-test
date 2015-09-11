@@ -159,8 +159,7 @@ describe "A JSON array of many articles" do
 
   it "contains the details of all the articles" do
     articles = double("Articles")
-    allow(articles).to(
-      receive(:all).and_return(@all_articles))
+    allow(articles).to(receive(:all).and_return(@all_articles))
 
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
     expect(parsed_json).to(eq(as_hash(@all_articles)))
