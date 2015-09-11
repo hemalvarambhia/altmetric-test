@@ -50,11 +50,8 @@ class JSONRenderer
 end
 
 describe "A JSON array of 1 article" do
-  it "contains the details of the article" do
-    articles = double("Articles")
-    allow(articles).to(
-      receive(:all).and_return(
-      [
+   before(:each) do
+     @all_articles = [
         Article.new(
         {
           doi: DOI.new("10.1234/altmetric0"),
@@ -64,9 +61,13 @@ describe "A JSON array of 1 article" do
             ISSN.new("0378-5955"),
             "Name of Journal")
         }
-      )
-      ]
-    ))
+       )
+    ]
+   end
+
+  it "contains the details of the article" do
+    articles = double("Articles")
+    allow(articles).to(receive(:all).and_return(@all_articles))
    
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
     expect(parsed_json).to(
@@ -85,11 +86,8 @@ describe "A JSON array of 1 article" do
 end
 
 describe "A JSON array of two articles" do
-  it "contains the details of both articles" do
-    articles = double("Articles")
-    allow(articles).to(
-      receive(:all).and_return(
-      [
+  before(:each) do
+    @all_articles = [
         Article.new(
         {
           doi: DOI.new("10.1234/altmetric0"),
@@ -101,18 +99,22 @@ describe "A JSON array of two articles" do
         }
        ),
        Article.new(
-	{
+        {
           doi: DOI.new("10.1234/altmetric1"),
           title: "Different Title",
           author: "Different Author",
           journal: Journal.new(
             ISSN.new("5966-4542"),
             "Different Journal")
-            
+
         }
        )
       ]
-    ))
+  end
+
+  it "contains the details of both articles" do
+    articles = double("Articles")
+    allow(articles).to(receive(:all).and_return(@all_articles))
 
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
     expect(parsed_json).to(
@@ -139,11 +141,8 @@ describe "A JSON array of two articles" do
 end
 
 describe "A JSON array of many articles" do
-  it "contains the details of all the articles" do
-    articles = double("Articles")
-    allow(articles).to(
-      receive(:all).and_return(
-      [
+  before(:each) do
+    @all_articles = [
         Article.new(
          {
            doi: DOI.new("10.1234/altmetric0"),
@@ -166,18 +165,23 @@ describe "A JSON array of many articles" do
         }
        ),
        Article.new(
-        { 
+        {
            doi: DOI.new("10.1234/altmetric2"),
            title: "Another Title",
            author: "Another Author",
            journal: Journal.new(
              ISSN.new("6078-3332"),
              "Another Journal")
-         
+
         }
        )
       ]
-    ))
+  end
+
+  it "contains the details of all the articles" do
+    articles = double("Articles")
+    allow(articles).to(
+      receive(:all).and_return(@all_articles))
 
     parsed_json = JSON.parse(JSONRenderer.new.render(articles))
     expect(parsed_json).to(
