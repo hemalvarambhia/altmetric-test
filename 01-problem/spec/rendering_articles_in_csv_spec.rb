@@ -54,7 +54,15 @@ describe "Rendering articles to CSV" do
       allow(articles).to(receive(:all).and_return([]))
 
       parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv.first).to eq(["DOI", "Title", "Author", "Journal Title", "ISSN"])
+      expect(parsed_csv.first).to(
+          eq(
+             [
+               "DOI", 
+               "Title", 
+               "Author", 
+               "Journal Title", 
+               "ISSN"
+             ])
     end
   end
 
