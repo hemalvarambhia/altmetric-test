@@ -1,7 +1,17 @@
+class InvalidDOI < Exception
+end
+
 class DOI
   def initialize doi_string
     @doi = doi_string || ""
+    raise InvalidDOI.new("Invalid DOI '#{@doi}'. DOIs take the form 10.1234/abcdefg") if not valid?
   end
+
+  def to_s
+    components.join("/")
+  end
+
+  private
 
   def valid?
     return false if @doi.empty?
@@ -17,12 +27,6 @@ class DOI
     return true
   end
 
-  def to_s
-    components.join("/")
-  end
-
-  private
-
   def prefix
     components[0] || ""
   end
@@ -35,6 +39,5 @@ class DOI
     @doi.split("/").
       collect{|component| component.strip}.
       collect{|component| component.gsub(/\s+/, "")}
-
   end
 end
