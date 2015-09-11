@@ -2,7 +2,6 @@ class InvalidISSN < Exception
 end
 
 class ISSN
-
   def initialize issn_string
     @issn = (issn_string || "").strip
     if @issn.empty?
@@ -24,6 +23,10 @@ class ISSN
 
   def to_s
     @issn
+  end
+
+  def ==(other)
+    @issn == other.to_s
   end
 
   private 
