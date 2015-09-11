@@ -7,6 +7,10 @@ class DOI
     raise InvalidDOI.new("Invalid DOI '#{@doi}'. DOIs take the form 10.1234/abcdefg") if not valid?
   end
 
+  def ==(other)
+    other.to_s == to_s
+  end
+
   def to_s
     components.join("/")
   end

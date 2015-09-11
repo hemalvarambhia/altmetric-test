@@ -43,4 +43,38 @@ describe "Digital object identifiers" do
       end
     end
   end
+
+  describe "equating DOIs" do
+    it "is reflexive" do
+      doi = DOI.new("10.1234/altmetric543")
+      expect(doi).to eq(doi)
+    end
+
+    it "is transitive" do
+      doi_1 = DOI.new("10.1234/altmetric132")
+      doi_2 = DOI.new("10.1234/altmetric132")
+      doi_3 = DOI.new("10.1234/altmetric132")
+     
+      expect(doi_1).to eq(doi_2)
+      expect(doi_2).to eq(doi_3)
+      expect(doi_1).to eq(doi_3)
+    end
+
+    it "is symmetric" do
+      doi_1 = DOI.new("10.1234/altmetric965")
+      doi_2 = DOI.new("10.1234/altmetric965")
+
+      expect(doi_1).to eq(doi_2)
+      expect(doi_2).to eq(doi_1)
+    end
+
+    context "different DOIs" do
+      it "confirms them as not being equal" do
+        doi = DOI.new("10.1234/altmetric675")
+        different_doi = DOI.new("10.6543/altmetric875")
+
+        expect(doi).not_to eq(different_doi)
+      end
+    end
+  end
 end
