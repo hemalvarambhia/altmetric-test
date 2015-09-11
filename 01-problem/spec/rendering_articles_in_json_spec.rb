@@ -33,7 +33,7 @@ end
 
 class JSONRenderer
   def render articles
-    [as_hash(articles.all.first), as_hash(articles.all.last)].uniq.to_json
+    articles.all.collect{|article| as_hash(article)}.to_json
   end
 
   private
@@ -138,3 +138,76 @@ describe "A JSON array of two articles" do
   end
 end
 
+describe "A JSON array of many articles" do
+  it "contains the details of all the articles" do
+    articles = double("Articles")
+    allow(articles).to(
+      receive(:all).and_return(
+      [
+        Article.new(
+         {
+           doi: DOI.new("10.1234/altmetric0"),
+           title: "Title of Article",
+           author: "Name of Author",
+           journal: Journal.new(
+             ISSN.new("0378-5955"),
+             "Name of Journal")
+         }
+       ),
+       Article.new(
+        {
+          doi: DOI.new("10.1234/altmetric1"),
+          title: "Different Title",
+          author: "Different Author",
+          journal: Journal.new(
+            ISSN.new("5966-4542"),
+            "Different Journal")
+
+        }
+       ),
+       Article.new(
+        { 
+           doi: DOI.new("10.1234/altmetric2"),
+           title: "Another Title",
+           author: "Another Author",
+           journal: Journal.new(
+             ISSN.new("6078-3332"),
+             "Another Journal")
+         
+        }
+       )
+      ]
+    ))
+
+    parsed_json = JSON.parse(JSONRenderer.new.render(articles))
+    expect(parsed_json).to(
+      eq(
+        [
+          {
+            "doi" => "10.1234/altmetric0",
+            "title" => "Title of Article",
+            "author" => "Name of Author",
+            "journal" => "Name of Journal",
+            "issn" => "0378-5955"
+          },
+          {
+            "doi" => "10.1234/altmetric1",
+            "title" => "Different Title",
+            "author" => "Different Author",
+            "journal" => "Different Journal",
+            "issn" => "5966-4542"
+          },
+          { 
+            "doi" => "10.1234/altmetric2",
+            "title" => "Another Title",
+            "author" => "Another Author",
+            "journal" => "Another Journal",
+            "issn" => "6078-3332"
+          }
+        ]
+      )
+    )
+
+  end
+	 
+end
