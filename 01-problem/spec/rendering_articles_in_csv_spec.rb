@@ -32,18 +32,6 @@ class CSVRenderer
   end
 end
 
-def as_array(articles)
-   articles.collect do |article|
-      [
-        article.doi,
-        article.title,
-        article.author,
-        article.journal_published_in.title,
-        article.journal_published_in.issn
-      ]
-   end 
-end
-
 def to_array(articles)
    articles.all.collect do |article|
       [
