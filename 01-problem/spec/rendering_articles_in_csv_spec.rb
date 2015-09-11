@@ -3,6 +3,7 @@ require_relative './issn'
 require_relative './doi'
 require_relative './journal'
 require_relative './article'
+require_relative './articles'
 
 class CSVRenderer
   def render articles
@@ -43,6 +44,18 @@ def as_array(articles)
    end 
 end
 
+def to_array(articles)
+   articles.all.collect do |article|
+      [
+        article.doi,
+        article.title,
+        article.author,
+        article.journal_published_in.title,
+        article.journal_published_in.issn
+      ]
+   end
+end
+
 def without_header(csv_rows)
   csv_rows.drop(1)
 end
@@ -50,8 +63,7 @@ end
 describe "Rendering articles to CSV" do
   describe "rendering no articles to CSV" do
     it "only contains the headers" do
-      articles = double("Articles")
-      allow(articles).to(receive(:all).and_return([]))
+      articles = Articles.new([])
 
       parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
       expect(parsed_csv.first).to(
@@ -62,13 +74,13 @@ describe "Rendering articles to CSV" do
                "Author", 
                "Journal Title", 
                "ISSN"
-             ])
+             ]))
     end
   end
 
   describe "rendering 1 article to CSV" do
     before(:each) do
-      @all_articles = [
+      @all_articles = Articles.new([
              Article.new(
                doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
@@ -77,7 +89,7 @@ describe "Rendering articles to CSV" do
                   ISSN.new("3853-8766"),
                   "Title of Journal")
              )
-           ]
+           ])
     end
 
     it "has a header" do
@@ -85,7 +97,7 @@ describe "Rendering articles to CSV" do
       allow(articles).to(
          receive(:all).and_return(@all_articles))
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
+      parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
       expect(parsed_csv[0]).to(
           eq(
              [
@@ -98,19 +110,16 @@ describe "Rendering articles to CSV" do
     end
 
     it "contains the details of the article" do
-      articles = double("Articles")
-      allow(articles).to(
-         receive(:all).and_return(@all_articles))
-
       parsed_csv = without_header(
-         CSV.parse(CSVRenderer.new.render(articles)))
-      expect(parsed_csv).to(eq(as_array(@all_articles)))
+         CSV.parse(CSVRenderer.new.render(@all_articles)))
+
+      expect(parsed_csv).to(eq(to_array(@all_articles)))
     end
   end
 
   describe "rendering 2 articles to CSV" do
     before(:each) do
-      @all_articles = [
+      @all_articles = Articles.new([
          Article.new(
            doi: DOI.new("10.1234/altmetric52"),
            title: "Title of Article",
@@ -127,23 +136,20 @@ describe "Rendering articles to CSV" do
               ISSN.new("6757-2931"),
               "Different Journal")
          )
-      ]
+      ])
     end
 
     it "contains the details of both articles" do
-      articles = double("Articles")
-      allow(articles).to(
-         receive(:all).and_return(@all_articles))
-
       parsed_csv = without_header(
-         CSV.parse(CSVRenderer.new.render(articles)))
-      expect(parsed_csv).to(eq(as_array(@all_articles)))
+         CSV.parse(CSVRenderer.new.render(@all_articles)))
+
+      expect(parsed_csv).to(eq(to_array(@all_articles)))
     end
   end
 
   describe "rendering many articles to CSV" do
     before(:each) do
-      @all_articles = [
+      @all_articles = Articles.new([
              Article.new(
                doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
@@ -170,17 +176,14 @@ describe "Rendering articles to CSV" do
                   "Another Journal"
              )
            )
-        ]      
+        ])      
     end
 
     it "contains the details of every article" do
-      articles = double("Articles")
-      allow(articles).to(
-         receive(:all).and_return(@all_articles))
-
       parsed_csv = without_header(
-          CSV.parse(CSVRenderer.new.render(articles)))
-      expect(parsed_csv).to(eq(as_array(@all_articles)))
+          CSV.parse(CSVRenderer.new.render(@all_articles)))
+
+      expect(parsed_csv).to(eq(to_array(@all_articles)))
     end
   end
 end
