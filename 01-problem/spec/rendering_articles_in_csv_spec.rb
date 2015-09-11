@@ -8,10 +8,9 @@ class CSVRenderer
   def render articles
      CSV.generate do |csv|
        csv << header
-       article = articles.all.first
-       csv << as_array(article) if article
-       article = articles.all[1]
-       csv << as_array(article) if article
+       articles.all.collect{ |article|
+         csv << as_array(article) if article
+       }
      end
   end
 
@@ -44,7 +43,7 @@ describe "Rendering articles to CSV" do
   end
 
   describe "rendering 1 article to CSV" do
-
+    
     it "has a header" do
       articles = double("Articles")
       allow(articles).to(
@@ -153,6 +152,67 @@ describe "Rendering articles to CSV" do
   end
 
   describe "rendering many articles to CSV" do
-    it "contains the details of every article"
+    it "contains the details of every article" do
+      articles = double("Articles")
+      allow(articles).to(
+         receive(:all).and_return(
+           [
+             Article.new(
+               doi: DOI.new("10.1234/altmetric52"),
+               title: "Title of Article",
+               author: "Name of Author",
+               journal: Journal.new(
+                  ISSN.new("3853-8766"),
+                  "Title of Journal")
+             ),
+             Article.new(
+               doi: DOI.new("10.1234/altmetric101"),
+               title: "Different Title",
+               author: "Different Author",
+               journal: Journal.new(
+                  ISSN.new("6757-2931"),
+                  "Different Journal"
+               )
+             ),
+             Article.new(
+               doi: DOI.new("10.1234/altmetric251"),
+               title: "Another Title",
+               author: "Another Author",
+               journal: Journal.new(
+                  ISSN.new("7771-5323"),
+                  "Another Journal"
+               )
+             )
+           ]
+         )
+      )
+
+      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
+      expect(parsed_csv[1]).to(
+          eq(
+             [
+               "10.1234/altmetric52",
+               "Title of Article",
+               "Name of Author",
+               "Title of Journal",
+               "3853-8766"
+             ]))
+      expect(parsed_csv[2]).to(
+             eq([
+               "10.1234/altmetric101",
+               "Different Title",
+               "Different Author",
+               "Different Journal",
+               "6757-2931"
+             ]))
+      expect(parsed_csv[3]).to(
+             eq([
+               "10.1234/altmetric251",
+	       "Another Title",
+	       "Another Author",
+	       "Another Journal",
+	       "7771-5323"
+               ]))
+    end
   end
 end
