@@ -71,7 +71,7 @@ end
 
 describe "A JSON array of two articles" do
   before(:each) do
-    @all_articles = [
+    @all_articles = Articles.new([
         Article.new(
         {
           doi: DOI.new("10.1234/altmetric0"),
@@ -92,15 +92,13 @@ describe "A JSON array of two articles" do
             "Different Journal")
         }
        )
-      ]
+      ])
   end
 
   it "contains the details of both articles" do
-    articles = double("Articles")
-    allow(articles).to(receive(:all).and_return(@all_articles))
+    parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
 
-    parsed_json = JSON.parse(JSONRenderer.new.render(articles))
-    expect(parsed_json).to(eq(as_hash(@all_articles)))
+    expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
   end
 end
 
