@@ -33,7 +33,7 @@ end
 
 class JSONRenderer
   def render articles
-    [as_hash(articles.all.first)].to_json
+    [as_hash(articles.all.first), as_hash(articles.all.last)].uniq.to_json
   end
 
   private
@@ -81,6 +81,60 @@ describe "A JSON array of 1 article" do
           }
         ]
       ))
+  end
+end
+
+describe "A JSON array of two articles" do
+  it "contains the details of both articles" do
+    articles = double("Articles")
+    allow(articles).to(
+      receive(:all).and_return(
+      [
+        Article.new(
+        {
+          doi: DOI.new("10.1234/altmetric0"),
+          title: "Title of Article",
+          author: "Name of Author",
+          journal: Journal.new(
+            ISSN.new("0378-5955"),
+            "Name of Journal")
+        }
+       ),
+       Article.new(
+	{
+          doi: DOI.new("10.1234/altmetric1"),
+          title: "Different Title",
+          author: "Different Author",
+          journal: Journal.new(
+            ISSN.new("5966-4542"),
+            "Different Journal")
+            
+        }
+       )
+      ]
+    ))
+
+    parsed_json = JSON.parse(JSONRenderer.new.render(articles))
+    expect(parsed_json).to(
+      eq(
+        [
+          {
+            "doi" => "10.1234/altmetric0",
+            "title" => "Title of Article",
+            "author" => "Name of Author",
+            "journal" => "Name of Journal",
+            "issn" => "0378-5955"
+          },
+          {
+            "doi" => "10.1234/altmetric1",
+            "title" => "Different Title",
+            "author" => "Different Author",
+            "journal" => "Different Journal",
+            "issn" => "5966-4542"
+          }
+        ]
+      )
+    )
   end
 end
 
