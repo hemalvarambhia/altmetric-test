@@ -25,7 +25,7 @@ end
 def convert_to_hash articles
   articles.all.collect{|article|
     {
-     "doi" => article.doi,
+     "doi" => article.doi.to_s,
      "title" => article.title,
      "author" => article.author,
      "journal" => article.journal_published_in.title,

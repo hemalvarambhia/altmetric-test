@@ -1,5 +1,5 @@
 class Article
-  attr_reader :title, :author
+  attr_reader :title, :author, :doi
   def initialize(hash)
     @doi = hash[:doi]
     @title = hash[:title]
@@ -9,9 +9,5 @@ class Article
 
   def journal_published_in
     @journal
-  end
-
-  def doi
-    @doi.to_s
   end
 end

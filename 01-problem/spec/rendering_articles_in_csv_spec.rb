@@ -35,7 +35,7 @@ end
 def to_array(articles)
    articles.all.collect do |article|
       [
-        article.doi,
+        article.doi.to_s,
         article.title,
         article.author,
         article.journal_published_in.title,
