@@ -123,18 +123,27 @@ describe "Loading articles from a CSV file" do
     end
    
     it "yields both articles" do
-      article = Articles.load_from(
+      articles = Articles.load_from(
         File.join(fixtures_dir, "two_articles.csv"),
         @journals,
         @authors
-      ).all.first
-      
+      ).all
+
+      article = articles.first
       expect(article.doi).to eq("10.1234/altmetric0")
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq("Amari Lubowitz")
       expect(article.journal_published_in.title).to(
         eq("Shanahan, Green and Ziemann"))
       expect(article.journal_published_in.issn).to eq("1337-8688")
+
+      article = articles.last
+      expect(article.doi).to eq("10.1234/altmetric100")
+      expect(article.title).to eq("Ergonomic Rubber Shirt")
+      expect(article.author).to eq("Lenny Kshlerin")
+      expect(article.journal_published_in.title).to(
+        eq("Wilkinson, Gaylord and Gerlach"))
+      expect(article.journal_published_in.issn).to eq("2542-5856")
     end
   end
 end
