@@ -17,8 +17,11 @@ describe "Finding journals by ISSN" do
                   ISSN.new("1234-5678")
                 )
 
-      expect(journal.title).to eq("Journal that exists")
-      expect(journal.issn).to eq(ISSN.new("1234-5678"))
+      expect(journal).to(
+        eq(
+          Journal.new(
+          ISSN.new("1234-5678"),
+          "Journal that exists")))
     end
 
     context "finding a journal for a different ISSN" do
@@ -35,8 +38,12 @@ describe "Finding journals by ISSN" do
                   ISSN.new("9876-5432")
                 )
 
-      expect(journal.title).to eq("Different journal")
-      expect(journal.issn).to eq(ISSN.new("9876-5432"))
+      expect(journal).to(
+        eq(
+           Journal.new(
+            ISSN.new("9876-5432"),
+           "Different journal"
+        )))
       end
     end
   end
