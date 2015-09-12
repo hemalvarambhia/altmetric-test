@@ -30,7 +30,7 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "the file is empty (contains just headers)" do
+  context "when the file has no articles (just headers)" do
     it "yields no articles" do
       articles = Articles.load_from(
         File.join(fixtures_dir, "no_articles.csv"),
@@ -42,7 +42,7 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "when the file contains one article" do
+  context "when the file contains 1 article" do
     before(:each) do
       @journals = double("Journals")
       allow(@journals).to(
@@ -80,7 +80,7 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "a file with 2 articles" do
+  context "when the file contains 2 articles" do
     before :each do
       @journals = double("Journals")
       [
