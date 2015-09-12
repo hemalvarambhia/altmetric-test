@@ -1,17 +1,6 @@
 require_relative './issn'
 require_relative './journal'
-
-class Journals
-  def initialize journals
-    @journals = journals || []
-  end
-  
-  def find_journal_for required_issn
-    @journals.detect{|journal|
-      journal.issn == required_issn
-    }
-  end
-end
+require_relative './journals'
 
 describe "Finding journals by ISSN" do
   context "when the article is found" do

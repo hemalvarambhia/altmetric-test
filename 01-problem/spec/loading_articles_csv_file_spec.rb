@@ -1,6 +1,7 @@
 require_relative './doi'
 require_relative './issn'
 require_relative './journal'
+require_relative './journals'
 require_relative './articles'
 
 class Author
@@ -44,14 +45,12 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 1 article" do
     before(:each) do
-      @journals = double("Journals")
-      allow(@journals).to(
-        receive(:find_journal_for).
-        with(ISSN.new("1337-8688")).
-        and_return(
+      @journals = Journals.new(
+        [
           Journal.new(
           ISSN.new("1337-8688"),
-          "Shanahan, Green and Ziemann"))
+          "Shanahan, Green and Ziemann")
+        ]
       )
 
       @authors = double("Authors")
@@ -82,7 +81,7 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 2 articles" do
     before :each do
-      @journals = double("Journals")
+      @journals = Journals.new(
       [
         Journal.new(
           ISSN.new("1337-8688"),
@@ -92,13 +91,7 @@ describe "Loading articles from a CSV file" do
           ISSN.new("2542-5856"),
           "Wilkinson, Gaylord and Gerlach"
         )                                    
-      ].each do |journal|
-        allow(@journals).to(
-          receive(:find_journal_for).
-          with(journal.issn).
-          and_return(journal)
-        )                                          
-       end                                           
+      ])                                           
 
       @authors = double("Authors")
       [
@@ -149,7 +142,7 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains many articles" do
     before(:each) do
-      @journals = double("Journals")
+      @journals = Journals.new(
       [
         Journal.new(
           ISSN.new("1337-8688"),
@@ -163,13 +156,7 @@ describe "Loading articles from a CSV file" do
           ISSN.new("3775-0307"),
           "Hahn and Sons"
         )
-      ].each do |journal|
-        allow(@journals).to(
-          receive(:find_journal_for).
-          with(journal.issn).
-          and_return(journal)
-        )                                          
-       end                                           
+      ])
 
       @authors = double("Authors")
       [
@@ -232,19 +219,7 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains articles with missing journals" do
     before :each do
-      @journals = double("Journals")
-      [
-        # These are ISSNs for non-existent journals
-        ISSN.new("3760-2228"),
-        ISSN.new("2781-6347")
-      ].each do |non_existent_issn|
-        allow(@journals).to(
-           receive(:find_journal_for).
-           with(non_existent_issn).
-           and_return(nil)
-        )
-      end
-      
+      @journals = Journals.new([])
       @authors = double("Authors")
     end
       
