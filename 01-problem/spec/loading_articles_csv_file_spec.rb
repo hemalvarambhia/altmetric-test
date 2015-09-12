@@ -229,4 +229,68 @@ describe "Loading articles from a CSV file" do
        expect(article.journal_published_in.issn).to eq("3775-0307")
     end
   end
+
+  context "when the file contains articles with duplicate DOIs and missing journals" do
+    before :each do
+       @journals = double("Journals")
+      [
+        Journal.new(
+          ISSN.new("9667-8162"),
+          "Gleichner, Shanahan and Predovic"
+      ),
+        Journal.new(
+          ISSN.new("8768-8891"),
+          "Becker LLC"
+        ),
+      ].each do |journal|
+        allow(@journals).to(
+          receive(:find_journal_for).
+          with(journal.issn).
+          and_return(journal)
+        )                                          
+      end
+      [
+        ISSN.new("3760-2228"),
+        ISSN.new("2781-6347") ].each do |non_existent_issn|
+        allow(@journals).to(
+           receive(:find_journal_for).
+           with(non_existent_issn).
+           and_return(nil)
+        )
+      
+      @authors = double("Authors")
+      [
+        Author.new(
+        "Randal Koelpin",
+         [DOI.new("10.1234/altmetric155")]
+      ),
+         Author.new(
+        "Perry Ondricka",
+         [DOI.new("10.1234/altmetric156")]
+        ),
+      ].each do |author|
+        author.publications.each do |doi|
+          allow(@authors).to(
+            receive(:author_of).
+            with(doi).
+            and_return(author.name)
+          )
+        end
+      end
+      end
+    end
+      
+    it "takes the article that was published in a real journal" do
+      articles = Articles.load_from(
+        File.join(fixtures_dir, "articles_with_duplicate_dois.csv"),
+        @journals,
+        @authors
+      ).all
+
+      expect(articles.last.doi).to eq("10.1234/altmetric156")
+      expect(articles.last.journal_published_in.issn).to(
+        eq("8768-8891")
+      )    
+    end
+  end
 end
