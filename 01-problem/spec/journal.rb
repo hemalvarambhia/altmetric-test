@@ -4,4 +4,8 @@ class Journal
     @issn = issn
     @title = title
   end
+
+  def ==(other)
+    @issn == other.issn
+  end
 end
