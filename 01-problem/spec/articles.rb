@@ -11,4 +11,8 @@ class Articles
   def all
     @articles
   end
+
+  def empty?
+    @articles.empty?
+  end
 end
