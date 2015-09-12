@@ -9,4 +9,19 @@ describe "Loading articles from a CSV file" do
             author_publications)}).to raise_error
     end
   end
+
+  context "the file is empty (contains just headers)" do
+    it "yields no articles" do
+      articles = Articles.load_from(
+        File.join(
+        File.dirname(__FILE__),
+        "fixtures",
+        "no_articles.csv"),
+        double("Journals"),
+        double("Authors")
+      )
+      
+      expect(articles).to be_empty
+    end
+  end
 end

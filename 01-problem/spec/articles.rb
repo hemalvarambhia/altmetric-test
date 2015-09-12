@@ -5,9 +5,12 @@ class Articles
 
   def self.load_from(
       file_name, journals, articles)
-
-    raise Exception.new(
+    if not File.exists?(file_name)
+      raise Exception.new(
             "'#{file_name}' does not exist")
+    end
+
+    Articles.new([])
   end
 
   def all
