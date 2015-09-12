@@ -11,7 +11,7 @@ describe "Loading articles from a CSV file" do
       expect(lambda {Articles.load_from(
             "non_existent.csv", 
             journals, 
-            author_publications)}).to raise_error
+            author_publications)}).to raise_error(Exception)
     end
   end
 
