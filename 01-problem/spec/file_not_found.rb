@@ -1,0 +1,3 @@
+class FileNotFound < Exception
+
+end
