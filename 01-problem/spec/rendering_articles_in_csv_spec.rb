@@ -39,7 +39,7 @@ def to_array(articles)
         article.title,
         article.author,
         article.journal_published_in.title,
-        article.journal_published_in.issn
+        article.journal_published_in.issn.to_s
       ]
    end
 end

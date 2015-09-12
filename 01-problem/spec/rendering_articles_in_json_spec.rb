@@ -29,7 +29,7 @@ def convert_to_hash articles
      "title" => article.title,
      "author" => article.author,
      "journal" => article.journal_published_in.title,
-     "issn" => article.journal_published_in.issn
+     "issn" => article.journal_published_in.issn.to_s
     }
   }
 end

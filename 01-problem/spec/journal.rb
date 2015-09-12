@@ -1,11 +1,7 @@
 class Journal
-  attr_reader :title
+  attr_reader :title, :issn
   def initialize(issn, title)
     @issn = issn
     @title = title
-  end
-
-  def issn
-    @issn.to_s
   end
 end
