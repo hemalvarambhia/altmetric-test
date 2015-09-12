@@ -232,7 +232,7 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains articles with duplicate DOIs and missing journals" do
     before :each do
-       @journals = double("Journals")
+      @journals = double("Journals")
       [
         Journal.new(
           ISSN.new("9667-8162"),
@@ -250,45 +250,37 @@ describe "Loading articles from a CSV file" do
         )                                          
       end
       [
+        # These are ISSNs for non-existent journals
         ISSN.new("3760-2228"),
-        ISSN.new("2781-6347") ].each do |non_existent_issn|
+        ISSN.new("2781-6347")
+      ].each do |non_existent_issn|
         allow(@journals).to(
            receive(:find_journal_for).
            with(non_existent_issn).
            and_return(nil)
         )
+      end
       
       @authors = double("Authors")
-      [
-        Author.new(
-        "Randal Koelpin",
-         [DOI.new("10.1234/altmetric155")]
-      ),
-         Author.new(
-        "Perry Ondricka",
-         [DOI.new("10.1234/altmetric156")]
-        ),
-      ].each do |author|
-        author.publications.each do |doi|
-          allow(@authors).to(
-            receive(:author_of).
-            with(doi).
-            and_return(author.name)
-          )
-        end
-      end
-      end
+      allow(@authors).to(
+        receive(:author_of).
+        with(DOI.new("10.1234/altmetric156")).
+              and_return("Perry Ondricka"))
+        
     end
       
     it "takes the article that was published in a real journal" do
       articles = Articles.load_from(
-        File.join(fixtures_dir, "articles_with_duplicate_dois.csv"),
+        File.join(
+        fixtures_dir,
+        "articles_with_duplicate_dois_with_missing_journals.csv"),
         @journals,
         @authors
       ).all
 
-      expect(articles.last.doi).to eq("10.1234/altmetric156")
-      expect(articles.last.journal_published_in.issn).to(
+      expect(articles.size).to eq(1)
+      expect(articles.first.doi).to eq("10.1234/altmetric156")
+      expect(articles.first.journal_published_in.issn).to(
         eq("8768-8891")
       )    
     end
