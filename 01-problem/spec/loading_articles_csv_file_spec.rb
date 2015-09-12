@@ -230,25 +230,9 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "when the file contains articles with duplicate DOIs and missing journals" do
+  context "when the file contains articles with missing journals" do
     before :each do
       @journals = double("Journals")
-      [
-        Journal.new(
-          ISSN.new("9667-8162"),
-          "Gleichner, Shanahan and Predovic"
-      ),
-        Journal.new(
-          ISSN.new("8768-8891"),
-          "Becker LLC"
-        ),
-      ].each do |journal|
-        allow(@journals).to(
-          receive(:find_journal_for).
-          with(journal.issn).
-          and_return(journal)
-        )                                          
-      end
       [
         # These are ISSNs for non-existent journals
         ISSN.new("3760-2228"),
@@ -262,27 +246,18 @@ describe "Loading articles from a CSV file" do
       end
       
       @authors = double("Authors")
-      allow(@authors).to(
-        receive(:author_of).
-        with(DOI.new("10.1234/altmetric156")).
-              and_return("Perry Ondricka"))
-        
     end
       
-    it "takes the article that was published in a real journal" do
+    it "does not include those articles" do
       articles = Articles.load_from(
         File.join(
         fixtures_dir,
         "articles_with_duplicate_dois_with_missing_journals.csv"),
         @journals,
         @authors
-      ).all
+      )
 
-      expect(articles.size).to eq(1)
-      expect(articles.first.doi).to eq("10.1234/altmetric156")
-      expect(articles.first.journal_published_in.issn).to(
-        eq("8768-8891")
-      )    
+      expect(articles).to be_empty
     end
   end
 end
