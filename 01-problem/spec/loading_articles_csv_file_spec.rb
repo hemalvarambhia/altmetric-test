@@ -252,7 +252,7 @@ describe "Loading articles from a CSV file" do
       articles = Articles.load_from(
         File.join(
         fixtures_dir,
-        "articles_with_duplicate_dois_with_missing_journals.csv"),
+        "articles_with_journals_missing.csv"),
         @journals,
         @authors
       )
