@@ -198,7 +198,7 @@ describe "Loading articles from a CSV file" do
     
     it "yields every articles" do
        articles = Articles.load_from(
-        File.join(fixtures_dir, "many.csv"),
+        File.join(fixtures_dir, "many_articles.csv"),
         @journals,
         @authors
       ).all
@@ -212,7 +212,7 @@ describe "Loading articles from a CSV file" do
 
        expect(article.journal_published_in.issn).to eq("1337-8688")
 
-       article = articles.second
+       article = articles[1]
        expect(article.doi).to eq("10.1234/altmetric100")
        expect(article.title).to eq("Ergonomic Rubber Shirt")
        expect(article.author).to eq("Lenny Kshlerin")
@@ -223,7 +223,7 @@ describe "Loading articles from a CSV file" do
        article = articles.last
        expect(article.doi).to eq("10.1234/altmetric103")
        expect(article.title).to eq("Fantastic Granite Computer")
-       expect(article.author).to eq("Harry Spink Jr.")
+       expect(article.author).to eq("Howard Spinka Jr.")
        expect(article.journal_published_in.title).to(
          eq("Hahn and Sons"))
        expect(article.journal_published_in.issn).to eq("3775-0307")
