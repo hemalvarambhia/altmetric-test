@@ -15,6 +15,10 @@ class Authors
   def size
     @articles.size
   end
+
+  def first
+    @articles.first
+  end
   
   def self.load_from file_name
     if not File.exists?(file_name)
@@ -29,7 +33,7 @@ class Authors
       }
       Author.new(
         author_as_json["name"], publications)
-    end.select{|author| author.publications.any?}
+    end.select{|author| author.has_publications?}
 
     return Authors.new(authors)
   end
@@ -75,7 +79,15 @@ describe "Loading authors from a JSON file" do
           "one_author_with_many_publications.json")
         )
 
-        expect(authors.size).to eq(1)
+         expect(authors.size).to eq(1)
+         expect(authors.first.name).to(
+           eq("Author With One or More Publications"))
+         expect(authors.first.publications).to(
+           eq([
+                DOI.new("10.1234/altmetric101"),
+                DOI.new("10.1234/altmetric323")
+              ]
+           ))
       end
     end
   end

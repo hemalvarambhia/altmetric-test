@@ -4,4 +4,8 @@ class Author
     @name = name
     @publications = publications
   end
+
+  def has_publications?
+    @publications.any?
+  end
 end
