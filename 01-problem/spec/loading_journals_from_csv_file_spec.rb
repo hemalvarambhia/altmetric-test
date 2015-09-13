@@ -1,11 +1,6 @@
+require 'spec_helper'
 require_relative '../lib/journals'
 require_relative './file_not_found'
-
-def fixtures_dir
-  File.join(
-    File.dirname(__FILE__),
-    "fixtures")
-end
 
 describe "Loading journals from csv files" do
   context "when the file does not exist" do

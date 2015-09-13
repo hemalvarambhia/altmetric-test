@@ -1,14 +1,8 @@
+require 'spec_helper'
 require_relative './doi'
 require_relative '../lib/journals'
 require_relative '../lib/author'
 require_relative './articles'
-
-def fixtures_dir
-  File.join(
-    File.dirname(__FILE__),
-    "fixtures"
-  )
-end
 
 describe "Loading articles from a CSV file" do
   context "when the file does not exist" do
