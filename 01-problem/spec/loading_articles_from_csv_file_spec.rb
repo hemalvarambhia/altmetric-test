@@ -212,7 +212,7 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "when the article has no authors" do
+  context "when the file contains article with no authors" do
     before(:each) do
        @journals = Journals.new(
       [
@@ -230,7 +230,8 @@ describe "Loading articles from a CSV file" do
       )
       ])
     end
-    it "is excluded" do
+    
+    it "excludes those articles" do
       articles = Articles.load_from(
         File.join(
         fixtures_dir,
