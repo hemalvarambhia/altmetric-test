@@ -1,3 +1,5 @@
+require 'json'
+
 class JSONRenderer
   def render articles
     articles.all.collect{|article| as_hash(article)}.to_json
