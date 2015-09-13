@@ -1,7 +1,7 @@
 require_relative './doi'
 require_relative './issn'
 require_relative './journal'
-require_relative './journals'
+require_relative '../lib/journals'
 require_relative './articles'
 
 class Author

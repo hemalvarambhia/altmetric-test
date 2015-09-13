@@ -1,6 +1,6 @@
 require_relative './issn'
 require_relative './journal'
-require_relative './journals'
+require_relative '../lib/journals'
 
 describe "Finding journals by ISSN" do
   context "when the article is found" do

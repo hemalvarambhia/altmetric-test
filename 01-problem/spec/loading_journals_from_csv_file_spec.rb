@@ -1,4 +1,4 @@
-require_relative './journals'
+require_relative '../lib/journals'
 require_relative './file_not_found'
 
 def fixtures_dir
