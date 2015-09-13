@@ -74,6 +74,16 @@ describe "Finding authors by their publications" do
   end
 
   context "when there are no authors of the publication" do
-    it "yields none"
+    it "yields none" do
+      authors = Authors.new(
+        [
+          Author.new(
+          "An author", [DOI.new("10.1234/altmetric555")]),
+        ]
+      )
+      author = authors.author_of DOI.new("10.1234/altmetric999")
+
+      expect(author).to be_empty
+    end
   end
 end
