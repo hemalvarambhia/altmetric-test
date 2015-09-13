@@ -48,7 +48,15 @@ describe "Equating Authors" do
   end
 
   context "authors with the same name but different publications" do
-    it "confirms them as not being the same"
+    it "confirms them as not being the same" do
+      author = Author.new(
+        "Jonathan Davis", [DOI.new("10.1234/altmetric127")])
+      different_author_same_name = Author.new(
+        "Jonathan Davis", [DOI.new("10.1234/altmetric489")]
+      )
+
+      expect(author).to_not eq(different_author_same_name)
+    end
   end
 
 end
