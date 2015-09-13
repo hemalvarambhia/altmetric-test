@@ -27,7 +27,21 @@ describe "Loading journals from csv files" do
   end
 
   context "when the file has 1 journal" do
-    it "loads that article"
+    it "loads that article" do
+      journals = Journals.load_from(
+        File.join(
+        fixtures_dir,
+        "one_journal.csv")
+      )
+      
+      expect(journals.size).to eq(1)
+      expect(journals.all.first).to(
+        eq(
+          Journal.new(
+          ISSN.new("2885-6503"),
+          "Sporer, Kihn and Turner"))
+      )
+    end
   end
 
   context "when the file has 2 journals" do

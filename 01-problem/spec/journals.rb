@@ -9,15 +9,30 @@ class Journals
     }
   end
 
+  def all
+    @journals
+  end
+
   def empty?
     @journals.empty?
+  end
+
+  def size
+    @journals.size
   end
   
   def self.load_from(file_name)
     if not File.exists?(file_name)
       raise FileNotFound.new("'#{file_name}' not found")
     end
+    
+    journals = []
+    CSV.foreach(file_name, {headers: true}) do |csv_row|
+      journals << Journal.new(
+        ISSN.new(csv_row["ISSN"]),
+        csv_row["Title"])
+    end
 
-    Journals.new([])
+    return Journals.new(journals)
   end
 end
