@@ -1,4 +1,5 @@
 require 'csv'
+require_relative './file_not_found'
 require_relative './journal'
 require_relative './issn'
 class Journals
@@ -34,7 +35,7 @@ class Journals
   
   def self.load_from(file_name)
     if not File.exists?(file_name)
-      raise FileNotFound.new("'#{file_name}' not found")
+      raise FileNotFound.new(file_name)
     end
     
     journals = []
