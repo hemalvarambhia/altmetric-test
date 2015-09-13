@@ -5,7 +5,7 @@ require_relative './doi'
 
 class Authors
   def self.load_from file_name
-    raise FileNotFound.new("'#{file_name}' not found")
+    raise FileNotFound.new(file_name)
   end
 end
 
