@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative './doi'
+require_relative '../lib/doi'
 require_relative '../lib/journals'
 require_relative '../lib/author'
 require_relative './articles'

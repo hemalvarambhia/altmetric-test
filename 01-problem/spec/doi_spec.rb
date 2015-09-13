@@ -1,4 +1,5 @@
-require_relative './doi'
+require_relative '../lib/doi'
+
 describe "Digital object identifiers" do
   describe "a blank DOI" do
     it "is invalid" do

@@ -1,6 +1,6 @@
 require 'csv'
 require_relative '../lib/issn'
-require_relative './doi'
+require_relative '../lib/doi'
 require_relative '../lib/journal'
 require_relative './article'
 require_relative './articles'
