@@ -19,7 +19,7 @@ describe "Loading authors from a JSON file" do
       it "yields no authors"
     end
 
-    context "when that authors has 1 or more publications" do
+    context "when that author has 1 or more publications" do
       it "yields the author"
     end
   end
