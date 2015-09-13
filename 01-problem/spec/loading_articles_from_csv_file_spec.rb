@@ -1,6 +1,7 @@
 require 'spec_helper'
 require_relative '../lib/doi'
 require_relative '../lib/journals'
+require_relative '../lib/authors'
 require_relative '../lib/author'
 require_relative './articles'
 
@@ -38,11 +39,11 @@ describe "Loading articles from a CSV file" do
         ]
       )
 
-      @authors = double("Authors")
-      allow(@authors).to(
-        receive(:author_of).
-        with(DOI.new("10.1234/altmetric0")).
-        and_return("Amari Lubowitz")
+      @authors = Authors.new(
+        [
+          Author.new(
+          "Amari Lubowitz", [DOI.new("10.1234/altmetric0")])
+        ]
       )
     end
     
@@ -56,7 +57,7 @@ describe "Loading articles from a CSV file" do
       article = articles.first
       expect(article.doi).to eq("10.1234/altmetric0")
       expect(article.title).to eq("Small Wooden Chair")
-      expect(article.author).to eq("Amari Lubowitz")
+      expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.issn).to(
         eq("1337-8688"))
       expect(article.journal_published_in.title).to(
@@ -78,7 +79,7 @@ describe "Loading articles from a CSV file" do
         )                                    
       ])                                           
 
-      @authors = double("Authors")
+      @authors = Authors.new(
       [
         Author.new(
         "Amari Lubowitz",
@@ -89,15 +90,7 @@ describe "Loading articles from a CSV file" do
          [DOI.new("10.1234/altmetric100")]
       ),
         
-      ].each do |author|
-        author.publications.each do |doi|
-          allow(@authors).to(
-            receive(:author_of).
-            with(doi).
-            and_return(author.name)
-          )
-        end
-      end
+      ])
     end
    
     it "yields both articles" do
@@ -110,7 +103,7 @@ describe "Loading articles from a CSV file" do
       article = articles.first
       expect(article.doi).to eq("10.1234/altmetric0")
       expect(article.title).to eq("Small Wooden Chair")
-      expect(article.author).to eq("Amari Lubowitz")
+      expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.title).to(
         eq("Shanahan, Green and Ziemann"))
       expect(article.journal_published_in.issn).to eq("1337-8688")
@@ -118,7 +111,7 @@ describe "Loading articles from a CSV file" do
       article = articles.last
       expect(article.doi).to eq("10.1234/altmetric100")
       expect(article.title).to eq("Ergonomic Rubber Shirt")
-      expect(article.author).to eq("Lenny Kshlerin")
+      expect(article.author).to eq(["Lenny Kshlerin"])
       expect(article.journal_published_in.title).to(
         eq("Wilkinson, Gaylord and Gerlach"))
       expect(article.journal_published_in.issn).to eq("2542-5856")
@@ -143,7 +136,7 @@ describe "Loading articles from a CSV file" do
         )
       ])
 
-      @authors = double("Authors")
+      @authors = Authors.new(
       [
         Author.new(
         "Amari Lubowitz",
@@ -157,15 +150,7 @@ describe "Loading articles from a CSV file" do
            "Howard Spinka Jr.", 
            [DOI.new("10.1234/altmetric103")]
          )       
-      ].each do |author|
-        author.publications.each do |doi|
-          allow(@authors).to(
-            receive(:author_of).
-            with(doi).
-            and_return(author.name)
-          )
-        end
-      end
+      ])
     end
     
     it "yields every articles" do
@@ -178,7 +163,7 @@ describe "Loading articles from a CSV file" do
        article = articles.first
        expect(article.doi).to eq("10.1234/altmetric0")
        expect(article.title).to eq("Small Wooden Chair")
-       expect(article.author).to eq("Amari Lubowitz")
+       expect(article.author).to eq(["Amari Lubowitz"])
        expect(article.journal_published_in.title).to(
          eq("Shanahan, Green and Ziemann"))
 
@@ -187,7 +172,7 @@ describe "Loading articles from a CSV file" do
        article = articles[1]
        expect(article.doi).to eq("10.1234/altmetric100")
        expect(article.title).to eq("Ergonomic Rubber Shirt")
-       expect(article.author).to eq("Lenny Kshlerin")
+       expect(article.author).to eq(["Lenny Kshlerin"])
        expect(article.journal_published_in.title).to(
          eq("Wilkinson, Gaylord and Gerlach"))
        expect(article.journal_published_in.issn).to eq("2542-5856")
@@ -195,7 +180,7 @@ describe "Loading articles from a CSV file" do
        article = articles.last
        expect(article.doi).to eq("10.1234/altmetric103")
        expect(article.title).to eq("Fantastic Granite Computer")
-       expect(article.author).to eq("Howard Spinka Jr.")
+       expect(article.author).to eq(["Howard Spinka Jr."])
        expect(article.journal_published_in.title).to(
          eq("Hahn and Sons"))
        expect(article.journal_published_in.issn).to eq("3775-0307")

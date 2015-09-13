@@ -17,7 +17,7 @@ class Articles
         articles << Article.new(
         doi: doi,
         title: csv["Title"],
-        author: authors.author_of(doi),
+        author: authors.author_of(doi).collect{|author| author.name },
         journal: journals.
           find_journal_for(
             ISSN.new(csv["ISSN"])))
