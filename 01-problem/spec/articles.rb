@@ -32,6 +32,10 @@ class Articles
     @articles
   end
 
+  def first
+    @articles.first
+  end
+
   def empty?
     @articles.empty?
   end

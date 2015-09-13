@@ -68,7 +68,7 @@ describe "Loading articles from a CSV file" do
         @authors
       )
       
-      article = articles.all.first
+      article = articles.first
       expect(article.doi).to eq("10.1234/altmetric0")
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq("Amari Lubowitz")
