@@ -13,12 +13,34 @@ describe "Finding authors by their publications" do
       )
       author = authors.author_of DOI.new("10.1234/altmetric101")
 
-      expect(author).to eq(["Author Name"])
+      expect(author).to(
+        eq([
+             Author.new(
+             "Author Name", [DOI.new("10.1234/altmetric101")])
+           ]
+          )
+      )
     end
   end
 
   context "when there is another author for a different publication" do
-    it "yields that author"
+    it "yields that author" do
+      authors = Authors.new(
+        [
+          Author.new(
+          "Another", [DOI.new("10.1234/altmetric171")]),
+        ]
+      )
+      author = authors.author_of DOI.new("10.1234/altmetric171")
+
+      expect(author).to(
+        eq([
+             Author.new(
+             "Another", [DOI.new("10.1234/altmetric171")])
+           ]
+          )
+      )
+    end
   end
 
   context "when there are several authors of the publication" do

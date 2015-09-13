@@ -2,32 +2,32 @@ require 'json'
 require_relative './doi'
 require_relative './author'
 class Authors
-  def initialize(articles)
-    @articles = articles || []
+  def initialize(authors)
+    @authors = authors || []
   end
 
   def empty?
-    @articles.empty?
+    @authors.empty?
   end
 
   def size
-    @articles.size
+    @authors.size
   end
 
   def all
-    @articles
+    @authors
   end
 
   def first
-    @articles.first
+    @authors.first
   end
 
   def last
-    @articles.last
+    @authors.last
   end
 
   def author_of doi
-    ["Author Name"]
+    @authors.select{|author| author.publications.include?(doi)}
   end
   
   def self.load_from file_name
