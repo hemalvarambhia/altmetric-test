@@ -1,0 +1,10 @@
+[
+    {
+	"name": "Author With Many Publications",
+	"articles": ["10.1234/altmetric221", "10.1234/altmetric240"]
+    },
+    {
+	"name": "Another Author With Many Publications",
+	"articles":["10.1234/altmetric007"]
+    }
+]

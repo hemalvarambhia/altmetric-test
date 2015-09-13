@@ -94,7 +94,23 @@ describe "Loading authors from a JSON file" do
 
   context "when the file consists of two authors" do
     context "when the authors have 1 or more publications" do
-      it "yields both authors"
+      it "yields both authors" do
+        authors = Authors.load_from(
+          File.join(
+          fixtures_dir,
+          "two_authors_with_many_publications.json"))
+        
+        expect(authors.size).to eq(2)
+        expect(authors.first.name).to eq("Author With Many Publications")
+        expect(authors.first.publications).to(
+          eq(
+            [
+              DOI.new("10.1234/altmetric221"),
+              DOI.new("10.1234/altmetric240")
+            ]
+          )
+        )
+      end
     end
   end
 
