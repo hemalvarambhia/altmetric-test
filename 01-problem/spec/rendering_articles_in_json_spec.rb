@@ -1,7 +1,7 @@
 require 'json'
 require_relative './doi'
-require_relative './issn'
-require_relative './journal'
+require_relative '../lib/issn'
+require_relative '../lib/journal'
 require_relative './article'
 require_relative './articles'
 class JSONRenderer
