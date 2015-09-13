@@ -4,23 +4,7 @@ require_relative '../lib/issn'
 require_relative '../lib/journal'
 require_relative '../lib/article'
 require_relative '../lib/articles'
-class JSONRenderer
-  def render articles
-    articles.all.collect{|article| as_hash(article)}.to_json
-  end
-
-  private
-
-  def as_hash article
-    {
-      "doi" => article.doi,
-      "title" => article.title,
-      "author" => article.author,
-      "journal" => article.journal_published_in.title,
-      "issn" => article.journal_published_in.issn
-    }
-  end
-end
+require_relative '../lib/json_renderer'
 
 def convert_to_hash articles
   articles.all.collect{|article|
