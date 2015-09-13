@@ -2,8 +2,8 @@ require 'json'
 require_relative '../lib/doi'
 require_relative '../lib/issn'
 require_relative '../lib/journal'
-require_relative './article'
-require_relative './articles'
+require_relative '../lib/article'
+require_relative '../lib/articles'
 class JSONRenderer
   def render articles
     articles.all.collect{|article| as_hash(article)}.to_json

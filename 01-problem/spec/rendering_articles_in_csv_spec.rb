@@ -2,8 +2,8 @@ require 'csv'
 require_relative '../lib/issn'
 require_relative '../lib/doi'
 require_relative '../lib/journal'
-require_relative './article'
-require_relative './articles'
+require_relative '../lib/article'
+require_relative '../lib/articles'
 
 class CSVRenderer
   def render articles

@@ -1,4 +1,5 @@
 require_relative '../lib/file_not_found'
+require_relative './article'
 class Articles
   def initialize(articles)
     @articles = articles || []

@@ -3,7 +3,7 @@ require_relative '../lib/doi'
 require_relative '../lib/journals'
 require_relative '../lib/authors'
 require_relative '../lib/author'
-require_relative './articles'
+require_relative '../lib/articles'
 
 describe "Loading articles from a CSV file" do
   context "when the file does not exist" do
