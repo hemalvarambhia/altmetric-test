@@ -44,7 +44,28 @@ describe "Finding authors by their publications" do
   end
 
   context "when there are several authors of the publication" do
-    it "yields them all"
+    it "yields them all" do
+      authors = Authors.new(
+        [
+          Author.new(
+          "Author", [DOI.new("10.1234/altmetric171")]),
+           Author.new(
+          "Collaborator", [DOI.new("10.1234/altmetric171")])
+        ]
+      )
+
+      authors = authors.author_of DOI.new("10.1234/altmetric171")
+
+      expect(authors).to(
+        eq(
+           [
+             Author.new(
+             "Author", [DOI.new("10.1234/altmetric171")]),
+             Author.new(
+               "Collaborator", [DOI.new("10.1234/altmetric171")])
+           ]
+        ))
+    end
   end
 
   context "when there are no authors of the publication" do
