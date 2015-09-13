@@ -25,6 +25,10 @@ class Authors
   def last
     @articles.last
   end
+
+  def author_of doi
+    ["Author Name"]
+  end
   
   def self.load_from file_name
     if not File.exists?(file_name)
