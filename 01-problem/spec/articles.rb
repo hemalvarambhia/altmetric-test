@@ -1,3 +1,4 @@
+require_relative './file_not_found'
 class Articles
   def initialize(articles)
     @articles = articles || []
@@ -6,8 +7,7 @@ class Articles
   def self.load_from(
       file_name, journals, authors)
     if not File.exists?(file_name)
-      raise Exception.new(
-            "'#{file_name}' does not exist")
+      raise FileNotFound.new(file_name)
     end
     articles = []
     CSV.foreach(file_name, {headers: true}) do |csv|
