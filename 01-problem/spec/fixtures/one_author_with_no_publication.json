@@ -1,4 +1,7 @@
 [
-    "name": "Author With No Publications",
-    "articles":[]
+    {
+
+	"name": "Author With No Publications",
+	"articles":[]
+    }
 ]
