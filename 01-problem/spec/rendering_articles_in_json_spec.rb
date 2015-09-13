@@ -11,7 +11,7 @@ def convert_to_hash articles
     {
      "doi" => article.doi.to_s,
      "title" => article.title,
-     "author" => article.author,
+     "author" => article.author.join(","),
      "journal" => article.journal_published_in.title,
      "issn" => article.journal_published_in.issn.to_s
     }
@@ -25,7 +25,7 @@ describe "A JSON array of 1 article" do
         {
           doi: DOI.new("10.1234/altmetric0"),
           title: "Title of Article",
-          author: "Name of Author",
+          author: ["Name of Author"],
           journal: Journal.new(
             ISSN.new("0378-5955"),
             "Name of Journal")
@@ -48,7 +48,7 @@ describe "A JSON array of two articles" do
         {
           doi: DOI.new("10.1234/altmetric0"),
           title: "Title of Article",
-          author: "Name of Author",
+          author: ["Name of Author"],
           journal: Journal.new(
             ISSN.new("0378-5955"),
             "Name of Journal")
@@ -58,7 +58,7 @@ describe "A JSON array of two articles" do
         {
           doi: DOI.new("10.1234/altmetric1"),
           title: "Different Title",
-          author: "Different Author",
+          author: ["Different Author"],
           journal: Journal.new(
             ISSN.new("5966-4542"),
             "Different Journal")
@@ -81,7 +81,7 @@ describe "A JSON array of many articles" do
          {
            doi: DOI.new("10.1234/altmetric0"),
            title: "Title of Article",
-           author: "Name of Author",
+           author: ["Name of Author"],
            journal: Journal.new(
              ISSN.new("0378-5955"),
              "Name of Journal")
@@ -91,7 +91,7 @@ describe "A JSON array of many articles" do
         {
           doi: DOI.new("10.1234/altmetric1"),
           title: "Different Title",
-          author: "Different Author",
+          author: ["Different Author"],
           journal: Journal.new(
             ISSN.new("5966-4542"),
             "Different Journal")
@@ -101,7 +101,7 @@ describe "A JSON array of many articles" do
         {
            doi: DOI.new("10.1234/altmetric2"),
            title: "Another Title",
-           author: "Another Author",
+           author: ["Another Author"],
            journal: Journal.new(
              ISSN.new("6078-3332"),
              "Another Journal")
