@@ -1,9 +1,21 @@
+require 'spec_helper'
+require_relative './file_not_found'
 require_relative '../lib/author'
 require_relative './doi'
 
+class Authors
+  def self.load_from file_name
+    raise FileNotFound.new("'#{file_name}' not found")
+  end
+end
+
 describe "Loading authors from a JSON file" do
   context "when the file does not exist" do
-    it "raises an error"
+    it "raises an error" do
+      expect(
+        lambda {Authors.load_from("non_existent.json")}
+      ).to raise_error(FileNotFound)
+    end
   end
 
   context "when the file is empty" do
