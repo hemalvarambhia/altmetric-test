@@ -65,19 +65,23 @@ describe "Loading authors from a JSON file" do
           "two_authors_with_many_publications.json"))
         
         expect(authors.size).to eq(2)
-        expect(authors.first.name).to eq("Author With Many Publications")
-        expect(authors.first.publications).to(
-          eq(
-            [
-              DOI.new("10.1234/altmetric221"),
-              DOI.new("10.1234/altmetric240")
-            ]
-          )
+        expect(authors.first).to(
+          eq(Author.new(
+              "Author With Many Publications",
+              [
+                DOI.new("10.1234/altmetric221"),
+                DOI.new("10.1234/altmetric240")
+              ]
+            )
+            )
         )
-        expect(authors.last.name).to(
-          eq("Another Author With Many Publications"))
-        expect(authors.last.publications).to(
-          eq([DOI.new("10.1234/altmetric007")]))
+        expect(authors.last).to(
+          eq(Author.new(
+              "Another Author With Many Publications",
+              [DOI.new("10.1234/altmetric007")]
+            )
+            )
+        )
       end
     end
   end
