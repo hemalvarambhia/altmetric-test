@@ -19,11 +19,16 @@ class Authors
   def first
     @articles.first
   end
+
+  def last
+    @articles.last
+  end
   
   def self.load_from file_name
     if not File.exists?(file_name)
       raise FileNotFound.new(file_name)
     end
+    
     authors = []
     authors_as_json = JSON.parse(
       File.open(file_name, "r").read)
@@ -110,6 +115,10 @@ describe "Loading authors from a JSON file" do
             ]
           )
         )
+        expect(authors.last.name).to(
+          eq("Another Author With Many Publications"))
+        expect(authors.last.publications).to(
+          eq([DOI.new("10.1234/altmetric007")]))
       end
     end
   end
