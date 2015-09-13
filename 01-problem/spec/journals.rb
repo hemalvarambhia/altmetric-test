@@ -9,7 +9,15 @@ class Journals
     }
   end
 
+  def empty?
+    @journals.empty?
+  end
+  
   def self.load_from(file_name)
-    raise FileNotFound.new("'#{file_name}' not found")
+    if not File.exists?(file_name)
+      raise FileNotFound.new("'#{file_name}' not found")
+    end
+
+    Journals.new([])
   end
 end
