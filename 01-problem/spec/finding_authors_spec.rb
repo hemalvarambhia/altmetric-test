@@ -49,8 +49,11 @@ describe "Finding authors by their publications" do
         [
           Author.new(
           "Author", [DOI.new("10.1234/altmetric171")]),
+          Author.new(
+            "Collaborator", [DOI.new("10.1234/altmetric171")]),
            Author.new(
-          "Collaborator", [DOI.new("10.1234/altmetric171")])
+            "Another Collaborator", [DOI.new("10.1234/altmetric171")]),
+             
         ]
       )
 
@@ -62,7 +65,9 @@ describe "Finding authors by their publications" do
              Author.new(
              "Author", [DOI.new("10.1234/altmetric171")]),
              Author.new(
-               "Collaborator", [DOI.new("10.1234/altmetric171")])
+               "Collaborator", [DOI.new("10.1234/altmetric171")]),
+             Author.new(
+               "Another Collaborator", [DOI.new("10.1234/altmetric171")]),
            ]
         ))
     end
