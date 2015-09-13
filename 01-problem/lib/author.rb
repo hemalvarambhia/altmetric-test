@@ -8,4 +8,8 @@ class Author
   def has_publications?
     @publications.any?
   end
+
+  def == other
+    @publications == other.publications
+  end
 end
