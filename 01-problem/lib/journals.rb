@@ -1,3 +1,6 @@
+require 'csv'
+require_relative './journal'
+require_relative './issn'
 class Journals
   def initialize journals
     @journals = journals || []

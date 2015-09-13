@@ -1,4 +1,4 @@
-require_relative './journal'
+require_relative '../lib/journal'
 describe "Equating journals" do
   it "is reflexive" do
     journal_1 = Journal.new(
