@@ -19,7 +19,8 @@ def convert_to_hash articles
 end
 
 describe "A JSON array of 1 article" do
-   before(:each) do
+  context "when the article has one author" do 
+    before(:each) do
      @all_articles = Articles.new([
         Article.new(
         {
@@ -34,10 +35,36 @@ describe "A JSON array of 1 article" do
     ])
    end
 
-  it "contains the details of the article" do
-    parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+   it "contains the details of the article" do
+     parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
 
-    expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
+     expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
+   end
+  end
+
+  context "when the article has multiple authors" do
+     before(:each) do
+       @all_articles = Articles.new(
+         [
+           Article.new(
+           {
+             doi: DOI.new("10.1234/altmetric0"),
+             title: "Title of Article",
+             author: ["Author 1", "Author 2", "Author 3"],
+             journal: Journal.new(
+               ISSN.new("0378-5955"),
+               "Name of Journal")
+
+           }
+         )
+         ])
+     end
+     
+    it "renders the authors as a comma-separated string" do
+      parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+
+      expect(parsed_json.first["author"]).to eq("Author 1, Author 2, Author 3")
+    end
   end
 end
 

@@ -11,7 +11,7 @@ class JSONRenderer
     {
       "doi" => article.doi,
       "title" => article.title,
-      "author" => article.author.join(","),
+      "author" => article.author.join(", "),
       "journal" => article.journal_published_in.title,
       "issn" => article.journal_published_in.issn
     }
