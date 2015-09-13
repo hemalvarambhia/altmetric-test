@@ -35,7 +35,7 @@ describe "Loading journals from csv files" do
       )
       
       expect(journals.size).to eq(1)
-      expect(journals.all.first).to(
+      expect(journals.first).to(
         eq(
           Journal.new(
           ISSN.new("2885-6503"),
@@ -45,7 +45,30 @@ describe "Loading journals from csv files" do
   end
 
   context "when the file has 2 journals" do
-    it "loads both journals"
+    it "loads both journals" do
+      journals = Journals.load_from(
+        File.join(
+        fixtures_dir,
+        "two_journals.csv"
+      )
+      )
+      
+      expect(journals.first).to(
+        eq(
+          Journal.new(
+          ISSN.new("1167-8230"),
+          "Bartell-Collins")
+        )
+      )
+      expect(journals.last).to(
+        eq(
+          Journal.new(
+          ISSN.new("2885-6503"),
+          "Sporer, Kihn and Turner"
+        )
+        )
+      )
+    end
   end
 
   context "when the file has many journals" do

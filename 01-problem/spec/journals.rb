@@ -9,6 +9,14 @@ class Journals
     }
   end
 
+  def first
+    @journals.first
+  end
+
+  def last
+    @journals.last
+  end
+
   def all
     @journals
   end
