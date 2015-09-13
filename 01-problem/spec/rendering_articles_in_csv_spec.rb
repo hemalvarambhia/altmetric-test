@@ -57,10 +57,6 @@ describe "Rendering articles to CSV" do
       end
 
       it "has a header" do
-        articles = double("Articles")
-        allow(articles).to(
-          receive(:all).and_return(@all_articles))
-
         parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
         expect(parsed_csv[0]).to(
           eq(
