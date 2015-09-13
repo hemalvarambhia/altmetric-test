@@ -25,13 +25,13 @@ describe "Loading authors from a JSON file" do
   end
 
   context "when the file consists of two authors" do
-    context "when the author has 1 or more publications" do
+    context "when the authors have 1 or more publications" do
       it "yields both authors"
     end
   end
 
   context "when the file consists of many authors" do
-    context "when the authors has many publications" do
+    context "when the authors have many publications" do
       it "yields every author"
     end
   end
