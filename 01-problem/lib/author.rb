@@ -10,6 +10,6 @@ class Author
   end
 
   def == other
-    @publications == other.publications
+    @publications == other.publications && @name == other.name
   end
 end

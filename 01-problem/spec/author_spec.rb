@@ -36,7 +36,15 @@ describe "Equating Authors" do
   end
 
   context "authors with a different names but same publications" do
-    it "confirms them as not being the same"
+    it "confirms them as not being the same" do
+      author = Author.new(
+        "Author", [DOI.new("10.1234/altmetric007")])
+      collaborator = Author.new(
+        "Collaborator", [DOI.new("10.1234/altmetric007")]
+      )
+
+      expect(author).to_not eq(collaborator)
+    end
   end
 
   context "authors with the same name but different publications" do
