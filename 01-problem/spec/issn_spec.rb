@@ -1,4 +1,4 @@
-require_relative './issn'
+require_relative '../lib/issn'
 describe "ISSNs" do
   describe "a blank ISSN" do
     it "is invalid" do
