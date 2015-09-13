@@ -16,6 +16,10 @@ class Authors
     @articles.size
   end
 
+  def all
+    @articles
+  end
+
   def first
     @articles.first
   end
@@ -33,11 +37,9 @@ class Authors
     authors_as_json = JSON.parse(
       File.open(file_name, "r").read)
     authors = authors_as_json.collect do |author_as_json|
-      publications = author_as_json["articles"].collect{ |doi|
-        DOI.new(doi)
-      }
-      Author.new(
-        author_as_json["name"], publications)
+      publications = author_as_json["articles"].
+                     collect{ |doi| DOI.new(doi)}
+      Author.new(author_as_json["name"], publications)
     end.select{|author| author.has_publications?}
 
     return Authors.new(authors)
@@ -125,7 +127,36 @@ describe "Loading authors from a JSON file" do
 
   context "when the file consists of many authors" do
     context "when the authors have many publications" do
-      it "yields every author"
+      it "yields every author" do
+        authors = Authors.load_from(
+          File.join(fixtures_dir,
+                    "many_authors_with_many_publications.json")
+        )
+        
+        expect(authors.first.name).to eq("Author 1")
+        expect(authors.first.publications).to(
+          eq([
+               DOI.new("10.1234/altmetric001"),
+               DOI.new("10.1234/altmetric002")
+             ])
+        )
+        expect(authors.all[1].name).to eq("Author 2")
+        expect(authors.all[1].publications).to(
+          eq([
+               DOI.new("10.1234/altmetric110")
+             ]
+          )
+        )
+        expect(authors.last.name).to eq("Authors 3")
+        expect(authors.last.publications).to(
+          eq([
+               DOI.new("10.1234/altmetric122"),
+               DOI.new("10.1234/altmetric555"),
+               DOI.new("10.1234/altmetric098"),
+             ]
+          )
+        )
+      end
     end
   end
 end
