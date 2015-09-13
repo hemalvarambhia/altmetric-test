@@ -4,8 +4,20 @@ require_relative '../lib/author'
 require_relative './doi'
 
 class Authors
+  def initialize(articles)
+    @articles = articles || []
+  end
+
+  def empty?
+    @articles.empty?
+  end
+  
   def self.load_from file_name
-    raise FileNotFound.new(file_name)
+    if not File.exists?(file_name)
+      raise FileNotFound.new(file_name)
+    end
+
+    Authors.new([])
   end
 end
 
@@ -19,7 +31,13 @@ describe "Loading authors from a JSON file" do
   end
 
   context "when the file is empty" do
-    it "yields no authors"
+    it "yields no authors" do
+      authors = Authors.load_from(
+        File.join(fixtures_dir, "no_authors.json")
+      )
+
+      expect(authors).to be_empty
+    end
   end
 
   context "when the file has an empty JSON array" do
