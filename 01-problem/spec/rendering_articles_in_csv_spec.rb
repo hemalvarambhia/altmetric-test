@@ -11,7 +11,7 @@ def to_array(articles)
       [
         article.doi.to_s,
         article.title,
-        article.author,
+        article.author.join(","),
         article.journal_published_in.title,
         article.journal_published_in.issn.to_s
       ]
@@ -41,26 +41,28 @@ describe "Rendering articles to CSV" do
   end
 
   describe "rendering 1 article to CSV" do
-    before(:each) do
-      @all_articles = Articles.new([
+    context "when the article has one author" do
+
+      before(:each) do
+        @all_articles = Articles.new([
              Article.new(
                doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
-               author: "Name of Author",
+               author: ["Name of Author"],
                journal: Journal.new(
                   ISSN.new("3853-8766"),
                   "Title of Journal")
              )
            ])
-    end
+      end
 
-    it "has a header" do
-      articles = double("Articles")
-      allow(articles).to(
-         receive(:all).and_return(@all_articles))
+      it "has a header" do
+        articles = double("Articles")
+        allow(articles).to(
+          receive(:all).and_return(@all_articles))
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
-      expect(parsed_csv[0]).to(
+        parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
+        expect(parsed_csv[0]).to(
           eq(
              [
                "DOI",
@@ -69,15 +71,42 @@ describe "Rendering articles to CSV" do
                "Journal Title",
                "ISSN"
              ]))
+
+      end
+
+
+      it "contains the details of the article" do
+        parsed_csv = without_header(
+          CSV.parse(CSVRenderer.new.render(@all_articles)))
+
+        expect(parsed_csv).to(eq(to_array(@all_articles)))
+      end
     end
 
-    it "contains the details of the article" do
-      parsed_csv = without_header(
-         CSV.parse(CSVRenderer.new.render(@all_articles)))
+    context "when the article has multiple authors" do
+      before(:each) do
+        @all_articles = Articles.new([
+             Article.new(
+               doi: DOI.new("10.1234/altmetric52"),
+               title: "Title of Article",
+               author: ["Author 1", "Author 2"],
+               journal: Journal.new(
+                  ISSN.new("3853-8766"),
+                  "Title of Journal")
+             )
+           ])
+      end
 
-      expect(parsed_csv).to(eq(to_array(@all_articles)))
+      it "presents the authors as a string with authors comma-separated" do
+         parsed_csv = without_header(
+           CSV.parse(CSVRenderer.new.render(@all_articles)))
+
+         expect(parsed_csv.first[2]).to(
+           eq("Author 1, Author 2"))
+      end
     end
   end
+    
 
   describe "rendering 2 articles to CSV" do
     before(:each) do
@@ -85,7 +114,7 @@ describe "Rendering articles to CSV" do
          Article.new(
            doi: DOI.new("10.1234/altmetric52"),
            title: "Title of Article",
-           author: "Name of Author",
+           author: ["Name of Author"],
            journal: Journal.new(
               ISSN.new("3853-8766"),
               "Title of Journal")
@@ -93,7 +122,7 @@ describe "Rendering articles to CSV" do
          Article.new(
            doi: DOI.new("10.1234/altmetric101"),
            title: "Different Title",
-           author: "Different Author",
+           author: ["Different Author"],
            journal: Journal.new(
               ISSN.new("6757-2931"),
               "Different Journal")
@@ -115,7 +144,7 @@ describe "Rendering articles to CSV" do
              Article.new(
                doi: DOI.new("10.1234/altmetric52"),
                title: "Title of Article",
-               author: "Name of Author",
+               author: ["Name of Author"],
                journal: Journal.new(
                   ISSN.new("3853-8766"),
                   "Title of Journal")
@@ -123,7 +152,7 @@ describe "Rendering articles to CSV" do
              Article.new(
                doi: DOI.new("10.1234/altmetric101"),
                title: "Different Title",
-               author: "Different Author",
+               author: ["Different Author"],
                journal: Journal.new(
                   ISSN.new("6757-2931"),
                   "Different Journal"
@@ -132,7 +161,7 @@ describe "Rendering articles to CSV" do
              Article.new(
                doi: DOI.new("10.1234/altmetric251"),
                title: "Another Title",
-               author: "Another Author",
+               author: ["Another Author"],
                journal: Journal.new(
                   ISSN.new("7771-5323"),
                   "Another Journal"

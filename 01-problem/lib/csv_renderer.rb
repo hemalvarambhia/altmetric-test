@@ -20,7 +20,7 @@ class CSVRenderer
      [
        article.doi,
        article.title,
-       article.author,
+       article.author.join(", "),
        article.journal_published_in.title,
        article.journal_published_in.issn
       ]
