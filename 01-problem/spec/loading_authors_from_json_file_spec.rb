@@ -42,11 +42,19 @@ describe "Loading authors from a JSON file" do
 
   context "when the file consists of one author" do
     context "when that author has no publications" do
-      it "yields no authors"
+      it "yields no authors" do
+        authors = Authors.load_from(
+          File.join(
+          fixtures_dir,
+          "one_author_with_no_publication.json")
+        )
+
+        expect(authors).to be_empty
+      end
     end
 
     context "when that author has 1 or more publications" do
-      it "yields the author"
+      it "yields the author" 
     end
   end
 
