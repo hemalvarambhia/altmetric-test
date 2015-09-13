@@ -72,6 +72,37 @@ describe "Loading journals from csv files" do
   end
 
   context "when the file has many journals" do
-    it "loads every journal"
+    it "loads every journal" do
+       journals = Journals.load_from(
+        File.join(
+        fixtures_dir,
+        "many_journals.csv"
+      )
+      )
+      
+      expect(journals.first).to(
+        eq(
+          Journal.new(
+          ISSN.new("1167-8230"),
+          "Bartell-Collins")
+        )
+      )
+      expect(journals.all[1]).to(
+        eq(
+          Journal.new(
+          ISSN.new("2885-6503"),
+          "Sporer, Kihn and Turner"
+        )
+        )
+      )
+      expect(journals.last).to(
+        eq(
+          Journal.new(
+          ISSN.new("0225-5454"),
+          "Durgan Group"
+        ) 
+        )
+      )
+    end
   end
 end
