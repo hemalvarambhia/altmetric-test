@@ -1,6 +1,6 @@
 require 'spec_helper'
 require_relative '../lib/journals'
-require_relative './file_not_found'
+require_relative '../lib/file_not_found'
 
 describe "Loading journals from csv files" do
   context "when the file does not exist" do

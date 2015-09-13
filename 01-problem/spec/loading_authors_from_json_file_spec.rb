@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative './file_not_found'
+require_relative '../lib/file_not_found'
 require_relative '../lib/authors'
 require_relative '../lib/doi'
 
