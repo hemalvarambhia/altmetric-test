@@ -36,6 +36,10 @@ class Articles
     @articles.first
   end
 
+  def last
+    @articles.last
+  end
+
   def empty?
     @articles.empty?
   end

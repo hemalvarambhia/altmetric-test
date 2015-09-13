@@ -120,7 +120,7 @@ describe "Loading articles from a CSV file" do
         File.join(fixtures_dir, "two_articles.csv"),
         @journals,
         @authors
-      ).all
+      )
 
       article = articles.first
       expect(article.doi).to eq("10.1234/altmetric0")
