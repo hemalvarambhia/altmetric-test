@@ -1,14 +1,7 @@
 require_relative './doi'
 require_relative '../lib/journals'
+require_relative '../lib/author'
 require_relative './articles'
-
-class Author
-  attr_reader :name, :publications
-  def initialize(name, publications)
-    @name = name
-    @publications = publications
-  end
-end
 
 def fixtures_dir
   File.join(
