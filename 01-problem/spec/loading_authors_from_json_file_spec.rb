@@ -30,18 +30,14 @@ describe "Loading authors from a JSON file" do
     end
   end
 
-  context "when the file is empty" do
+  context "when the file has an empty JSON array" do
     it "yields no authors" do
-      authors = Authors.load_from(
+       authors = Authors.load_from(
         File.join(fixtures_dir, "no_authors.json")
       )
 
       expect(authors).to be_empty
     end
-  end
-
-  context "when the file has an empty JSON array" do
-    it "yields no authors"
   end
 
   context "when the file consists of one author" do
