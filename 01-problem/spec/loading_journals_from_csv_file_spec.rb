@@ -14,7 +14,7 @@ describe "Loading journals from csv files" do
   context "when the file has no journals (just headers)" do
     it "loads no journals" do
       journals = Journals.load_from(
-        File.join(fixtures_dir, "no_journals.csv")
+          File.join(fixtures_dir, "no_journals.csv")
       )
 
       expect(journals).to be_empty
@@ -24,11 +24,9 @@ describe "Loading journals from csv files" do
   context "when the file has 1 journal" do
     it "loads that article" do
       journals = Journals.load_from(
-        File.join(
-        fixtures_dir,
-        "one_journal.csv")
+          File.join(fixtures_dir, "one_journal.csv")
       )
-      
+
       expect(journals.size).to eq(1)
       expect(journals.first).to(
         eq(
@@ -42,12 +40,9 @@ describe "Loading journals from csv files" do
   context "when the file has 2 journals" do
     it "loads both journals" do
       journals = Journals.load_from(
-        File.join(
-        fixtures_dir,
-        "two_journals.csv"
+          File.join(fixtures_dir, "two_journals.csv")
       )
-      )
-      
+
       expect(journals.first).to(
         eq(
           Journal.new(
@@ -68,11 +63,8 @@ describe "Loading journals from csv files" do
 
   context "when the file has many journals" do
     it "loads every journal" do
-       journals = Journals.load_from(
-        File.join(
-        fixtures_dir,
-        "many_journals.csv"
-      )
+      journals = Journals.load_from(
+          File.join(fixtures_dir, "many_journals.csv")
       )
 
       expect(journals.first).to(

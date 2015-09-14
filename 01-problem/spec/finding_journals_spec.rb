@@ -23,7 +23,6 @@ describe "Finding journals by ISSN" do
 
     context "finding a journal for a different ISSN" do
       it "is returned" do
-        
         journals = Journals.new(
           [
             Journal.new(
@@ -55,8 +54,7 @@ describe "Finding journals by ISSN" do
         )
         ])
 
-      non_existent = journals.find_journal_for(
-        ISSN.new("0378-5955"))
+      non_existent = journals.find_journal_for(ISSN.new("0378-5955"))
 
       expect(non_existent).to be_nil
     end

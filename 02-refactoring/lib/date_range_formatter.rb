@@ -13,7 +13,7 @@ class DateRangeFormatter
     if @start_date == @end_date
       return "#{prefix} to #{@end_time}" if both_times_known?
       return "#{prefix} until #{@end_time}" if end_time_known?
-      return prefix if start_time_known? or not both_times_known?
+      return prefix if start_time_known? or times_not_known?
     end
 
     if times_not_known?

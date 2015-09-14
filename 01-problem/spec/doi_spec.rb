@@ -55,7 +55,7 @@ describe "Digital object identifiers" do
       doi_1 = DOI.new("10.1234/altmetric132")
       doi_2 = DOI.new("10.1234/altmetric132")
       doi_3 = DOI.new("10.1234/altmetric132")
-     
+
       expect(doi_1).to eq(doi_2)
       expect(doi_2).to eq(doi_3)
       expect(doi_1).to eq(doi_3)

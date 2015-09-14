@@ -11,20 +11,20 @@ describe "Loading articles from a CSV file" do
       journals = double("Journals")
       author_publications = double("Authors")
       expect(lambda {Articles.load_from(
-            "non_existent.csv", 
-            journals, 
-            author_publications)}).to raise_error(FileNotFound)
+                 "non_existent.csv",
+                 journals,
+                 author_publications)}).to raise_error(FileNotFound)
     end
   end
 
   context "when the file has no articles (just headers)" do
     it "yields no articles" do
       articles = Articles.load_from(
-        File.join(fixtures_dir, "no_articles.csv"),
-        double("Journals"),
-        double("Authors")
+          File.join(fixtures_dir, "no_articles.csv"),
+          double("Journals"),
+          double("Authors")
       )
-      
+
       expect(articles).to be_empty
     end
   end
@@ -40,22 +40,22 @@ describe "Loading articles from a CSV file" do
       )
 
       @authors = Authors.new(
-        [
-          Author.new(
-          "Amari Lubowitz", [DOI.new("10.1234/altmetric0")])
-        ]
+          [
+              Author.new(
+                  "Amari Lubowitz", [DOI.new("10.1234/altmetric0")])
+          ]
       )
     end
-    
+
     it "yields the article" do
       articles = Articles.load_from(
-        File.join(fixtures_dir, "one_article.csv"),
-        @journals,
-        @authors
+          File.join(fixtures_dir, "one_article.csv"),
+          @journals,
+          @authors
       )
-      
+
       article = articles.first
-      expect(article.doi).to eq("10.1234/altmetric0")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric0"))
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.issn).to(
@@ -77,22 +77,19 @@ describe "Loading articles from a CSV file" do
           ISSN.new("0032-1478"),
           "Wilkinson, Gaylord and Gerlach"
         )                                    
-      ])                                           
+      ])
 
       @authors = Authors.new(
-      [
-        Author.new(
-        "Amari Lubowitz",
-         [DOI.new("10.1234/altmetric0")]
-      ),
-         Author.new(
-        "Lenny Kshlerin",
-         [DOI.new("10.1234/altmetric100")]
-      ),
-        
-      ])
+          [
+              Author.new(
+                  "Amari Lubowitz", [DOI.new("10.1234/altmetric0")]
+              ),
+              Author.new(
+                  "Lenny Kshlerin", [DOI.new("10.1234/altmetric100")]
+              ),
+          ])
     end
-   
+
     it "yields both articles" do
       articles = Articles.load_from(
         File.join(fixtures_dir, "two_articles.csv"),
@@ -101,7 +98,7 @@ describe "Loading articles from a CSV file" do
       )
 
       article = articles.first
-      expect(article.doi).to eq("10.1234/altmetric0")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric0"))
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.title).to(
@@ -137,20 +134,11 @@ describe "Loading articles from a CSV file" do
       ])
 
       @authors = Authors.new(
-      [
-        Author.new(
-        "Amari Lubowitz",
-         [DOI.new("10.1234/altmetric0")]
-      ),
-         Author.new(
-        "Lenny Kshlerin",
-         [DOI.new("10.1234/altmetric100")]
-        ),
-         Author.new(
-           "Howard Spinka Jr.", 
-           [DOI.new("10.1234/altmetric103")]
-         )       
-      ])
+          [
+              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]),
+              Author.new("Lenny Kshlerin", [DOI.new("10.1234/altmetric100")]),
+              Author.new("Howard Spinka Jr.", [DOI.new("10.1234/altmetric103")])
+          ])
     end
     
     it "yields every article" do
@@ -191,21 +179,17 @@ describe "Loading articles from a CSV file" do
     before :each do
       @journals = Journals.new([])
       @authors = Authors.new(
-        [
-          Author.new(
-          "Author",
-          [DOI.new("10.1234/altmetric156")])
-        ]
+          [
+              Author.new("Author", [DOI.new("10.1234/altmetric156")])
+          ]
       )
     end
-      
+
     it "does not include those articles" do
       articles = Articles.load_from(
-        File.join(
-        fixtures_dir,
-        "articles_with_journals_missing.csv"),
-        @journals,
-        @authors
+          File.join(fixtures_dir, "articles_with_journals_missing.csv"),
+          @journals,
+          @authors
       )
 
       expect(articles).to be_empty
@@ -223,21 +207,17 @@ describe "Loading articles from a CSV file" do
       ])
 
       @authors = Authors.new(
-      [
-        Author.new(
-        "Amari Lubowitz",
-         [DOI.new("10.1234/altmetric0")]
-      )
-      ])
+          [
+              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]
+              )
+          ])
     end
-    
+
     it "excludes those articles" do
       articles = Articles.load_from(
-        File.join(
-        fixtures_dir,
-        "articles_with_no_authors.csv"),
-        @journals,
-        @authors
+          File.join(fixtures_dir, "articles_with_no_authors.csv"),
+          @journals,
+          @authors
       )
 
       expect(articles).to be_empty

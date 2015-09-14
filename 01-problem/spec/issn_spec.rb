@@ -51,7 +51,7 @@ describe "ISSNs" do
     it "is invalid" do
       expect(lambda {ISSN.new("aybc-riet")}).to raise_error(InvalidISSN)
     end
-  end                   
+  end
 
   describe "an ISSN with a valid checksum" do
     it "is valid" do
@@ -76,7 +76,7 @@ describe "ISSNs" do
       issn_1 = ISSN.new("0024-9319")
       issn_2 = ISSN.new("0024-9319")
       issn_3 = ISSN.new("0024-9319")
-  
+
       expect(issn_1).to eq(issn_2)
       expect(issn_2).to eq(issn_3)
       expect(issn_1).to eq(issn_3)
@@ -94,7 +94,7 @@ describe "ISSNs" do
       it "confirms them to be the same" do
         issn_with_dash = ISSN.new("0024-9319")
         same_issn_without_dash = ISSN.new("0024-9319")
- 
+
         expect(issn_with_dash).to eq(same_issn_without_dash)
       end
     end

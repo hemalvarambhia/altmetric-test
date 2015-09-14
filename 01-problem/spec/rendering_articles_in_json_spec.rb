@@ -27,7 +27,8 @@ describe "Rendering articles to JSON" do
       it "renders the authors as a comma-separated string" do
         rendered_articles = render(@all_articles)
 
-        expect(rendered_articles.first["author"]).to eq("Author 1, Author 2, Author 3")
+        expect(rendered_articles.first["author"]).to(
+            eq("Author 1, Author 2, Author 3"))
       end
     end
   end
