@@ -13,10 +13,13 @@ class DateRangeFormatter
     full_start_date = date_in_full(@start_date)
     full_end_date = date_in_full(@end_date)
 
+    if times_known?
+      return "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
+      return "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
+    end
+
     if @start_date == @end_date
-      if times_known?
-        "#{full_start_date} at #{@start_time} to #{@end_time}"
-      elsif @start_time
+      if @start_time
         "#{full_start_date} at #{@start_time}"
       elsif @end_time
         "#{full_start_date} until #{@end_time}"
@@ -24,9 +27,7 @@ class DateRangeFormatter
         full_start_date
       end
     elsif @start_date.month == @end_date.month
-      if times_known?
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
+      if @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
       elsif @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
@@ -34,9 +35,7 @@ class DateRangeFormatter
         @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
       end
     elsif @start_date.year == @end_date.year
-      if times_known?
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
+      if @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
       elsif @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
@@ -44,9 +43,7 @@ class DateRangeFormatter
         @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
       end
     else
-      if times_known?
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
+      if @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
       elsif @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
