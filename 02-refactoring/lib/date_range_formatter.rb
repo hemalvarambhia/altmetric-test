@@ -10,50 +10,55 @@ class DateRangeFormatter
   end
 
   def to_s
-    full_start_date = @start_date.strftime("#{@start_date.day.ordinalize} %B %Y")
-    full_end_date = @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
-
     if @start_date == @end_date
-      if @start_time && @end_time
-        "#{full_start_date} at #{@start_time} to #{@end_time}"
-      elsif @start_time
-        "#{full_start_date} at #{@start_time}"
-      elsif @end_time
-        "#{full_start_date} until #{@end_time}"
-      else
-        full_start_date
-      end
-    elsif @start_date.month == @end_date.month
-      if @start_time && @end_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
-      end
-    elsif @start_date.year == @end_date.year
-      if @start_time && @end_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
-      end
-    else
-      if @start_time && @end_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
-      elsif @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        "#{full_start_date} - #{full_end_date}"
-      end
+      return "#{prefix} to #{@end_time}" if both_times_known?
+      return "#{prefix} until #{@end_time}" if end_time_known?
+      return prefix if start_time_known? or not both_times_known?
     end
+
+    if times_not_known?
+      return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month
+      return @start_date.strftime("#{@start_date.day.ordinalize} %B - #{suffix}") if @start_date.year == @end_date.year
+    end
+
+    return "#{prefix} - #{suffix}"
+  end
+
+  private
+
+  def prefix
+    section(@start_date, @start_time)
+  end
+
+  def suffix
+    section(@end_date, @end_time)
+  end
+
+  def section(date, time)
+    date_range_section = date_in_full(date)
+    date_range_section << " at #{time}" if time
+
+    date_range_section
+  end
+
+  def date_in_full(start_date)
+    start_date.strftime("#{start_date.day.ordinalize} %B %Y")
+  end
+
+  def times_not_known?
+    @start_time.nil? and @end_time.nil?
+  end
+
+  def both_times_known?
+    start_time_known? and end_time_known?
+  end
+
+  def start_time_known?
+    !@start_time.nil?
+  end
+
+  def end_time_known?
+    !@end_time.nil?
   end
 end
 
