@@ -13,15 +13,13 @@ class DateRangeFormatter
     full_start_date = date_in_full(@start_date)
     full_end_date = date_in_full(@end_date)
 
-    if times_known?
+    if both_times_known?
       return "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
       return "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
     end
 
     if start_time_known?
       return "#{full_start_date} at #{@start_time}" if @start_date == @end_date
-      return "#{full_start_date} at #{@start_time} - #{full_end_date}" if @start_date.month == @end_date.month
-      return "#{full_start_date} at #{@start_time} - #{full_end_date}" if @start_date.year == @end_date.year
       return "#{full_start_date} at #{@start_time} - #{full_end_date}"
     end
 
@@ -55,7 +53,7 @@ class DateRangeFormatter
   end
 
   private
-  def times_known?
+  def both_times_known?
     @start_time && @end_time
   end
 
