@@ -5,10 +5,8 @@ describe "Finding journals by ISSN" do
     it "is returned" do
       journals = Journals.new(
           [
-              Journal.new(
-                  ISSN.new("1234-5678"),
-                  "Journal that exists"
-              )])
+              Journal.new(ISSN.new("1234-5678"), "Journal that exists")
+          ])
 
       journal = journals.find_journal_for(ISSN.new("1234-5678"))
 
