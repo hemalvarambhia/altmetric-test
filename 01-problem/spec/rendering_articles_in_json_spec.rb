@@ -6,7 +6,7 @@ require_relative '../lib/article'
 require_relative '../lib/articles'
 require_relative '../lib/json_renderer'
 
-def convert_to_hash articles
+def expected_format articles
   articles.all.collect{|article|
     {
      "doi" => article.doi.to_s,
@@ -16,6 +16,10 @@ def convert_to_hash articles
      "issn" => article.journal_published_in.issn.to_s
     }
   }
+end
+
+def run_renderer(all_articles)
+  JSON.parse(JSONRenderer.new.render(all_articles))
 end
 
 describe "Rendering articles to JSON" do
@@ -38,9 +42,9 @@ describe "Rendering articles to JSON" do
       end
 
       it "contains the details of the article" do
-        parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+        parsed_json = run_renderer(@all_articles)
 
-        expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
+        expect(parsed_json).to(eq(expected_format(@all_articles)))
       end
     end
 
@@ -63,7 +67,7 @@ describe "Rendering articles to JSON" do
       end
 
       it "renders the authors as a comma-separated string" do
-        parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+        parsed_json = run_renderer(@all_articles)
 
         expect(parsed_json.first["author"]).to eq("Author 1, Author 2, Author 3")
       end
@@ -98,9 +102,9 @@ describe "Rendering articles to JSON" do
     end
 
     it "contains the details of both articles" do
-      parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+      parsed_json = run_renderer(@all_articles)
 
-      expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
+      expect(parsed_json).to(eq(expected_format(@all_articles)))
     end
   end
 
@@ -142,9 +146,9 @@ describe "Rendering articles to JSON" do
     end
 
     it "contains the details of every article" do
-      parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
+      parsed_json = run_renderer(@all_articles)
 
-      expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
+      expect(parsed_json).to(eq(expected_format(@all_articles)))
     end
   end
 
@@ -152,7 +156,7 @@ describe "Rendering articles to JSON" do
     it "contains nothing" do
       no_articles = Articles.new([])
 
-      parsed_json = JSON.parse(JSONRenderer.new.render(no_articles))
+      parsed_json = run_renderer(no_articles)
 
       expect(parsed_json).to be_empty
     end
