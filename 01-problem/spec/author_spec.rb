@@ -4,21 +4,21 @@ require_relative '../lib/doi'
 describe "Equating Authors" do
   it "is reflexive" do
     author = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")])
+        "Author", [DOI.new("10.1234/altmetric007")])
 
     expect(author).to eq(author)
   end
 
   it "is transitive" do
     author_1 = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")])
+        "Author", [DOI.new("10.1234/altmetric007")])
     author_2 = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")]
+        "Author", [DOI.new("10.1234/altmetric007")]
     )
     author_3 = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")]
+        "Author", [DOI.new("10.1234/altmetric007")]
     )
-    
+
     expect(author_1).to eq(author_2)
     expect(author_2).to eq(author_3)
     expect(author_1).to eq(author_3)
@@ -26,9 +26,9 @@ describe "Equating Authors" do
 
   it "is symmetric" do
     author_1 = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")])
+        "Author", [DOI.new("10.1234/altmetric007")])
     author_2 = Author.new(
-      "Author", [DOI.new("10.1234/altmetric007")]
+        "Author", [DOI.new("10.1234/altmetric007")]
     )
 
     expect(author_1).to eq author_2
@@ -38,9 +38,9 @@ describe "Equating Authors" do
   context "authors with a different names but same publications" do
     it "confirms them as not being the same" do
       author = Author.new(
-        "Author", [DOI.new("10.1234/altmetric007")])
+          "Author", [DOI.new("10.1234/altmetric007")])
       collaborator = Author.new(
-        "Collaborator", [DOI.new("10.1234/altmetric007")]
+          "Collaborator", [DOI.new("10.1234/altmetric007")]
       )
 
       expect(author).to_not eq(collaborator)
@@ -50,9 +50,9 @@ describe "Equating Authors" do
   context "authors with the same name but different publications" do
     it "confirms them as not being the same" do
       author = Author.new(
-        "Jonathan Davis", [DOI.new("10.1234/altmetric127")])
+          "Jonathan Davis", [DOI.new("10.1234/altmetric127")])
       different_author_same_name = Author.new(
-        "Jonathan Davis", [DOI.new("10.1234/altmetric489")]
+          "Jonathan Davis", [DOI.new("10.1234/altmetric489")]
       )
 
       expect(author).to_not eq(different_author_same_name)

@@ -7,15 +7,15 @@ describe "Loading authors from a JSON file" do
   context "when the file does not exist" do
     it "raises an error" do
       expect(
-        lambda {Authors.load_from("non_existent.json")}
+          lambda {Authors.load_from("non_existent.json")}
       ).to raise_error(FileNotFound)
     end
   end
 
   context "when the file has an empty JSON array" do
     it "yields no authors" do
-       authors = Authors.load_from(
-        File.join(fixtures_dir, "no_authors.json")
+      authors = Authors.load_from(
+          File.join(fixtures_dir, "no_authors.json")
       )
 
       expect(authors).to be_empty
@@ -26,9 +26,9 @@ describe "Loading authors from a JSON file" do
     context "when that author has no publications" do
       it "yields no authors" do
         authors = Authors.load_from(
-          File.join(
-          fixtures_dir,
-          "one_author_with_no_publication.json")
+            File.join(
+                fixtures_dir,
+                "one_author_with_no_publication.json")
         )
 
         expect(authors).to be_empty
@@ -37,21 +37,21 @@ describe "Loading authors from a JSON file" do
 
     context "when that author has 1 or more publications" do
       it "yields the author" do
-         authors = Authors.load_from(
-          File.join(
-          fixtures_dir,
-          "one_author_with_many_publications.json")
+        authors = Authors.load_from(
+            File.join(
+                fixtures_dir,
+                "one_author_with_many_publications.json")
         )
 
-         expect(authors.size).to eq(1)
-         expect(authors.first.name).to(
-           eq("Author With One or More Publications"))
-         expect(authors.first.publications).to(
-           eq([
-                DOI.new("10.1234/altmetric101"),
-                DOI.new("10.1234/altmetric323")
-              ]
-           ))
+        expect(authors.size).to eq(1)
+        expect(authors.first.name).to(
+            eq("Author With One or More Publications"))
+        expect(authors.first.publications).to(
+            eq([
+                   DOI.new("10.1234/altmetric101"),
+                   DOI.new("10.1234/altmetric323")
+               ]
+            ))
       end
     end
   end
@@ -60,26 +60,26 @@ describe "Loading authors from a JSON file" do
     context "when the authors have 1 or more publications" do
       it "yields both authors" do
         authors = Authors.load_from(
-          File.join(
-          fixtures_dir,
-          "two_authors_with_many_publications.json"))
-        
+            File.join(
+                fixtures_dir,
+                "two_authors_with_many_publications.json"))
+
         expect(authors.size).to eq(2)
         expect(authors.first).to(
-          eq(Author.new(
-              "Author With Many Publications",
-              [
-                DOI.new("10.1234/altmetric221"),
-                DOI.new("10.1234/altmetric240")
-              ]
-            )
+            eq(Author.new(
+                   "Author With Many Publications",
+                   [
+                       DOI.new("10.1234/altmetric221"),
+                       DOI.new("10.1234/altmetric240")
+                   ]
+               )
             )
         )
         expect(authors.last).to(
-          eq(Author.new(
-              "Another Author With Many Publications",
-              [DOI.new("10.1234/altmetric007")]
-            )
+            eq(Author.new(
+                   "Another Author With Many Publications",
+                   [DOI.new("10.1234/altmetric007")]
+               )
             )
         )
       end
@@ -90,32 +90,32 @@ describe "Loading authors from a JSON file" do
     context "when the authors have many publications" do
       it "yields every author" do
         authors = Authors.load_from(
-          File.join(fixtures_dir,
-                    "many_authors_with_many_publications.json")
+            File.join(fixtures_dir,
+                      "many_authors_with_many_publications.json")
         )
-        
+
         expect(authors.first.name).to eq("Author 1")
         expect(authors.first.publications).to(
-          eq([
-               DOI.new("10.1234/altmetric001"),
-               DOI.new("10.1234/altmetric002")
-             ])
+            eq([
+                   DOI.new("10.1234/altmetric001"),
+                   DOI.new("10.1234/altmetric002")
+               ])
         )
         expect(authors.all[1].name).to eq("Author 2")
         expect(authors.all[1].publications).to(
-          eq([
-               DOI.new("10.1234/altmetric110")
-             ]
-          )
+            eq([
+                   DOI.new("10.1234/altmetric110")
+               ]
+            )
         )
         expect(authors.last.name).to eq("Authors 3")
         expect(authors.last.publications).to(
-          eq([
-               DOI.new("10.1234/altmetric122"),
-               DOI.new("10.1234/altmetric555"),
-               DOI.new("10.1234/altmetric098"),
-             ]
-          )
+            eq([
+                   DOI.new("10.1234/altmetric122"),
+                   DOI.new("10.1234/altmetric555"),
+                   DOI.new("10.1234/altmetric098"),
+               ]
+            )
         )
       end
     end

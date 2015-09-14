@@ -39,7 +39,7 @@ describe "ISSNs" do
 
   describe "an 8-digit ISSN without the dash" do
     it "is valid" do
-       expect(lambda {ISSN.new("03785955")}).not_to raise_error
+      expect(lambda {ISSN.new("03785955")}).not_to raise_error
     end
 
     it "includes the dash at instanciation" do
@@ -51,7 +51,7 @@ describe "ISSNs" do
     it "is invalid" do
       expect(lambda {ISSN.new("aybc-riet")}).to raise_error(InvalidISSN)
     end
-  end                   
+  end
 
   describe "equating ISSN" do
     it "is reflexive" do
@@ -64,7 +64,7 @@ describe "ISSNs" do
       issn_1 = ISSN.new("5334-5578")
       issn_2 = ISSN.new("5334-5578")
       issn_3 = ISSN.new("5334-5578")
-  
+
       expect(issn_1).to eq(issn_2)
       expect(issn_2).to eq(issn_3)
       expect(issn_1).to eq(issn_3)
@@ -82,7 +82,7 @@ describe "ISSNs" do
       it "confirms them to be the same" do
         issn_with_dash = ISSN.new("8904-4375")
         same_issn_without_dash = ISSN.new("89044375")
- 
+
         expect(issn_with_dash).to eq(same_issn_without_dash)
       end
     end
