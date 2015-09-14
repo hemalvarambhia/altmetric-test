@@ -1,10 +1,5 @@
 require 'csv'
-require_relative '../lib/issn'
-require_relative '../lib/doi'
-require_relative '../lib/journal'
-require_relative '../lib/article'
-require_relative '../lib/articles'
-require_relative './renderer_spec'
+require_relative './renderer_contract_spec'
 require_relative '../lib/csv_renderer'
 
 def expected_format(articles)
