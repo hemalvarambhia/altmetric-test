@@ -42,9 +42,7 @@ class DateRangeFormatter
         @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
       end
     else
-      if start_time_known?
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif end_time_known?
+      if end_time_known?
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         "#{full_start_date} - #{full_end_date}"
