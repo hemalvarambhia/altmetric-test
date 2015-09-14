@@ -43,11 +43,10 @@ class DateRangeFormatter
   end
 
   def suffix
-     if end_time_known?
-       "#{date_in_full(@end_date)} at #{@end_time}"
-     else
-        date_in_full(@end_date)
-     end
+    date_range_suffix = date_in_full(@end_date)
+    date_range_suffix << " at #{@end_time}" if end_time_known?
+
+    date_range_suffix
   end
 
   def both_times_known?
