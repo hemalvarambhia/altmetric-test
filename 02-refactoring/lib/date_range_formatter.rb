@@ -40,8 +40,9 @@ class DateRangeFormatter
   end
 
   private
+
   def both_times_known?
-    @start_time && @end_time
+    start_time_known? and end_time_known?
   end
 
   def start_time_known?
