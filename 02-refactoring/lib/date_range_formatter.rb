@@ -10,9 +10,9 @@ class DateRangeFormatter
   end
 
   def to_s
+    as_string = "#{prefix} - #{suffix}"
     if both_times_known?
       return "#{prefix} to #{@end_time}" if @start_date == @end_date
-      return "#{prefix} - #{suffix}"
     end
 
     if start_time_known?
@@ -22,7 +22,6 @@ class DateRangeFormatter
 
     if end_time_known?
       return "#{prefix} until #{@end_time}" if @start_date == @end_date
-      return "#{prefix} - #{suffix}"
     end
 
     if not both_times_known?
@@ -32,10 +31,10 @@ class DateRangeFormatter
         return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}")
       elsif @start_date.year == @end_date.year
         return @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix
-      else
-        return "#{prefix} - #{suffix}"
       end
     end
+
+    return as_string
   end
 
   private
