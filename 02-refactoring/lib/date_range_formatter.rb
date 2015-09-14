@@ -30,11 +30,11 @@ class DateRangeFormatter
     if @start_date == @end_date
       prefix
     elsif @start_date.month == @end_date.month
-      @start_date.strftime("#{@start_date.day.ordinalize} - #{date_in_full(@end_date)}")
+      @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}")
     elsif @start_date.year == @end_date.year
-      @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
+      @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix
     else
-      "#{prefix} - #{full_end_date}"
+      "#{prefix} - #{suffix}"
     end
   end
 
