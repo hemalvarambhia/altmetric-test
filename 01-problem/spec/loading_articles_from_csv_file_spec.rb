@@ -54,13 +54,13 @@ describe "Loading articles from a CSV file" do
       )
 
       article = articles.first
-      expect(article.doi).to eq("10.1234/altmetric0")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric0"))
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
-      expect(article.journal_published_in.issn).to(
-          eq("1337-8688"))
-      expect(article.journal_published_in.title).to(
-          eq("Shanahan, Green and Ziemann"))
+      expect(article.journal_published_in).to(
+          eq(Journal.new(
+                 ISSN.new("1337-8688"), "Shanahan, Green and Ziemann")))
+
     end
   end
 
@@ -95,20 +95,22 @@ describe "Loading articles from a CSV file" do
       )
 
       article = articles.first
-      expect(article.doi).to eq("10.1234/altmetric0")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric0"))
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
-      expect(article.journal_published_in.title).to(
-          eq("Shanahan, Green and Ziemann"))
-      expect(article.journal_published_in.issn).to eq("1337-8688")
+      expect(article.journal_published_in).to(
+          eq(Journal.new(
+                 ISSN.new("1337-8688"), "Shanahan, Green and Ziemann"
+             )))
 
       article = articles.last
-      expect(article.doi).to eq("10.1234/altmetric100")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric100"))
       expect(article.title).to eq("Ergonomic Rubber Shirt")
       expect(article.author).to eq(["Lenny Kshlerin"])
-      expect(article.journal_published_in.title).to(
-          eq("Wilkinson, Gaylord and Gerlach"))
-      expect(article.journal_published_in.issn).to eq("2542-5856")
+      expect(article.journal_published_in).to(
+          eq(Journal.new(
+                 ISSN.new("2542-5856"), "Wilkinson, Gaylord and Gerlach"
+             )))
     end
   end
 
@@ -137,29 +139,26 @@ describe "Loading articles from a CSV file" do
       ).all
 
       article = articles.first
-      expect(article.doi).to eq("10.1234/altmetric0")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric0"))
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
-      expect(article.journal_published_in.title).to(
-          eq("Shanahan, Green and Ziemann"))
-
-      expect(article.journal_published_in.issn).to eq("1337-8688")
+      expect(article.journal_published_in).to(
+          eq(Journal.new(ISSN.new("1337-8688"), "Shanahan, Green and Ziemann")))
 
       article = articles[1]
-      expect(article.doi).to eq("10.1234/altmetric100")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric100"))
       expect(article.title).to eq("Ergonomic Rubber Shirt")
       expect(article.author).to eq(["Lenny Kshlerin"])
-      expect(article.journal_published_in.title).to(
-          eq("Wilkinson, Gaylord and Gerlach"))
-      expect(article.journal_published_in.issn).to eq("2542-5856")
+      expect(article.journal_published_in).to(
+          eq(Journal.new(ISSN.new("2542-5856"), "Wilkinson, Gaylord and Gerlach")))
+
 
       article = articles.last
-      expect(article.doi).to eq("10.1234/altmetric103")
+      expect(article.doi).to eq(DOI.new("10.1234/altmetric103"))
       expect(article.title).to eq("Fantastic Granite Computer")
       expect(article.author).to eq(["Howard Spinka Jr."])
-      expect(article.journal_published_in.title).to(
-          eq("Hahn and Sons"))
-      expect(article.journal_published_in.issn).to eq("3775-0307")
+      expect(article.journal_published_in).to(
+          eq(Journal.new(ISSN.new("3775-0307"), "Hahn and Sons")))
     end
   end
 
