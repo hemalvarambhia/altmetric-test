@@ -41,6 +41,10 @@ class DateRangeFormatter
     date_range_section
   end
 
+  def date_in_full(start_date)
+    start_date.strftime("#{start_date.day.ordinalize} %B %Y")
+  end
+
   def times_not_known?
     @start_time.nil? and @end_time.nil?
   end
@@ -55,10 +59,6 @@ class DateRangeFormatter
 
   def end_time_known?
     !@end_time.nil?
-  end
-
-  def date_in_full(start_date)
-    start_date.strftime("#{start_date.day.ordinalize} %B %Y")
   end
 end
 
