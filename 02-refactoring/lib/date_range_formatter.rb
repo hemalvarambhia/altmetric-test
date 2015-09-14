@@ -10,8 +10,6 @@ class DateRangeFormatter
   end
 
   def to_s
-    full_end_date = date_in_full(@end_date)
-
     if both_times_known?
       return "#{prefix} to #{@end_time}" if @start_date == @end_date
       return "#{prefix} - #{suffix}"
