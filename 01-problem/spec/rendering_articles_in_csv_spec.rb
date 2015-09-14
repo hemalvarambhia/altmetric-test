@@ -51,7 +51,7 @@ describe "Rendering articles to CSV" do
                   title: "Title of Article",
                   author: ["Name of Author"],
                   journal: Journal.new(
-                      ISSN.new("3853-8766"),
+                      ISSN.new("0032-1478"),
                       "Title of Journal")
               )
           ])

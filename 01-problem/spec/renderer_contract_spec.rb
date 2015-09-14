@@ -86,7 +86,7 @@ shared_examples "a renderer" do
                       title: "Different Title",
                       author: ["Different Author"],
                       journal: Journal.new(
-                          ISSN.new("5966-4542"),
+                          ISSN.new("0024-9319"),
                           "Different Journal")
                   }
               )
@@ -120,7 +120,7 @@ shared_examples "a renderer" do
                       title: "Different Title",
                       author: ["Different Author"],
                       journal: Journal.new(
-                          ISSN.new("5966-4542"),
+                          ISSN.new("0024-9319"),
                           "Different Journal")
                   }
               ),
@@ -130,7 +130,7 @@ shared_examples "a renderer" do
                       title: "Another Title",
                       author: ["Another Author"],
                       journal: Journal.new(
-                          ISSN.new("6078-3332"),
+                          ISSN.new("0032-1478"),
                           "Another Journal")
                   }
               )

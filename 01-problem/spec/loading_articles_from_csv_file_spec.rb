@@ -34,7 +34,7 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new(
         [
           Journal.new(
-          ISSN.new("1337-8688"),
+          ISSN.new("0032-1478"),
           "Shanahan, Green and Ziemann")
         ]
       )
@@ -59,7 +59,7 @@ describe "Loading articles from a CSV file" do
       expect(article.title).to eq("Small Wooden Chair")
       expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.issn).to(
-        eq("1337-8688"))
+        eq("0032-1478"))
       expect(article.journal_published_in.title).to(
         eq("Shanahan, Green and Ziemann"))
     end
@@ -70,11 +70,11 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new(
       [
         Journal.new(
-          ISSN.new("1337-8688"),
+          ISSN.new("0024-9319"),
           "Shanahan, Green and Ziemann"
       ),
         Journal.new(
-          ISSN.new("2542-5856"),
+          ISSN.new("0032-1478"),
           "Wilkinson, Gaylord and Gerlach"
         )                                    
       ])                                           
@@ -106,7 +106,7 @@ describe "Loading articles from a CSV file" do
       expect(article.author).to eq(["Amari Lubowitz"])
       expect(article.journal_published_in.title).to(
         eq("Shanahan, Green and Ziemann"))
-      expect(article.journal_published_in.issn).to eq("1337-8688")
+      expect(article.journal_published_in.issn).to eq("0024-9319")
 
       article = articles.last
       expect(article.doi).to eq("10.1234/altmetric100")
@@ -114,7 +114,7 @@ describe "Loading articles from a CSV file" do
       expect(article.author).to eq(["Lenny Kshlerin"])
       expect(article.journal_published_in.title).to(
         eq("Wilkinson, Gaylord and Gerlach"))
-      expect(article.journal_published_in.issn).to eq("2542-5856")
+      expect(article.journal_published_in.issn).to eq("0032-1478")
     end
   end
 
@@ -123,15 +123,15 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new(
       [
         Journal.new(
-          ISSN.new("1337-8688"),
+          ISSN.new("0378-5955"),
           "Shanahan, Green and Ziemann"
       ),
         Journal.new(
-          ISSN.new("2542-5856"),
+          ISSN.new("0024-9319"),
           "Wilkinson, Gaylord and Gerlach"
         ),
         Journal.new(
-          ISSN.new("3775-0307"),
+          ISSN.new("0032-1478"),
           "Hahn and Sons"
         )
       ])
@@ -153,7 +153,7 @@ describe "Loading articles from a CSV file" do
       ])
     end
     
-    it "yields every articles" do
+    it "yields every article" do
        articles = Articles.load_from(
         File.join(fixtures_dir, "many_articles.csv"),
         @journals,
@@ -167,7 +167,7 @@ describe "Loading articles from a CSV file" do
        expect(article.journal_published_in.title).to(
          eq("Shanahan, Green and Ziemann"))
 
-       expect(article.journal_published_in.issn).to eq("1337-8688")
+       expect(article.journal_published_in.issn).to eq("0378-5955")
 
        article = articles[1]
        expect(article.doi).to eq("10.1234/altmetric100")
@@ -175,7 +175,7 @@ describe "Loading articles from a CSV file" do
        expect(article.author).to eq(["Lenny Kshlerin"])
        expect(article.journal_published_in.title).to(
          eq("Wilkinson, Gaylord and Gerlach"))
-       expect(article.journal_published_in.issn).to eq("2542-5856")
+       expect(article.journal_published_in.issn).to eq("0024-9319")
 
        article = articles.last
        expect(article.doi).to eq("10.1234/altmetric103")
@@ -183,7 +183,7 @@ describe "Loading articles from a CSV file" do
        expect(article.author).to eq(["Howard Spinka Jr."])
        expect(article.journal_published_in.title).to(
          eq("Hahn and Sons"))
-       expect(article.journal_published_in.issn).to eq("3775-0307")
+       expect(article.journal_published_in.issn).to eq("0032-1478")
     end
   end
 
@@ -217,7 +217,7 @@ describe "Loading articles from a CSV file" do
        @journals = Journals.new(
       [
         Journal.new(
-          ISSN.new("1337-8688"),
+          ISSN.new("0032-1478"),
           "Shanahan, Green and Ziemann"
       )
       ])

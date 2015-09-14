@@ -33,7 +33,7 @@ describe "Loading journals from csv files" do
       expect(journals.first).to(
         eq(
           Journal.new(
-          ISSN.new("2885-6503"),
+          ISSN.new("0024-9319"),
           "Sporer, Kihn and Turner"))
       )
     end
@@ -51,14 +51,14 @@ describe "Loading journals from csv files" do
       expect(journals.first).to(
         eq(
           Journal.new(
-          ISSN.new("1167-8230"),
+          ISSN.new("0024-9319"),
           "Bartell-Collins")
         )
       )
       expect(journals.last).to(
         eq(
           Journal.new(
-          ISSN.new("2885-6503"),
+          ISSN.new("0032-1478"),
           "Sporer, Kihn and Turner"
         )
         )
@@ -74,18 +74,18 @@ describe "Loading journals from csv files" do
         "many_journals.csv"
       )
       )
-      
+
       expect(journals.first).to(
         eq(
           Journal.new(
-          ISSN.new("1167-8230"),
+          ISSN.new("0378-5955"),
           "Bartell-Collins")
         )
       )
       expect(journals.all[1]).to(
         eq(
           Journal.new(
-          ISSN.new("2885-6503"),
+          ISSN.new("0024-9319"),
           "Sporer, Kihn and Turner"
         )
         )
@@ -93,7 +93,7 @@ describe "Loading journals from csv files" do
       expect(journals.last).to(
         eq(
           Journal.new(
-          ISSN.new("0225-5454"),
+          ISSN.new("0032-1478"),
           "Durgan Group"
         ) 
         )

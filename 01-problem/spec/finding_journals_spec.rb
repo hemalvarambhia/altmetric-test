@@ -6,19 +6,18 @@ describe "Finding journals by ISSN" do
       journals = Journals.new(
         [
           Journal.new(
-          ISSN.new("1234-5678"),
+          ISSN.new("0032-1478"),
           "Journal that exists"
         )])
 
-      journal = journals.
-                find_journal_for(
-                  ISSN.new("1234-5678")
+      journal = journals.find_journal_for(
+                  ISSN.new("0032-1478")
                 )
 
       expect(journal).to(
         eq(
           Journal.new(
-          ISSN.new("1234-5678"),
+          ISSN.new("0032-1478"),
           "Journal that exists")))
     end
 
@@ -28,18 +27,18 @@ describe "Finding journals by ISSN" do
         journals = Journals.new(
           [
             Journal.new(
-            ISSN.new("9876-5432"),
+            ISSN.new("0378-5955"),
            "Different journal"
           )])
 
       journal = journals.find_journal_for(
-                  ISSN.new("9876-5432")
+                  ISSN.new("0378-5955")
                 )
 
       expect(journal).to(
         eq(
            Journal.new(
-            ISSN.new("9876-5432"),
+            ISSN.new("0378-5955"),
            "Different journal"
         )))
       end
@@ -51,13 +50,13 @@ describe "Finding journals by ISSN" do
       journals = Journals.new(
         [
           Journal.new(
-            ISSN.new("9876-5432"),
+            ISSN.new("0024-9319"),
            "Different journal"
         )
         ])
 
       non_existent = journals.find_journal_for(
-        ISSN.new("1234-6878"))
+        ISSN.new("0378-5955"))
 
       expect(non_existent).to be_nil
     end

@@ -53,17 +53,29 @@ describe "ISSNs" do
     end
   end                   
 
+  describe "an ISSN with a valid checksum" do
+    it "is valid" do
+      expect(lambda {ISSN.new("0378-5955")}).not_to raise_error
+    end
+  end
+
+  describe "an ISSN with an invalid checksum" do
+    it "is valid" do
+      expect(lambda {ISSN.new("0378-5950")}).to raise_error(InvalidISSN)
+    end
+  end
+
   describe "equating ISSN" do
     it "is reflexive" do
-      issn = ISSN.new("1234-5678")
+      issn = ISSN.new("0024-9319")
 
       expect(issn).to eq(issn)
     end
 
     it "is transitive" do
-      issn_1 = ISSN.new("5334-5578")
-      issn_2 = ISSN.new("5334-5578")
-      issn_3 = ISSN.new("5334-5578")
+      issn_1 = ISSN.new("0024-9319")
+      issn_2 = ISSN.new("0024-9319")
+      issn_3 = ISSN.new("0024-9319")
   
       expect(issn_1).to eq(issn_2)
       expect(issn_2).to eq(issn_3)
@@ -71,8 +83,8 @@ describe "ISSNs" do
     end
 
     it "is symmetric" do
-      issn_1 = ISSN.new("5432-7654")
-      issn_2 = ISSN.new("5432-7654")
+      issn_1 = ISSN.new("0024-9319")
+      issn_2 = ISSN.new("0024-9319")
 
       expect(issn_1).to eq(issn_2)
       expect(issn_2).to eq(issn_1)
@@ -80,8 +92,8 @@ describe "ISSNs" do
 
     context "same DOIs, one with dash and one without" do
       it "confirms them to be the same" do
-        issn_with_dash = ISSN.new("8904-4375")
-        same_issn_without_dash = ISSN.new("89044375")
+        issn_with_dash = ISSN.new("0024-9319")
+        same_issn_without_dash = ISSN.new("0024-9319")
  
         expect(issn_with_dash).to eq(same_issn_without_dash)
       end
