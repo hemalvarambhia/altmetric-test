@@ -31,9 +31,9 @@ describe "Rendering articles to CSV" do
   describe "Rendering no articles" do
     it "contains nothing" do
       articles = Articles.new([])
-      parsed_csv = render(articles)
+      rendered_articles = render(articles)
 
-      expect(parsed_csv).to be_empty
+      expect(rendered_articles).to be_empty
     end
   end
 
@@ -53,9 +53,9 @@ describe "Rendering articles to CSV" do
       end
 
       it "contains the details of the article" do
-        parsed_csv = render(@all_articles)
+        rendered_articles = render(@all_articles)
 
-        expect(parsed_csv).to(eq(expected_format(@all_articles)))
+        expect(rendered_articles).to(eq(expected_format(@all_articles)))
       end
     end
 
@@ -74,9 +74,9 @@ describe "Rendering articles to CSV" do
       end
 
       it "renders the authors as a comma-separated string" do
-         parsed_csv = render(@all_articles)
+         rendered_articles = render(@all_articles)
 
-         expect(parsed_csv.first["author"]).to(
+         expect(rendered_articles.first["author"]).to(
            eq("Author 1, Author 2"))
       end
     end
@@ -105,9 +105,9 @@ describe "Rendering articles to CSV" do
     end
 
     it "contains the details of both articles" do
-      parsed_csv = render(@all_articles)
+      rendered_articles = render(@all_articles)
 
-      expect(parsed_csv).to(eq(expected_format(@all_articles)))
+      expect(rendered_articles).to(eq(expected_format(@all_articles)))
     end
   end
 
@@ -144,9 +144,9 @@ describe "Rendering articles to CSV" do
     end
 
     it "contains the details of every article" do
-      parsed_csv = render(@all_articles)
+      rendered_articles = render(@all_articles)
 
-      expect(parsed_csv).to(eq(expected_format(@all_articles)))
+      expect(rendered_articles).to(eq(expected_format(@all_articles)))
     end
   end
 
@@ -154,8 +154,8 @@ describe "Rendering articles to CSV" do
     it "has the headers" do
       articles = Articles.new([])
 
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv.first).to(
+      rendered_articles = CSV.parse(CSVRenderer.new.render(articles))
+      expect(rendered_articles.first).to(
           eq(
               [
                   "DOI",
@@ -183,8 +183,8 @@ describe "Rendering articles to CSV" do
     end
 
     it "has a header" do
-      parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
-      expect(parsed_csv[0]).to(
+      rendered_articles = CSV.parse(CSVRenderer.new.render(@all_articles))
+      expect(rendered_articles[0]).to(
           eq(
               [
                   "DOI",
