@@ -18,7 +18,7 @@ def expected_format articles
   }
 end
 
-def run_renderer(all_articles)
+def render(all_articles)
   JSON.parse(JSONRenderer.new.render(all_articles))
 end
 
@@ -27,7 +27,7 @@ describe "Rendering articles to JSON" do
     it "contains nothing" do
       no_articles = Articles.new([])
 
-      parsed_json = run_renderer(no_articles)
+      parsed_json = render(no_articles)
 
       expect(parsed_json).to be_empty
     end
@@ -52,7 +52,7 @@ describe "Rendering articles to JSON" do
       end
 
       it "contains the details of the article" do
-        parsed_json = run_renderer(@all_articles)
+        parsed_json = render(@all_articles)
 
         expect(parsed_json).to(eq(expected_format(@all_articles)))
       end
@@ -77,7 +77,7 @@ describe "Rendering articles to JSON" do
       end
 
       it "renders the authors as a comma-separated string" do
-        parsed_json = run_renderer(@all_articles)
+        parsed_json = render(@all_articles)
 
         expect(parsed_json.first["author"]).to eq("Author 1, Author 2, Author 3")
       end
@@ -112,7 +112,7 @@ describe "Rendering articles to JSON" do
     end
 
     it "contains the details of both articles" do
-      parsed_json = run_renderer(@all_articles)
+      parsed_json = render(@all_articles)
 
       expect(parsed_json).to(eq(expected_format(@all_articles)))
     end
@@ -156,7 +156,7 @@ describe "Rendering articles to JSON" do
     end
 
     it "contains the details of every article" do
-      parsed_json = run_renderer(@all_articles)
+      parsed_json = render(@all_articles)
 
       expect(parsed_json).to(eq(expected_format(@all_articles)))
     end

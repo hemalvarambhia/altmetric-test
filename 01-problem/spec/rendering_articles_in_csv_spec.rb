@@ -22,7 +22,7 @@ def without_header(csv_rows)
   csv_rows.drop(1)
 end
 
-def run_renderer(all_articles)
+def render(all_articles)
   without_header(
       CSV.parse(CSVRenderer.new.render(all_articles)))
 end
@@ -31,7 +31,7 @@ describe "Rendering articles to CSV" do
   describe "Rendering no articles" do
     it "contains nothing" do
       articles = Articles.new([])
-      parsed_csv = run_renderer(articles)
+      parsed_csv = render(articles)
 
       expect(parsed_csv).to be_empty
     end
@@ -53,7 +53,7 @@ describe "Rendering articles to CSV" do
       end
 
       it "contains the details of the article" do
-        parsed_csv = run_renderer(@all_articles)
+        parsed_csv = render(@all_articles)
 
         expect(parsed_csv).to(eq(expected_format(@all_articles)))
       end
@@ -74,7 +74,7 @@ describe "Rendering articles to CSV" do
       end
 
       it "renders the authors as a comma-separated string" do
-         parsed_csv = run_renderer(@all_articles)
+         parsed_csv = render(@all_articles)
 
          expect(parsed_csv.first["author"]).to(
            eq("Author 1, Author 2"))
@@ -105,7 +105,7 @@ describe "Rendering articles to CSV" do
     end
 
     it "contains the details of both articles" do
-      parsed_csv = run_renderer(@all_articles)
+      parsed_csv = render(@all_articles)
 
       expect(parsed_csv).to(eq(expected_format(@all_articles)))
     end
@@ -144,7 +144,7 @@ describe "Rendering articles to CSV" do
     end
 
     it "contains the details of every article" do
-      parsed_csv = run_renderer(@all_articles)
+      parsed_csv = render(@all_articles)
 
       expect(parsed_csv).to(eq(expected_format(@all_articles)))
     end
