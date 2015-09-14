@@ -14,17 +14,17 @@ class DateRangeFormatter
 
     if both_times_known?
       return "#{prefix} to #{@end_time}" if @start_date == @end_date
-      return "#{prefix} - #{full_end_date} at #{@end_time}"
+      return "#{prefix} - #{suffix}"
     end
 
     if start_time_known?
       return "#{prefix}" if @start_date == @end_date
-      return "#{prefix} - #{full_end_date}"
+      return "#{prefix} - #{suffix}"
     end
 
     if end_time_known?
       return "#{prefix} until #{@end_time}" if @start_date == @end_date
-      return "#{prefix} - #{full_end_date} at #{@end_time}"
+      return "#{prefix} - #{suffix}"
     end
 
     if @start_date == @end_date
@@ -41,11 +41,18 @@ class DateRangeFormatter
   private
 
   def prefix
-    if start_time_known?
-      "#{date_in_full(@start_date)} at #{@start_time}"
-    else
-      date_in_full(@start_date)
-    end
+    date_range_prefix = date_in_full(@start_date)
+    date_range_prefix << " at #{@start_time}" if start_time_known?
+
+    date_range_prefix
+  end
+
+  def suffix
+     if end_time_known?
+       "#{date_in_full(@end_date)} at #{@end_time}"
+     else
+        date_in_full(@end_date)
+     end
   end
 
   def both_times_known?
