@@ -36,17 +36,18 @@ class DateRangeFormatter
   private
 
   def prefix
-    date_range_prefix = date_in_full(@start_date)
-    date_range_prefix << " at #{@start_time}" if start_time_known?
-
-    date_range_prefix
+    section(@start_date, @start_time)
   end
 
   def suffix
-    date_range_suffix = date_in_full(@end_date)
-    date_range_suffix << " at #{@end_time}" if end_time_known?
+    section(@end_date, @end_time)
+  end
 
-    date_range_suffix
+  def section(date, time)
+    date_range_section = date_in_full(date)
+    date_range_section << " at #{time}" if time
+
+    date_range_section
   end
 
   def both_times_known?
