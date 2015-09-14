@@ -31,7 +31,7 @@ class DateRangeFormatter
     if @start_date == @end_date
       full_start_date
     elsif @start_date.month == @end_date.month
-      @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
+      @start_date.strftime("#{@start_date.day.ordinalize} - #{date_in_full(@end_date)}")
     elsif @start_date.year == @end_date.year
       @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
     else
