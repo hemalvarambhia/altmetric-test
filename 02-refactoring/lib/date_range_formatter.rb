@@ -11,21 +11,18 @@ class DateRangeFormatter
 
   def to_s
     as_string = "#{prefix} - #{suffix}"
-    if both_times_known?
-      return "#{prefix} to #{@end_time}" if @start_date == @end_date
+    if @start_date == @end_date
+      return "#{prefix} to #{@end_time}" if both_times_known?
+      return "#{prefix}" if start_time_known?
+      return "#{prefix} until #{@end_time}" if end_time_known?
+      return prefix if not both_times_known?
     end
 
     if start_time_known?
-      return "#{prefix}" if @start_date == @end_date
       return as_string
     end
 
-    if end_time_known?
-      return "#{prefix} until #{@end_time}" if @start_date == @end_date
-    end
-
     if not both_times_known?
-      return prefix if @start_date == @end_date
       return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month
       return @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix if @start_date.year == @end_date.year
     end
