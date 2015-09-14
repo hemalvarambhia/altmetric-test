@@ -1,23 +1,24 @@
 class InvalidISSN < Exception
+  def initialize(issn)
+    super "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd"
+  end
+
 end
 
 class ISSN
   def initialize issn_string
     @issn = (issn_string || "").strip
     if @issn.empty?
-      raise InvalidISSN.new(
-          "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
+      raise InvalidISSN.new(@issn)
     end
     if digits.size != 8
-      raise InvalidISSN.new(
-            "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
+      raise InvalidISSN.new(@issn)
     end
       
     @issn = @issn.insert(4, "-") if not @issn.include?("-")
 
     unless @issn=~/^\d{4}-\d{4}$/
-      raise InvalidISSN.new(
-           "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd")
+      raise InvalidISSN.new(@issn)
     end
   end
 
