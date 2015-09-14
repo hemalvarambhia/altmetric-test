@@ -25,8 +25,6 @@ class DateRangeFormatter
 
     if end_time_known?
       return "#{full_start_date} until #{@end_time}" if @start_date == @end_date
-      return "#{full_start_date} - #{full_end_date} at #{@end_time}" if @start_date.month == @end_date.month
-      return "#{full_start_date} - #{full_end_date} at #{@end_time}" if @start_date.year == @end_date.year
       return "#{full_start_date} - #{full_end_date} at #{@end_time}"
     end
 
