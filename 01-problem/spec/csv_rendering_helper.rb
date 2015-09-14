@@ -20,4 +20,8 @@ module CSVRenderingHelper
     without_header(
         CSV.parse(CSVRenderer.new.render(all_articles)))
   end
+
+  def author_of_article(index, rendered_articles)
+    rendered_articles[index][2]
+  end
 end

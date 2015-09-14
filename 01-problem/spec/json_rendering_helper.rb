@@ -16,4 +16,7 @@ module JSONRenderingHelper
     JSON.parse(JSONRenderer.new.render(all_articles))
   end
 
+  def author_of_article(index, rendered_articles)
+    rendered_articles[index]["author"]
+  end
 end

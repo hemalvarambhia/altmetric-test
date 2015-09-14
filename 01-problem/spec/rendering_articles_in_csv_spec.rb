@@ -50,30 +50,5 @@ describe "Rendering articles to CSV" do
               ]))
 
     end
-
-    context "when the article has multiple authors" do
-      before(:each) do
-        @all_articles = Articles.new(
-            [
-                Article.new(
-                    {
-                        doi: DOI.new("10.1234/altmetric0"),
-                        title: "Title of Article",
-                        author: ["Author 1", "Author 2", "Author 3"],
-                        journal: Journal.new(
-                            ISSN.new("0378-5955"),
-                            "Name of Journal")
-
-                    }
-                )
-            ])
-      end
-
-      it "renders the authors as a comma-separated string" do
-        rendered_articles = render(@all_articles)
-
-        expect(rendered_articles.first[2]).to eq("Author 1, Author 2, Author 3")
-      end
-    end
   end
 end
