@@ -1,6 +1,6 @@
 class InvalidISSN < Exception
   def initialize(issn)
-    super "Invalid ISSN '#{@issn}'. ISSNs take the form dddd-dddd"
+    super "Invalid ISSN '#{issn}'. ISSNs take the form dddd-dddd"
   end
 
 end
