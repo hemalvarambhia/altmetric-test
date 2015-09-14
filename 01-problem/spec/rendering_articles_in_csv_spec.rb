@@ -1,28 +1,8 @@
 require 'csv'
-require_relative '../lib/csv_renderer'
-
-def expected_format(articles)
-   articles.all.collect do |article|
-      [
-        article.doi.to_s,
-        article.title,
-        article.author.join(","),
-        article.journal_published_in.title,
-        article.journal_published_in.issn.to_s
-      ]
-   end
-end
-
-def without_header(csv_rows)
-  csv_rows.drop(1)
-end
-
-def render(all_articles)
-  without_header(
-      CSV.parse(CSVRenderer.new.render(all_articles)))
-end
+require_relative './csv_rendering_helper'
 
 describe "Rendering articles to CSV" do
+  include CSVRenderingHelper
   it_behaves_like "a renderer"
 
   describe "Rendering no articles in CSV" do
@@ -69,6 +49,31 @@ describe "Rendering articles to CSV" do
                   "ISSN"
               ]))
 
+    end
+
+    context "when the article has multiple authors" do
+      before(:each) do
+        @all_articles = Articles.new(
+            [
+                Article.new(
+                    {
+                        doi: DOI.new("10.1234/altmetric0"),
+                        title: "Title of Article",
+                        author: ["Author 1", "Author 2", "Author 3"],
+                        journal: Journal.new(
+                            ISSN.new("0378-5955"),
+                            "Name of Journal")
+
+                    }
+                )
+            ])
+      end
+
+      it "renders the authors as a comma-separated string" do
+        rendered_articles = render(@all_articles)
+
+        expect(rendered_articles.first[2]).to eq("Author 1, Author 2, Author 3")
+      end
     end
   end
 end

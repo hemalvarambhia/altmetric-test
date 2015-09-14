@@ -69,6 +69,13 @@ describe "Digital object identifiers" do
       expect(doi_2).to eq(doi_1)
     end
 
+    it "is case-insensitive" do
+      doi_1 = DOI.new("10.1234/altmetric965")
+      doi_2 = DOI.new("10.1234/ALTMETRIC965")
+
+      expect(doi_1).to eq(doi_2)
+    end
+
     context "different DOIs" do
       it "confirms them as not being equal" do
         doi = DOI.new("10.1234/altmetric675")

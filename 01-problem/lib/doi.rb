@@ -11,7 +11,7 @@ class DOI
   end
 
   def ==(other)
-    other.to_s == to_s
+    other.to_s.downcase == to_s.downcase
   end
 
   def to_s
