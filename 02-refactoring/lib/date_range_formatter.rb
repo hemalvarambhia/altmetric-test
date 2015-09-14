@@ -10,11 +10,11 @@ class DateRangeFormatter
   end
 
   def to_s
-    full_start_date = @start_date.strftime("#{@start_date.day.ordinalize} %B %Y")
-    full_end_date = @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
+    full_start_date = date_in_full(@start_date)
+    full_end_date = date_in_full(@end_date)
 
     if @start_date == @end_date
-      if @start_time && @end_time
+      if times_known?
         "#{full_start_date} at #{@start_time} to #{@end_time}"
       elsif @start_time
         "#{full_start_date} at #{@start_time}"
@@ -24,7 +24,7 @@ class DateRangeFormatter
         full_start_date
       end
     elsif @start_date.month == @end_date.month
-      if @start_time && @end_time
+      if times_known?
         "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
       elsif @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
@@ -34,17 +34,17 @@ class DateRangeFormatter
         @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
       end
     elsif @start_date.year == @end_date.year
-      if @start_time && @end_time
+      if times_known?
         "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
       elsif @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
       elsif @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
-        @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
+        @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
       end
     else
-      if @start_time && @end_time
+      if times_known?
         "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
       elsif @start_time
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
@@ -54,6 +54,15 @@ class DateRangeFormatter
         "#{full_start_date} - #{full_end_date}"
       end
     end
+  end
+
+  private
+  def times_known?
+    @start_time && @end_time
+  end
+
+  def date_in_full(start_date)
+    start_date.strftime("#{start_date.day.ordinalize} %B %Y")
   end
 end
 
