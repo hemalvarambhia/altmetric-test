@@ -29,7 +29,7 @@ class DateRangeFormatter
 
     if not both_times_known?
       if @start_date == @end_date
-        prefix
+        return prefix
       elsif @start_date.month == @end_date.month
         return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}")
       elsif @start_date.year == @end_date.year
