@@ -34,8 +34,7 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new(
           [
               Journal.new(
-                  ISSN.new("1337-8688"),
-                  "Shanahan, Green and Ziemann")
+                  ISSN.new("1337-8688"), "Shanahan, Green and Ziemann")
           ]
       )
 
@@ -70,26 +69,21 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new(
           [
               Journal.new(
-                  ISSN.new("1337-8688"),
-                  "Shanahan, Green and Ziemann"
+                  ISSN.new("1337-8688"), "Shanahan, Green and Ziemann"
               ),
               Journal.new(
-                  ISSN.new("2542-5856"),
-                  "Wilkinson, Gaylord and Gerlach"
+                  ISSN.new("2542-5856"), "Wilkinson, Gaylord and Gerlach"
               )
           ])
 
       @authors = Authors.new(
           [
               Author.new(
-                  "Amari Lubowitz",
-                  [DOI.new("10.1234/altmetric0")]
+                  "Amari Lubowitz", [DOI.new("10.1234/altmetric0")]
               ),
               Author.new(
-                  "Lenny Kshlerin",
-                  [DOI.new("10.1234/altmetric100")]
+                  "Lenny Kshlerin", [DOI.new("10.1234/altmetric100")]
               ),
-
           ])
     end
 
@@ -122,34 +116,16 @@ describe "Loading articles from a CSV file" do
     before(:each) do
       @journals = Journals.new(
           [
-              Journal.new(
-                  ISSN.new("1337-8688"),
-                  "Shanahan, Green and Ziemann"
-              ),
-              Journal.new(
-                  ISSN.new("2542-5856"),
-                  "Wilkinson, Gaylord and Gerlach"
-              ),
-              Journal.new(
-                  ISSN.new("3775-0307"),
-                  "Hahn and Sons"
-              )
+              Journal.new(ISSN.new("1337-8688"), "Shanahan, Green and Ziemann"),
+              Journal.new(ISSN.new("2542-5856"), "Wilkinson, Gaylord and Gerlach"),
+              Journal.new(ISSN.new("3775-0307"), "Hahn and Sons")
           ])
 
       @authors = Authors.new(
           [
-              Author.new(
-                  "Amari Lubowitz",
-                  [DOI.new("10.1234/altmetric0")]
-              ),
-              Author.new(
-                  "Lenny Kshlerin",
-                  [DOI.new("10.1234/altmetric100")]
-              ),
-              Author.new(
-                  "Howard Spinka Jr.",
-                  [DOI.new("10.1234/altmetric103")]
-              )
+              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]),
+              Author.new("Lenny Kshlerin", [DOI.new("10.1234/altmetric100")]),
+              Author.new("Howard Spinka Jr.", [DOI.new("10.1234/altmetric103")])
           ])
     end
 
@@ -192,18 +168,14 @@ describe "Loading articles from a CSV file" do
       @journals = Journals.new([])
       @authors = Authors.new(
           [
-              Author.new(
-                  "Author",
-                  [DOI.new("10.1234/altmetric156")])
+              Author.new("Author", [DOI.new("10.1234/altmetric156")])
           ]
       )
     end
 
     it "does not include those articles" do
       articles = Articles.load_from(
-          File.join(
-              fixtures_dir,
-              "articles_with_journals_missing.csv"),
+          File.join(fixtures_dir, "articles_with_journals_missing.csv"),
           @journals,
           @authors
       )
@@ -216,26 +188,19 @@ describe "Loading articles from a CSV file" do
     before(:each) do
       @journals = Journals.new(
           [
-              Journal.new(
-                  ISSN.new("1337-8688"),
-                  "Shanahan, Green and Ziemann"
-              )
+              Journal.new(ISSN.new("1337-8688"), "Shanahan, Green and Ziemann")
           ])
 
       @authors = Authors.new(
           [
-              Author.new(
-                  "Amari Lubowitz",
-                  [DOI.new("10.1234/altmetric0")]
+              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]
               )
           ])
     end
 
     it "excludes those articles" do
       articles = Articles.load_from(
-          File.join(
-              fixtures_dir,
-              "articles_with_no_authors.csv"),
+          File.join(fixtures_dir, "articles_with_no_authors.csv"),
           @journals,
           @authors
       )
