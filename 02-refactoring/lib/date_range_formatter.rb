@@ -10,23 +10,18 @@ class DateRangeFormatter
   end
 
   def to_s
-    as_string = "#{prefix} - #{suffix}"
     if @start_date == @end_date
       return "#{prefix} to #{@end_time}" if both_times_known?
       return "#{prefix} until #{@end_time}" if end_time_known?
       return prefix if start_time_known? or not both_times_known?
     end
 
-    if start_time_known?
-      return as_string
-    end
-
-    if not both_times_known?
+    if times_not_known?
       return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month
       return @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix if @start_date.year == @end_date.year
     end
 
-    return as_string
+    return "#{prefix} - #{suffix}"
   end
 
   private
@@ -44,6 +39,10 @@ class DateRangeFormatter
     date_range_section << " at #{time}" if time
 
     date_range_section
+  end
+
+  def times_not_known?
+    @start_time.nil? and @end_time.nil?
   end
 
   def both_times_known?
