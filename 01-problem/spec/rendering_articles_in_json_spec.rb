@@ -1,6 +1,5 @@
 require 'json'
 require_relative '../lib/json_renderer'
-require_relative './renderer_contract_spec'
 
 def expected_format articles
   articles.all.collect{|article|

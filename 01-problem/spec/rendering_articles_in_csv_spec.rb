@@ -1,5 +1,4 @@
 require 'csv'
-require_relative './renderer_contract_spec'
 require_relative '../lib/csv_renderer'
 
 def expected_format(articles)
