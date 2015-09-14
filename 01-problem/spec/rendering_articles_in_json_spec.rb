@@ -141,7 +141,7 @@ describe "Rendering articles to JSON" do
           ])
     end
 
-    it "contains the details of all the articles" do
+    it "contains the details of every article" do
       parsed_json = JSON.parse(JSONRenderer.new.render(@all_articles))
 
       expect(parsed_json).to(eq(convert_to_hash(@all_articles)))
