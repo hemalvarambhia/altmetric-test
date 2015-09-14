@@ -19,7 +19,7 @@ class DateRangeFormatter
     end
 
     if @start_date == @end_date
-      if @start_time
+      if start_time_known?
         "#{full_start_date} at #{@start_time}"
       elsif @end_time
         "#{full_start_date} until #{@end_time}"
