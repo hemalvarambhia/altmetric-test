@@ -25,13 +25,9 @@ class DateRangeFormatter
     end
 
     if not both_times_known?
-      if @start_date == @end_date
-        return prefix
-      elsif @start_date.month == @end_date.month
-        return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}")
-      elsif @start_date.year == @end_date.year
-        return @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix
-      end
+      return prefix if @start_date == @end_date
+      return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month
+      return @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + suffix if @start_date.year == @end_date.year
     end
 
     return as_string
