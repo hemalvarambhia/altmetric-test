@@ -17,16 +17,16 @@ class Articles
       article_authors = authors.author_of(doi)
       if journal and article_authors.any?
         articles << Article.new(
-        doi: doi,
-        title: csv["Title"],
-        author: article_authors.collect{|author| author.name },
-        journal: journals.
-          find_journal_for(
-            ISSN.new(csv["ISSN"])))
+            doi: doi,
+            title: csv["Title"],
+            author: article_authors.collect{|author| author.name },
+            journal: journals.
+                find_journal_for(
+                    ISSN.new(csv["ISSN"])))
       end
     end
     Articles.new(
-      articles
+        articles
     )
   end
 

@@ -29,18 +29,17 @@ class Authors
   def author_of doi
     @authors.select{|author| author.publications.include?(doi)}
   end
-  
+
   def self.load_from file_name
     if not File.exists?(file_name)
       raise FileNotFound.new(file_name)
     end
-    
-    authors = []
+
     authors_as_json = JSON.parse(
-      File.open(file_name, "r").read)
+        File.open(file_name, "r").read)
     authors = authors_as_json.collect do |author_as_json|
       publications = author_as_json["articles"].
-                     collect{ |doi| DOI.new(doi)}
+          collect{ |doi| DOI.new(doi)}
       Author.new(author_as_json["name"], publications)
     end.select{|author| author.has_publications?}
 

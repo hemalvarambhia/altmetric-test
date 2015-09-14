@@ -14,7 +14,7 @@ class ISSN
     if digits.size != 8
       raise InvalidISSN.new(@issn)
     end
-      
+
     @issn = @issn.insert(4, "-") if not @issn.include?("-")
 
     unless @issn=~/^\d{4}-\d{4}$/
@@ -30,7 +30,7 @@ class ISSN
     @issn == other.to_s
   end
 
-  private 
+  private
   def digits
     @issn.scan(/\d/).collect{|digit| digit.to_i}
   end

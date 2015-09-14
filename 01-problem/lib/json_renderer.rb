@@ -9,11 +9,11 @@ class JSONRenderer
 
   def as_hash article
     {
-      "doi" => article.doi,
-      "title" => article.title,
-      "author" => article.author.join(", "),
-      "journal" => article.journal_published_in.title,
-      "issn" => article.journal_published_in.issn
+        "doi" => article.doi,
+        "title" => article.title,
+        "author" => article.author.join(", "),
+        "journal" => article.journal_published_in.title,
+        "issn" => article.journal_published_in.issn
     }
   end
 end

@@ -22,7 +22,7 @@ class DOI
 
   def valid?
     return false if @doi.empty?
-      
+
     return false unless prefix.start_with?("10")
 
     # The registrant code is currently four digits long,
@@ -41,10 +41,10 @@ class DOI
   def suffix
     components[1] || ""
   end
-    
+
   def components
     @doi.split("/").
-      collect{|component| component.strip}.
-      collect{|component| component.gsub(/\s+/, "")}
+        collect{|component| component.strip}.
+        collect{|component| component.gsub(/\s+/, "")}
   end
 end
