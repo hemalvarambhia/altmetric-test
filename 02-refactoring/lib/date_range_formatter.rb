@@ -17,7 +17,7 @@ class DateRangeFormatter
 
     if start_time_known?
       return "#{prefix}" if @start_date == @end_date
-      return "#{prefix} - #{suffix}"
+      return as_string
     end
 
     if end_time_known?
