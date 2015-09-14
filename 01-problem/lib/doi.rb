@@ -1,10 +1,13 @@
 class InvalidDOI < Exception
+  def initialize doi
+    super "Invalid DOI '#{doi}'. DOIs take the form 10.1234/abcdefg"
+  end
 end
 
 class DOI
   def initialize doi_string
     @doi = doi_string || ""
-    raise InvalidDOI.new("Invalid DOI '#{@doi}'. DOIs take the form 10.1234/abcdefg") if not valid?
+    raise InvalidDOI.new(@doi) if not valid?
   end
 
   def ==(other)
