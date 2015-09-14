@@ -15,10 +15,8 @@ describe "Finding authors by their publications" do
 
       expect(author).to(
           eq([
-                 Author.new(
-                     "Author Name", [DOI.new("10.1234/altmetric101")])
-             ]
-          )
+                 Author.new("Author Name", [DOI.new("10.1234/altmetric101")])
+             ])
       )
     end
   end
@@ -27,18 +25,13 @@ describe "Finding authors by their publications" do
     it "yields that author" do
       authors = Authors.new(
           [
-              Author.new(
-                  "Another", [DOI.new("10.1234/altmetric171")]),
+              Author.new("Another", [DOI.new("10.1234/altmetric171")]),
           ]
       )
       author = authors.author_of DOI.new("10.1234/altmetric171")
 
       expect(author).to(
-          eq([
-                 Author.new(
-                     "Another", [DOI.new("10.1234/altmetric171")])
-             ]
-          )
+          eq([Author.new("Another", [DOI.new("10.1234/altmetric171")])])
       )
     end
   end
@@ -47,13 +40,9 @@ describe "Finding authors by their publications" do
     it "yields them all" do
       authors = Authors.new(
           [
-              Author.new(
-                  "Author", [DOI.new("10.1234/altmetric171")]),
-              Author.new(
-                  "Collaborator", [DOI.new("10.1234/altmetric171")]),
-              Author.new(
-                  "Another Collaborator", [DOI.new("10.1234/altmetric171")]),
-
+              Author.new("Author", [DOI.new("10.1234/altmetric171")]),
+              Author.new("Collaborator", [DOI.new("10.1234/altmetric171")]),
+              Author.new("Another Collaborator", [DOI.new("10.1234/altmetric171")]),
           ]
       )
 
@@ -62,10 +51,8 @@ describe "Finding authors by their publications" do
       expect(authors).to(
           eq(
               [
-                  Author.new(
-                      "Author", [DOI.new("10.1234/altmetric171")]),
-                  Author.new(
-                      "Collaborator", [DOI.new("10.1234/altmetric171")]),
+                  Author.new("Author", [DOI.new("10.1234/altmetric171")]),
+                  Author.new("Collaborator", [DOI.new("10.1234/altmetric171")]),
                   Author.new(
                       "Another Collaborator", [DOI.new("10.1234/altmetric171")]),
               ]
@@ -76,11 +63,9 @@ describe "Finding authors by their publications" do
   context "when there are no authors of the publication" do
     it "yields none" do
       authors = Authors.new(
-          [
-              Author.new(
-                  "An author", [DOI.new("10.1234/altmetric555")]),
-          ]
+          [Author.new("An author", [DOI.new("10.1234/altmetric555")])]
       )
+
       author = authors.author_of DOI.new("10.1234/altmetric999")
 
       expect(author).to be_empty
