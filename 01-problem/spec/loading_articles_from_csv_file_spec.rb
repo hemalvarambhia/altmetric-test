@@ -131,7 +131,7 @@ describe "Loading articles from a CSV file" do
           ])
     end
 
-    it "yields every articles" do
+    it "yields every article" do
       articles = Articles.load_from(
           File.join(fixtures_dir, "many_articles.csv"),
           @journals,
