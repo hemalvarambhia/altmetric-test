@@ -29,10 +29,7 @@ describe "Loading journals from csv files" do
 
       expect(journals.size).to eq(1)
       expect(journals.first).to(
-        eq(
-          Journal.new(
-          ISSN.new("0024-9319"),
-          "Sporer, Kihn and Turner"))
+        eq(Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"))
       )
     end
   end
@@ -44,20 +41,9 @@ describe "Loading journals from csv files" do
       )
 
       expect(journals.first).to(
-        eq(
-          Journal.new(
-          ISSN.new("0024-9319"),
-          "Bartell-Collins")
-        )
-      )
+        eq(Journal.new(ISSN.new("0024-9319"), "Bartell-Collins")))
       expect(journals.last).to(
-        eq(
-          Journal.new(
-          ISSN.new("0032-1478"),
-          "Sporer, Kihn and Turner"
-        )
-        )
-      )
+        eq(Journal.new(ISSN.new("0032-1478"), "Sporer, Kihn and Turner")))
     end
   end
 
@@ -68,27 +54,13 @@ describe "Loading journals from csv files" do
       )
 
       expect(journals.first).to(
-        eq(
-          Journal.new(
-          ISSN.new("0378-5955"),
-          "Bartell-Collins")
-        )
+        eq(Journal.new(ISSN.new("0378-5955"), "Bartell-Collins"))
       )
       expect(journals.all[1]).to(
-        eq(
-          Journal.new(
-          ISSN.new("0024-9319"),
-          "Sporer, Kihn and Turner"
-        )
-        )
+        eq(Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"))
       )
       expect(journals.last).to(
-        eq(
-          Journal.new(
-          ISSN.new("0032-1478"),
-          "Durgan Group"
-        ) 
-        )
+        eq(Journal.new(ISSN.new("0032-1478"), "Durgan Group"))
       )
     end
   end

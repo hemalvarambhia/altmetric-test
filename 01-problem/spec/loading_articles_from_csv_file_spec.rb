@@ -33,9 +33,7 @@ describe "Loading articles from a CSV file" do
     before(:each) do
       @journals = Journals.new(
         [
-          Journal.new(
-          ISSN.new("0032-1478"),
-          "Shanahan, Green and Ziemann")
+          Journal.new(ISSN.new("0032-1478"), "Shanahan, Green and Ziemann")
         ]
       )
 
@@ -69,14 +67,8 @@ describe "Loading articles from a CSV file" do
     before :each do
       @journals = Journals.new(
       [
-        Journal.new(
-          ISSN.new("0024-9319"),
-          "Shanahan, Green and Ziemann"
-      ),
-        Journal.new(
-          ISSN.new("0032-1478"),
-          "Wilkinson, Gaylord and Gerlach"
-        )                                    
+        Journal.new(ISSN.new("0024-9319"), "Shanahan, Green and Ziemann"),
+        Journal.new(ISSN.new("0032-1478"), "Wilkinson, Gaylord and Gerlach")
       ])
 
       @authors = Authors.new(
@@ -119,18 +111,9 @@ describe "Loading articles from a CSV file" do
     before(:each) do
       @journals = Journals.new(
       [
-        Journal.new(
-          ISSN.new("0378-5955"),
-          "Shanahan, Green and Ziemann"
-      ),
-        Journal.new(
-          ISSN.new("0024-9319"),
-          "Wilkinson, Gaylord and Gerlach"
-        ),
-        Journal.new(
-          ISSN.new("0032-1478"),
-          "Hahn and Sons"
-        )
+        Journal.new(ISSN.new("0378-5955"), "Shanahan, Green and Ziemann"),
+        Journal.new(ISSN.new("0024-9319"), "Wilkinson, Gaylord and Gerlach"),
+        Journal.new(ISSN.new("0032-1478"), "Hahn and Sons")
       ])
 
       @authors = Authors.new(
@@ -200,16 +183,12 @@ describe "Loading articles from a CSV file" do
     before(:each) do
        @journals = Journals.new(
       [
-        Journal.new(
-          ISSN.new("0032-1478"),
-          "Shanahan, Green and Ziemann"
-      )
+        Journal.new(ISSN.new("0032-1478"), "Shanahan, Green and Ziemann")
       ])
 
       @authors = Authors.new(
           [
-              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]
-              )
+              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")])
           ])
     end
 
