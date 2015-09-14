@@ -35,26 +35,10 @@ describe "Rendering articles to CSV" do
 
       expect(parsed_csv).to be_empty
     end
-
-    it "only contains the headers" do
-      articles = Articles.new([])
-
-      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
-      expect(parsed_csv.first).to(
-          eq(
-             [
-               "DOI", 
-               "Title", 
-               "Author", 
-               "Journal Title", 
-               "ISSN"
-             ]))
-    end
   end
 
   describe "Rendering 1 article" do
     context "when the article has one author" do
-
       before(:each) do
         @all_articles = Articles.new([
              Article.new(
@@ -67,21 +51,6 @@ describe "Rendering articles to CSV" do
              )
            ])
       end
-
-      it "has a header" do
-        parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
-        expect(parsed_csv[0]).to(
-          eq(
-             [
-               "DOI",
-               "Title",
-               "Author",
-               "Journal Title",
-               "ISSN"
-             ]))
-
-      end
-
 
       it "contains the details of the article" do
         parsed_csv = run_renderer(@all_articles)
@@ -112,7 +81,6 @@ describe "Rendering articles to CSV" do
       end
     end
   end
-    
 
   describe "Rendering 2 articles" do
     before(:each) do
@@ -179,6 +147,53 @@ describe "Rendering articles to CSV" do
       parsed_csv = run_renderer(@all_articles)
 
       expect(parsed_csv).to(eq(expected_format(@all_articles)))
+    end
+  end
+
+  describe "Rendering no articles in CSV" do
+    it "has the headers" do
+      articles = Articles.new([])
+
+      parsed_csv = CSV.parse(CSVRenderer.new.render(articles))
+      expect(parsed_csv.first).to(
+          eq(
+              [
+                  "DOI",
+                  "Title",
+                  "Author",
+                  "Journal Title",
+                  "ISSN"
+              ]))
+    end
+  end
+
+  describe "Rendering 1 article in CSV" do
+    before(:each) do
+      @all_articles = Articles.new(
+          [
+              Article.new(
+                  doi: DOI.new("10.1234/altmetric52"),
+                  title: "Title of Article",
+                  author: ["Name of Author"],
+                  journal: Journal.new(
+                      ISSN.new("3853-8766"),
+                      "Title of Journal")
+              )
+          ])
+    end
+
+    it "has a header" do
+      parsed_csv = CSV.parse(CSVRenderer.new.render(@all_articles))
+      expect(parsed_csv[0]).to(
+          eq(
+              [
+                  "DOI",
+                  "Title",
+                  "Author",
+                  "Journal Title",
+                  "ISSN"
+              ]))
+
     end
   end
 end
