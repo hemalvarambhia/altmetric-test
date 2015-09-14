@@ -31,29 +31,13 @@ class DateRangeFormatter
     end
 
     if @start_date == @end_date
-      if end_time_known?
-        "#{full_start_date} until #{@end_time}"
-      else
-        full_start_date
-      end
+      full_start_date
     elsif @start_date.month == @end_date.month
-      if end_time_known?
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
-      end
+      @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
     elsif @start_date.year == @end_date.year
-      if end_time_known?
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
-      end
+      @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
     else
-      if end_time_known?
-        "#{full_start_date} - #{full_end_date} at #{@end_time}"
-      else
-        "#{full_start_date} - #{full_end_date}"
-      end
+      "#{full_start_date} - #{full_end_date}"
     end
   end
 
