@@ -13,8 +13,8 @@ class DateRangeFormatter
     as_string = "#{prefix} - #{suffix}"
     if @start_date == @end_date
       return "#{prefix} to #{@end_time}" if both_times_known?
-      return "#{prefix}" if start_time_known?
       return "#{prefix} until #{@end_time}" if end_time_known?
+      return "#{prefix}" if start_time_known?
       return prefix if not both_times_known?
     end
 
