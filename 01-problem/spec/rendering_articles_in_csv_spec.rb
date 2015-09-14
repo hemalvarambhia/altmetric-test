@@ -23,7 +23,14 @@ def without_header(csv_rows)
 end
 
 describe "Rendering articles to CSV" do
-  describe "rendering no articles to CSV" do
+  describe "Rendering no articles" do
+    it "contains nothing" do
+      articles = Articles.new([])
+
+      parsed_csv = without_header(CSV.parse(CSVRenderer.new.render(articles)))
+      expect(parsed_csv).to be_empty
+    end
+
     it "only contains the headers" do
       articles = Articles.new([])
 
@@ -40,7 +47,7 @@ describe "Rendering articles to CSV" do
     end
   end
 
-  describe "rendering 1 article to CSV" do
+  describe "Rendering 1 article" do
     context "when the article has one author" do
 
       before(:each) do
@@ -93,7 +100,7 @@ describe "Rendering articles to CSV" do
            ])
       end
 
-      it "presents the authors as a string with authors comma-separated" do
+      it "renders the authors as a comma-separated string" do
          parsed_csv = without_header(
            CSV.parse(CSVRenderer.new.render(@all_articles)))
 
@@ -104,7 +111,7 @@ describe "Rendering articles to CSV" do
   end
     
 
-  describe "rendering 2 articles to CSV" do
+  describe "Rendering 2 articles" do
     before(:each) do
       @all_articles = Articles.new([
          Article.new(
@@ -134,7 +141,7 @@ describe "Rendering articles to CSV" do
     end
   end
 
-  describe "rendering many articles to CSV" do
+  describe "Rendering many articles" do
     before(:each) do
       @all_articles = Articles.new([
              Article.new(
