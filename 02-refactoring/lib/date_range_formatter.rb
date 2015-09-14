@@ -24,19 +24,19 @@ class DateRangeFormatter
     end
 
     if @start_date == @end_date
-      if @end_time
+      if end_time_known?
         "#{full_start_date} until #{@end_time}"
       else
         full_start_date
       end
     elsif @start_date.month == @end_date.month
-      if @end_time
+      if end_time_known?
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
       end
     elsif @start_date.year == @end_date.year
-      if @end_time
+      if end_time_known?
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + date_in_full(@end_date)
@@ -44,7 +44,7 @@ class DateRangeFormatter
     else
       if start_time_known?
         "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
+      elsif end_time_known?
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         "#{full_start_date} - #{full_end_date}"
@@ -59,6 +59,10 @@ class DateRangeFormatter
 
   def start_time_known?
     !@start_time.nil?
+  end
+
+  def end_time_known?
+    !@end_time.nil?
   end
 
   def date_in_full(start_date)
