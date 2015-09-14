@@ -23,6 +23,16 @@ def run_renderer(all_articles)
 end
 
 describe "Rendering articles to JSON" do
+  describe "Rendering no articles" do
+    it "contains nothing" do
+      no_articles = Articles.new([])
+
+      parsed_json = run_renderer(no_articles)
+
+      expect(parsed_json).to be_empty
+    end
+  end
+
   describe "Rendering of 1 article" do
     context "when the article has one author" do
       before(:each) do
@@ -149,16 +159,6 @@ describe "Rendering articles to JSON" do
       parsed_json = run_renderer(@all_articles)
 
       expect(parsed_json).to(eq(expected_format(@all_articles)))
-    end
-  end
-
-  describe "Rendering no articles" do
-    it "contains nothing" do
-      no_articles = Articles.new([])
-
-      parsed_json = run_renderer(no_articles)
-
-      expect(parsed_json).to be_empty
     end
   end
 end
