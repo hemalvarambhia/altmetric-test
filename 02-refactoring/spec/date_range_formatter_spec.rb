@@ -60,5 +60,10 @@ RSpec.describe(DateRangeFormatter) do
     formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1", "10:00", "11:00")
     expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2010 at 11:00")
   end
+
+  it "formats a date range for different day and year with same year" do
+    formatter = DateRangeFormatter.new("2009-11-1", "2010-11-3")
+    expect(formatter.to_s).to eq("1st November 2009 - 3rd November 2010")
+  end
 end
 
