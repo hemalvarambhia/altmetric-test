@@ -5,7 +5,7 @@ class CSVRenderer
     CSV.generate do |csv|
       csv << header
       articles.all.collect{ |article|
-        csv << as_array(article) if article
+        csv << as_array(article)
       }
     end
   end
