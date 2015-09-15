@@ -16,9 +16,9 @@ class DateRangeFormatter
       return prefix if start_time_known? or times_not_known?
     end
 
-    if times_not_known?
-      return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month and @start_date.year == @end_date.year
-      return @start_date.strftime("#{@start_date.day.ordinalize} %B - #{suffix}") if @start_date.year == @end_date.year
+    if times_not_known? and @start_date.year == @end_date.year
+      return @start_date.strftime("#{@start_date.day.ordinalize} - #{suffix}") if @start_date.month == @end_date.month
+      return @start_date.strftime("#{@start_date.day.ordinalize} %B - #{suffix}")
     end
 
     return "#{prefix} - #{suffix}"
