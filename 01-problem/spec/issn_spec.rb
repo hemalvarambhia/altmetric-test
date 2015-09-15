@@ -53,18 +53,6 @@ describe "ISSNs" do
     end
   end
 
-  describe "an ISSN with a valid checksum" do
-    it "is valid" do
-      expect(lambda {ISSN.new("0378-5955")}).not_to raise_error
-    end
-  end
-
-  describe "an ISSN with an invalid checksum" do
-    it "is valid" do
-      expect(lambda {ISSN.new("0378-5950")}).to raise_error(InvalidISSN)
-    end
-  end
-
   describe "equating ISSN" do
     it "is reflexive" do
       issn = ISSN.new("0024-9319")
