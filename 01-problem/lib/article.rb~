@@ -10,8 +10,4 @@ class Article
   def journal_published_in
     @journal
   end
-
-  def ==(other)
-    @doi == other.doi && @journal == other.journal
-  end 
 end
