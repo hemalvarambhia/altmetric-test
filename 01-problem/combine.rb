@@ -21,4 +21,4 @@ authors = Authors.load_from(authors_json)
 articles = Articles.load_from(articles_csv, journals, authors)
 rendering_factory = RenderingFactory.new
 renderer = rendering_factory.renderer_for format
-p renderer.render articles
+puts renderer.render articles
