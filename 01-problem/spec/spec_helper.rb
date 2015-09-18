@@ -12,3 +12,10 @@ RSpec::Matchers.define :have_issn do |expected_issn|
     journal.issn == expected_issn
   end
 end
+
+RSpec::Matchers.define :have_published do |publication|
+  match do |authors|
+    authors.size > 0 &&
+      authors.all?{|author| author.publications.include?(publication)}
+  end
+end

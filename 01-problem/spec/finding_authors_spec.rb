@@ -7,19 +7,16 @@ describe "Finding authors by their publications" do
   include GenerateDOI
   context "when there is 1 author of the publication" do
     it "yields the author" do
-      publication_of_interest = DOI.new("10.1234/altmetric101")
+      publication = DOI.new("10.1234/altmetric101")
       authors = some_authors(
         an_author,
         an_author,
-        an_author.of_publications(publication_of_interest)
+        an_author.of_publications(publication)
       )
-      authors = authors.author_of publication_of_interest
+      
+      authors = authors.author_of publication
 
-      expect(authors.size).to eq(1)
-      authors.each do |author|
-        expect(author.publications).to(
-          include(publication_of_interest))
-      end
+      expect(authors).to have_published publication
     end
   end
 
@@ -31,12 +28,10 @@ describe "Finding authors by their publications" do
         an_author,
         an_author.of_publications(publication)
       )
+      
       authors = authors.author_of publication
 
-      expect(authors.size).to eq(1)
-      authors.each do |author|
-        expect(author.publications).to(include(publication))
-      end
+      expect(authors).to have_published publication
     end
   end
 
@@ -53,9 +48,7 @@ describe "Finding authors by their publications" do
       authors = authors.author_of publication
 
       expect(authors.size).to be > 1
-      authors.each do |author|
-        expect(author.publications).to(include(publication))
-      end
+      expect(authors).to have_published publication
     end
   end
 
