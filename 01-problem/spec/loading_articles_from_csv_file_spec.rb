@@ -19,11 +19,10 @@ describe "Loading articles from a CSV file" do
 
   context "when the file has no articles (just headers)" do
     it "yields no articles" do
+      write_to @article_csv
+      
       articles = Articles.load_from(
-          File.join(fixtures_dir, "no_articles.csv"),
-          double("Journals"),
-          double("Authors")
-      )
+          @article_csv, Journals.new([]), Authors.new([]))
 
       expect(articles).to be_empty
     end
