@@ -125,7 +125,7 @@ describe "Loading articles from a CSV file" do
   context "when the file contains article with no authors" do
     before(:each) do
       journal = a_journal
-      @journals = some_journals a_journal
+      @journals = some_journals journal
       doi = a_doi
       missing_author = an_author.of_publications(doi)
       @authors = some_authors(an_author, an_author)
