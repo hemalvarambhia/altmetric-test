@@ -106,10 +106,10 @@ describe "Loading articles from a CSV file" do
   
   context "when the file contains articles with missing journals" do
     before :each do
+      missing_journal = a_journal
       @journals = some_journals(a_journal, a_journal)
       doi = a_doi
       author = an_author.of_publications doi
-      missing_journal = a_journal
       @authors = some_authors(author)
       write_to(
         @article_csv, some_articles([doi, missing_journal, author]).first)
