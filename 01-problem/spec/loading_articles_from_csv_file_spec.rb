@@ -1,8 +1,4 @@
 require 'spec_helper'
-require_relative '../lib/doi'
-require_relative '../lib/journals'
-require_relative '../lib/authors'
-require_relative '../lib/author'
 require_relative '../lib/articles'
 require_relative './support/generate_doi'
 describe "Loading articles from a CSV file" do
