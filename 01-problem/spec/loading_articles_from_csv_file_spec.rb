@@ -21,8 +21,7 @@ describe "Loading articles from a CSV file" do
     it "yields no articles" do
       write_to @article_csv
       
-      articles = Articles.load_from(
-          @article_csv, Journals.new([]), Authors.new([]))
+      articles = Articles.load_from(@article_csv, some_journals, some_articles)
 
       expect(articles).to be_empty
     end
@@ -40,8 +39,7 @@ describe "Loading articles from a CSV file" do
     end
 
     it "yields the article" do
-      articles = Articles.load_from(
-          @article_csv, @journals, @authors)
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles.all).to contain_exactly(@expected_article)
     end
@@ -64,8 +62,7 @@ describe "Loading articles from a CSV file" do
     end
 
     it "yields both articles" do
-      articles = Articles.load_from(
-        @article_csv, @journals, @authors)
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles.all).to contain_exactly(@expected_articles)
     end
@@ -128,8 +125,7 @@ describe "Loading articles from a CSV file" do
     end
 
     it "excludes those articles" do
-      articles = Articles.load_from(
-          @article_csv, @journals, @authors)
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to be_empty
     end
