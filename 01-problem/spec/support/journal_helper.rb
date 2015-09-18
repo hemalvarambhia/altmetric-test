@@ -1,6 +1,15 @@
+require_relative '../../lib/journals'
 require_relative './generate_issn'
 module JournalHelper
   include GenerateISSN
+  def some_journals *journal_builders
+    Journals.new(journal_builders.
+      collect {|builder|
+        builder.build
+      }
+    )
+  end
+  
   def a_journal
     Builder.new(an_issn, "::Academic Journal::")
   end

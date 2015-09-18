@@ -4,13 +4,12 @@ require_relative '../lib/journals'
 describe "Finding journals by ISSN" do
   context "when the article is found" do
     it "is returned" do
-      issn_to_find =ISSN.new("0032-1478")  
-      journals = Journals.new(
-        [
+      issn_to_find = ISSN.new("0032-1478")  
+      journals = some_journals(
           a_journal,
           a_journal.with_issn(issn_to_find),
           a_journal
-        ].collect{|builder| builder.build})
+      )
 
       journal = journals.find_journal_for(issn_to_find)
 
