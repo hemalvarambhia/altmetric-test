@@ -1,6 +1,5 @@
 require 'spec_helper'
 require_relative '../lib/articles'
-require_relative './support/generate_doi'
 describe "Loading articles from a CSV file" do
   include GenerateDOI
   before(:each) do
