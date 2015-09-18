@@ -21,7 +21,7 @@ describe "Loading articles from a CSV file" do
     it "yields no articles" do
       write_to @article_csv
       
-      articles = Articles.load_from(@article_csv, some_journals, some_articles)
+      articles = Articles.load_from(@article_csv, some_journals, some_authors)
 
       expect(articles).to be_empty
     end
