@@ -41,9 +41,7 @@ describe "Loading articles from a CSV file" do
       author = an_author.of_publications(doi)
       @journals = some_journals(journal)
       @authors = some_authors(author)
-      @expected_article = [
-        an_article.with_doi(doi).authored_by(author).published_in(journal)
-      ].collect{|article| article.build}
+      @expected_article = some_articles([doi, journal, author])
       write_to @article_csv, @expected_article.first
     end
 
@@ -57,20 +55,17 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 2 articles" do
     before :each do
-      journal = a_journal
-      another_journal = a_journal
-      @journals = some_journals(journal, another_journal)
-      doi = a_doi
-      another_doi = a_doi
-      author = an_author.of_publications(doi)
-      another_author = an_author.of_publications(another_doi)
-      @authors = some_authors(author, another_author)
-      @expected_articles = [
-        [journal, author],
-        [another_journal, another_author]
-      ].collect do |journal, author|
-        an_article.with_doi(doi).authored_by(author).published_in(journal)
-      end.collect{|article| article.build}
+      journal_1, journal_2 = a_journal, a_journal
+      @journals = some_journals(journal_1, journal_2)
+      doi_1, doi_2 = a_doi, a_doi
+      author_1, author_2 = [doi_1, doi_2].collect{|doi|
+        an_author.of_publications(doi)
+      }
+      @authors = some_authors(author_1, author_2)
+      @expected_articles = some_articles(
+        [doi_1, journal_1, author_1],
+        [doi_2, journal_2, author_2]
+      )      
       write_to @article_csv, @expected_articles.first, @expected_articles.last
     end
 
@@ -84,55 +79,31 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains many articles" do
     before(:each) do
-      @journals = Journals.new(
-      [
-        Journal.new(ISSN.new("0378-5955"), "Shanahan, Green and Ziemann"),
-        Journal.new(ISSN.new("0024-9319"), "Wilkinson, Gaylord and Gerlach"),
-        Journal.new(ISSN.new("0032-1478"), "Hahn and Sons")
-      ])
-
-      @authors = Authors.new(
-          [
-              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")]),
-              Author.new("Lenny Kshlerin", [DOI.new("10.1234/altmetric100")]),
-              Author.new("Howard Spinka Jr.", [DOI.new("10.1234/altmetric103")])
-          ])
+      journal_1, journal_2, journal_3 = a_journal, a_journal, a_journal
+      @journals = some_journals(journal_1, journal_2, journal_3)
+      doi_1, doi_2, doi_3 = a_doi, a_doi, a_doi
+      author_1, author_2,author_3 = [doi_1, doi_2, doi_3].collect{ |doi|
+        an_author.of_publications doi
+      }
+      @authors = some_authors(author_1, author_2, author_3)
+      @expected_articles = some_articles(
+        [doi_1, journal_1, author_1],
+        [doi_2, journal_2, author_2],
+        [doi_3, journal_3, author_3]
+      )      
+      write_to(@article_csv,
+               @expected_articles.first,
+               @expected_articles[1],
+               @expected_articles.last)
     end
     
     it "yields every article" do
-       articles = Articles.load_from(
-        File.join(fixtures_dir, "many_articles.csv"),
-        @journals,
-        @authors
-      ).all
+      articles = Articles.load_from(@article_csv, @journals, @authors).all
 
-       article = articles.first
-       expect(article.doi).to eq("10.1234/altmetric0")
-       expect(article.title).to eq("Small Wooden Chair")
-       expect(article.author).to eq(["Amari Lubowitz"])
-       expect(article.journal_published_in.title).to(
-         eq("Shanahan, Green and Ziemann"))
-
-       expect(article.journal_published_in.issn).to eq("0378-5955")
-
-       article = articles[1]
-       expect(article.doi).to eq("10.1234/altmetric100")
-       expect(article.title).to eq("Ergonomic Rubber Shirt")
-       expect(article.author).to eq(["Lenny Kshlerin"])
-       expect(article.journal_published_in.title).to(
-         eq("Wilkinson, Gaylord and Gerlach"))
-       expect(article.journal_published_in.issn).to eq("0024-9319")
-
-       article = articles.last
-       expect(article.doi).to eq("10.1234/altmetric103")
-       expect(article.title).to eq("Fantastic Granite Computer")
-       expect(article.author).to eq(["Howard Spinka Jr."])
-       expect(article.journal_published_in.title).to(
-         eq("Hahn and Sons"))
-       expect(article.journal_published_in.issn).to eq("0032-1478")
+      expect(articles).to contain_exactly @expected_articles
     end
   end
-
+  
   context "when the file contains articles with missing journals" do
     before :each do
       @journals = Journals.new([])

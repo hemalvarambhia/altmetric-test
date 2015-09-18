@@ -21,6 +21,12 @@ module ArticleHelper
     end
   end
 
+  def some_articles *article_data
+    article_data.collect { |doi, journal, author|
+      an_article.with_doi(doi).authored_by(author).published_in(journal)
+    }.collect{|article| article.build}
+  end
+
   def an_article
     Builder.new
   end
