@@ -7,6 +7,10 @@ require_relative '../lib/articles'
 require_relative './support/generate_doi'
 describe "Loading articles from a CSV file" do
   include GenerateDOI
+  before(:each) do
+    @article_csv = File.join(fixtures_dir, "articles.csv")
+  end
+  
   context "when the file does not exist" do
     it "raises an error" do
       journals = double("Journals")
@@ -38,24 +42,16 @@ describe "Loading articles from a CSV file" do
       @journals = some_journals(journal)
       @authors = some_authors(author)
       @expected_article = [
-        an_article.
-        with_doi(doi).
-        authored_by(author).
-        published_in(journal).
-        build
-      ]
-      @article_csv = File.join(fixtures_dir, "articles.csv")
+        an_article.with_doi(doi).authored_by(author).published_in(journal)
+      ].collect{|article| article.build}
       write_to @article_csv, @expected_article.first
     end
 
     it "yields the article" do
       articles = Articles.load_from(
-          @article_csv,
-          @journals,
-          @authors
-      ).all
+          @article_csv, @journals, @authors)
 
-      expect(articles).to contain_exactly(@expected_article)
+      expect(articles.all).to contain_exactly(@expected_article)
     end
   end
 
@@ -68,29 +64,21 @@ describe "Loading articles from a CSV file" do
       another_doi = a_doi
       author = an_author.of_publications(doi)
       another_author = an_author.of_publications(another_doi)
-      @authors = some_authors(author, another_author)       
+      @authors = some_authors(author, another_author)
       @expected_articles = [
-        an_article.
-        with_doi(doi).
-        authored_by(author).
-        published_in(journal).build,
-      an_article.
-        with_doi(another_doi).
-        authored_by(another_author).
-        published_in(another_journal).build
-      ]
-      @article_csv = File.join(fixtures_dir, "articles.csv")
+        [journal, author],
+        [another_journal, another_author]
+      ].collect do |journal, author|
+        an_article.with_doi(doi).authored_by(author).published_in(journal)
+      end.collect{|article| article.build}
       write_to @article_csv, @expected_articles.first, @expected_articles.last
-     end
+    end
 
     it "yields both articles" do
       articles = Articles.load_from(
-        @article_csv,
-        @journals,
-        @authors
-      ).all
+        @article_csv, @journals, @authors)
 
-      expect(articles).to contain_exactly(@expected_articles)
+      expect(articles.all).to contain_exactly(@expected_articles)
     end
   end
 
