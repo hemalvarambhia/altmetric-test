@@ -106,20 +106,17 @@ describe "Loading articles from a CSV file" do
   
   context "when the file contains articles with missing journals" do
     before :each do
-      @journals = Journals.new([])
-      @authors = Authors.new(
-          [
-              Author.new("Author", [DOI.new("10.1234/altmetric156")])
-          ]
-      )
+      @journals = some_journals(a_journal, a_journal)
+      doi = a_doi
+      author = an_author.of_publications doi
+      missing_journal = a_journal
+      @authors = some_authors(author)
+      write_to(
+        @article_csv, some_articles([doi, missing_journal, author]).first)
     end
 
     it "does not include those articles" do
-      articles = Articles.load_from(
-          File.join(fixtures_dir, "articles_with_journals_missing.csv"),
-          @journals,
-          @authors
-      )
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to be_empty
     end
@@ -127,23 +124,18 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains article with no authors" do
     before(:each) do
-       @journals = Journals.new(
-      [
-        Journal.new(ISSN.new("0032-1478"), "Shanahan, Green and Ziemann")
-      ])
-
-      @authors = Authors.new(
-          [
-              Author.new("Amari Lubowitz", [DOI.new("10.1234/altmetric0")])
-          ])
+      journal = a_journal
+      @journals = some_journals a_journal
+      doi = a_doi
+      missing_author = an_author.of_publications(doi)
+      @authors = some_authors(an_author, an_author)
+      write_to(
+        @article_csv, some_articles([doi, journal, missing_author]).first)
     end
 
     it "excludes those articles" do
       articles = Articles.load_from(
-          File.join(fixtures_dir, "articles_with_no_authors.csv"),
-          @journals,
-          @authors
-      )
+          @article_csv, @journals, @authors)
 
       expect(articles).to be_empty
     end
