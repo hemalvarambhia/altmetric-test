@@ -52,9 +52,7 @@ describe "Loading articles from a CSV file" do
       journals = [a_journal, a_journal]
       @journals = some_journals(*journals)
       dois = [a_doi, a_doi]
-      authors = dois.collect{|doi|
-        an_author.of_publications(doi)
-      }
+      authors = dois.collect{|doi| an_author.of_publications(doi)}
       @authors = some_authors(*authors)
       @expected_articles = some_articles(
         [dois.first, journals.first, authors.first],
@@ -72,22 +70,17 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains many articles" do
     before(:each) do
-      journal_1, journal_2, journal_3 = a_journal, a_journal, a_journal
-      @journals = some_journals(journal_1, journal_2, journal_3)
-      doi_1, doi_2, doi_3 = a_doi, a_doi, a_doi
-      author_1, author_2,author_3 = [doi_1, doi_2, doi_3].collect{ |doi|
-        an_author.of_publications doi
-      }
-      @authors = some_authors(author_1, author_2, author_3)
+      journals = [a_journal, a_journal, a_journal]
+      @journals = some_journals(*journals)
+      dois = [a_doi, a_doi, a_doi]
+      authors = dois.collect{ |doi| an_author.of_publications doi }
+      @authors = some_authors(*authors)
       @expected_articles = some_articles(
-        [doi_1, journal_1, author_1],
-        [doi_2, journal_2, author_2],
-        [doi_3, journal_3, author_3]
+        [dois.first, journals.first, authors.first],
+        [dois[1], journals[1], authors[1]],
+        [dois.last, journals.last, authors.last]
       )      
-      write_to(@article_csv,
-               @expected_articles.first,
-               @expected_articles[1],
-               @expected_articles.last)
+      write_to(@article_csv, *@expected_articles)
     end
     
     it "yields every article" do
