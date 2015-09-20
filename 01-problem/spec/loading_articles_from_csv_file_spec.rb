@@ -18,9 +18,11 @@ describe "Loading articles from a CSV file" do
   end
 
   context "when the file has no articles (just headers)" do
-    it "yields no articles" do
+    before :each do
       write_to @article_csv
-      
+    end
+    
+    it "yields no articles" do
       articles = Articles.load_from(@article_csv, some_journals, some_authors)
 
       expect(articles).to be_empty
@@ -47,18 +49,18 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 2 articles" do
     before :each do
-      journal_1, journal_2 = a_journal, a_journal
-      @journals = some_journals(journal_1, journal_2)
-      doi_1, doi_2 = a_doi, a_doi
-      author_1, author_2 = [doi_1, doi_2].collect{|doi|
+      journals = [a_journal, a_journal]
+      @journals = some_journals(*journals)
+      dois = [a_doi, a_doi]
+      authors = dois.collect{|doi|
         an_author.of_publications(doi)
       }
-      @authors = some_authors(author_1, author_2)
+      @authors = some_authors(*authors)
       @expected_articles = some_articles(
-        [doi_1, journal_1, author_1],
-        [doi_2, journal_2, author_2]
+        [dois.first, journals.first, authors.first],
+        [dois.last, journals.last, authors.last]
       )      
-      write_to @article_csv, @expected_articles.first, @expected_articles.last
+      write_to @article_csv, *@expected_articles
     end
 
     it "yields both articles" do
