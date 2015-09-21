@@ -49,9 +49,9 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 2 articles" do
     before :each do
-      journals = [a_journal, a_journal]
+      journals = Array.new(2){a_journal}
       @journals = some_journals(*journals)
-      dois = [a_doi, a_doi]
+      dois = Array.new(2){a_doi}
       authors = dois.collect{|doi| an_author.of_publications(doi)}
       @authors = some_authors(*authors)
       @expected_articles = some_articles(
@@ -70,9 +70,9 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains many articles" do
     before(:each) do
-      journals = [a_journal, a_journal, a_journal]
+      journals = Array.new(3){a_journal}
       @journals = some_journals(*journals)
-      dois = [a_doi, a_doi, a_doi]
+      dois = Array.new(3){a_doi}
       authors = dois.collect{ |doi| an_author.of_publications doi }
       @authors = some_authors(*authors)
       @expected_articles = some_articles(

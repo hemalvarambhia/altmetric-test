@@ -1,3 +1,4 @@
+require_relative '../../lib/doi'
 module GenerateDOI
   def a_doi
     suffix = "altmetric#{rand(1000000)}"
