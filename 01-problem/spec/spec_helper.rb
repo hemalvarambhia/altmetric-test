@@ -22,7 +22,7 @@ RSpec::Matchers.define :have_published do |publication|
   end
 end
 
-RSpec::Matchers.define :contain_exactly do |expected_articles|
+RSpec::Matchers.define :have_loaded do |expected_articles|
   match do |actual_articles|
     outcome = true
     actual_articles.each_index do |index|
