@@ -22,21 +22,21 @@ describe "Loading authors from a JSON file" do
     end
   end
 
-  context "when the file consists of 1 author" do
-    context "when that author has no publications" do
-      before :each do
-      	authors = Array.new(1){ an_author.of_publications(*[]).build }
-        @authors_file = File.join(fixtures_dir, "authors.json")
-        write_authors_to @authors_file, *authors
-      end
-
-      it "yields no authors" do
-        authors = Authors.load_from(@authors_file)
-
-        expect(authors).to be_empty
-      end
+  context "when an author has no publications" do
+    before :each do
+      authors = Array.new(1){ an_author.of_publications(*[]).build }
+      @authors_file = File.join(fixtures_dir, "authors.json")
+      write_authors_to @authors_file, *authors
     end
 
+    it "yields no authors" do
+      authors = Authors.load_from(@authors_file)
+
+      expect(authors).to be_empty
+    end
+  end
+
+  context "when the file consists of 1 author" do
     context "when that author has 1 or more publications" do
       before :each do
         @expected_authors = Array.new(1){ an_author.build }
