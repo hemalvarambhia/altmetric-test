@@ -44,7 +44,7 @@ describe "Loading authors from a JSON file" do
         write_authors_to @authors_file, *@expected_authors
       end
 
-      it "yields the author" do
+      it "yields every author" do
         authors = Authors.load_from(@authors_file)
 
         expect(authors.all).to(eq(@expected_authors))
@@ -60,7 +60,7 @@ describe "Loading authors from a JSON file" do
     end
 
     context "when the authors have 1 or more publications" do
-      it "yields both authors" do
+      it "yields every author" do
         authors = Authors.load_from(@authors_file)
 
         expect(authors.all).to(eq(@expected_authors))
