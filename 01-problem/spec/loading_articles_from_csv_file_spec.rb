@@ -31,12 +31,14 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 1 article" do
     before(:each) do
-      doi = a_doi
-      journal = a_journal
-      author = an_author.of_publications(doi)
-      @journals = some_journals(journal)
-      @authors = some_authors(author)
-      @expected_article = some_articles([doi, journal, author])
+      dois = Array.new(1){a_doi}
+      journals = Array.new(1){a_journal}
+      authors = dois.collect{|doi| an_author.of_publications doi }
+      @journals = some_journals(*journals)
+      @authors = some_authors(*authors)
+      @expected_article = some_articles(
+      	[dois.first, journals.first, authors.first]
+      )
       write_to @article_csv, @expected_article.first
     end
 
@@ -52,7 +54,7 @@ describe "Loading articles from a CSV file" do
       journals = Array.new(2){a_journal}
       @journals = some_journals(*journals)
       dois = Array.new(2){a_doi}
-      authors = dois.collect{|doi| an_author.of_publications(doi)}
+      authors = dois.collect{|doi| an_author.of_publications doi}
       @authors = some_authors(*authors)
       @expected_articles = some_articles(
         [dois.first, journals.first, authors.first],
