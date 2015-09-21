@@ -31,18 +31,18 @@ describe "Loading articles from a CSV file" do
 
   context "when the file contains 1 article" do
     before(:each) do
-      dois = Array.new(1){a_doi}
       journals = Array.new(1){a_journal}
-      authors = dois.collect{|doi| an_author.of_publications doi }
       @journals = some_journals(*journals)
+      dois = Array.new(1){a_doi}
+      authors = dois.collect{|doi| an_author.of_publications doi }
       @authors = some_authors(*authors)
       @expected_article = some_articles(
       	*Array.new(1){|index| [dois[index], journals[index], authors[index]]}
       )
-      write_to @article_csv, @expected_article.first
+      write_to @article_csv, *@expected_article
     end
 
-    it "yields the article" do
+    it "yields every article" do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles.all).to contain_exactly(@expected_article)
@@ -62,7 +62,7 @@ describe "Loading articles from a CSV file" do
       write_to @article_csv, *@expected_articles
     end
 
-    it "yields both articles" do
+    it "yields every articles" do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles.all).to contain_exactly(@expected_articles)
@@ -79,7 +79,7 @@ describe "Loading articles from a CSV file" do
       @expected_articles = some_articles(
          *Array.new(3){|index| [dois[index], journals[index], authors[index]]}
       )
-      write_to(@article_csv, *@expected_articles)
+      write_to @article_csv, *@expected_articles
     end
     
     it "yields every article" do
