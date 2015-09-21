@@ -29,15 +29,17 @@ describe "Loading articles from a CSV file" do
     end
   end
 
-  context "when the file contains 1 article" do
+[1, 2, 3].each do |number_of|
+  context "when the file contains #{number_of} article(s)" do
     before(:each) do
-      journals = Array.new(1){a_journal}
+      journals = Array.new(number_of){a_journal}
       @journals = some_journals(*journals)
-      dois = Array.new(1){a_doi}
+      dois = Array.new(number_of){a_doi}
       authors = dois.collect{|doi| an_author.of_publications doi }
       @authors = some_authors(*authors)
       @expected_article = some_articles(
-      	*Array.new(1){|index| [dois[index], journals[index], authors[index]]}
+      	*Array.new(number_of){|index| 
+	   [dois[index], journals[index], authors[index]]}
       )
       write_to @article_csv, *@expected_article
     end
@@ -48,46 +50,7 @@ describe "Loading articles from a CSV file" do
       expect(articles.all).to contain_exactly(@expected_article)
     end
   end
-
-  context "when the file contains 2 articles" do
-    before :each do
-      journals = Array.new(2){a_journal}
-      @journals = some_journals(*journals)
-      dois = Array.new(2){a_doi}
-      authors = dois.collect{|doi| an_author.of_publications doi}
-      @authors = some_authors(*authors)
-      @expected_articles = some_articles(
-        *Array.new(2){|index| [dois[index], journals[index], authors[index]]}
-      )      
-      write_to @article_csv, *@expected_articles
-    end
-
-    it "yields every articles" do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
-
-      expect(articles.all).to contain_exactly(@expected_articles)
-    end
-  end
-
-  context "when the file contains many articles" do
-    before(:each) do
-      journals = Array.new(3){a_journal}
-      @journals = some_journals(*journals)
-      dois = Array.new(3){a_doi}
-      authors = dois.collect{ |doi| an_author.of_publications doi }
-      @authors = some_authors(*authors)
-      @expected_articles = some_articles(
-         *Array.new(3){|index| [dois[index], journals[index], authors[index]]}
-      )
-      write_to @article_csv, *@expected_articles
-    end
-    
-    it "yields every article" do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
-
-      expect(articles.all).to contain_exactly @expected_articles
-    end
-  end
+end
   
   context "when the file contains articles with missing journals" do
     before :each do
