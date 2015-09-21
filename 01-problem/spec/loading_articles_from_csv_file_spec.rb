@@ -78,10 +78,8 @@ describe "Loading articles from a CSV file" do
       authors = dois.collect{ |doi| an_author.of_publications doi }
       @authors = some_authors(*authors)
       @expected_articles = some_articles(
-        [dois.first, journals.first, authors.first],
-        [dois[1], journals[1], authors[1]],
-        [dois.last, journals.last, authors.last]
-      )      
+         *Array.new(3){|index| [dois[index], journals[index], authors[index]]}
+      )
       write_to(@article_csv, *@expected_articles)
     end
     
