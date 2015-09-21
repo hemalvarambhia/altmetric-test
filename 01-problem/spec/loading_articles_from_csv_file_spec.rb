@@ -83,9 +83,9 @@ describe "Loading articles from a CSV file" do
     end
     
     it "yields every article" do
-      articles = Articles.load_from(@article_csv, @journals, @authors).all
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
-      expect(articles).to contain_exactly @expected_articles
+      expect(articles.all).to contain_exactly @expected_articles
     end
   end
   
