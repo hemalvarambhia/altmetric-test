@@ -37,17 +37,17 @@ describe "Loading articles from a CSV file" do
       dois = Array.new(number_of){a_doi}
       authors = dois.collect{|doi| an_author.of_publications doi }
       @authors = some_authors(*authors)
-      @expected_article = some_articles(
+      @expected_articles = some_articles(
       	*Array.new(number_of){|index| 
 	   [dois[index], journals[index], authors[index]]}
       )
-      write_to @article_csv, *@expected_article
+      write_to @article_csv, *@expected_articles
     end
 
     it "yields every article" do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
-      expect(articles.all).to contain_exactly(@expected_article)
+      expect(articles.all).to contain_exactly(@expected_articles)
     end
   end
 end
