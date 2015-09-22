@@ -34,42 +34,39 @@ module ArticleHelper
   class Builder
     include GenerateDOI, AuthorHelper, JournalHelper
     def initialize
-      @attributes = {
-        doi: a_doi,
-        title: "::An Article::",
-        author: ["::Author::"],
-        journal: a_journal
-      }
+      @doi = a_doi
+      @authors = [an_author.of_publications(@doi)]
+      @journal = a_journal
     end
 
     def with_doi doi
-      @attributes = @attributes.merge({doi: doi})
+      @doi = doi
 
       self
     end
 
     def authored_by *author_builders
-      authors_of_article = author_builders.collect{|builder|
-        builder.build
-      }
-      @attributes = @attributes.merge(
-        {
-          author: authors_of_article.
-            collect{|author| author.name}
-        }
-      )
+      @authors = author_builders
 
       self
     end
 
     def published_in journal_builder
-      @attributes = @attributes.merge({journal: journal_builder.build})
+      @journal = journal_builder
 
       self
     end
 
     def build
-      Article.new @attributes
+      Article.new(
+          {
+              doi: @doi,
+              title: "::Title::",
+              author: @authors.
+                  collect{|author| author.of_publications(@doi).build}.
+                  collect{|author| author.name},
+              journal: @journal.build
+          })
     end
   end
 end
