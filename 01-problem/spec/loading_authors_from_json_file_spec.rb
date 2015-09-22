@@ -4,6 +4,10 @@ require_relative '../lib/authors'
 require_relative '../lib/doi'
 
 describe "Loading authors from a JSON file" do
+  before :each do
+    @authors_file = File.join(fixtures_dir, "authors.json")
+  end
+
   context "when the file does not exist" do
     it "raises an error" do
       expect(
@@ -12,11 +16,11 @@ describe "Loading authors from a JSON file" do
     end
   end
 
-  context "when the file has an empty JSON array" do
+  context "when the file has no authors" do
     it "yields no authors" do
-      authors = Authors.load_from(
-          File.join(fixtures_dir, "no_authors.json")
-      )
+      write_authors_to @authors_file
+
+      authors = Authors.load_from(@authors_file)
 
       expect(authors).to be_empty
     end
@@ -25,7 +29,6 @@ describe "Loading authors from a JSON file" do
   context "when an author has no publications" do
     before :each do
       authors = Array.new(1){ an_author.of_publications(*[]).build }
-      @authors_file = File.join(fixtures_dir, "authors.json")
       write_authors_to @authors_file, *authors
     end
 
@@ -41,7 +44,6 @@ describe "Loading authors from a JSON file" do
       context "when the author(s) has/have 1 or more publications" do
         before :each do
           @expected_authors = Array.new(number_of){ an_author.build }
-          @authors_file = File.join(fixtures_dir, "authors.json")
           write_authors_to @authors_file, *@expected_authors
         end
 
