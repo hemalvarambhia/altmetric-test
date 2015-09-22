@@ -19,10 +19,6 @@ class Authors
     @authors
   end
 
-  def last
-    @authors.last
-  end
-
   def each &block
     @authors.each &block
   end
