@@ -3,6 +3,21 @@ require_relative '../lib/journals'
 require_relative '../lib/file_not_found'
 
 describe "Loading journals from csv files" do
+  matcher :eq do |expected|
+    match do |journal|
+      are_equal = true
+      journal.each_index do |index|
+        are_equal = are_equal && are_equal?(expected[index], journal[index])
+      end
+
+      return expected.size == journal.size && are_equal
+    end
+
+    def are_equal?(expected, actual)
+      actual.issn == expected.issn && actual.title == expected.title
+    end
+  end
+
   context "when the file does not exist" do
     it "raises an error" do
       expect(lambda {
@@ -27,9 +42,8 @@ describe "Loading journals from csv files" do
           File.join(fixtures_dir, "one_journal.csv")
       )
 
-      expect(journals.size).to eq(1)
-      expect(journals.first).to(
-        eq(Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"))
+      expect(journals.all).to(
+        eq([Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner")])
       )
     end
   end
@@ -40,10 +54,11 @@ describe "Loading journals from csv files" do
           File.join(fixtures_dir, "two_journals.csv")
       )
 
-      expect(journals.first).to(
-        eq(Journal.new(ISSN.new("0024-9319"), "Bartell-Collins")))
-      expect(journals.last).to(
-        eq(Journal.new(ISSN.new("0032-1478"), "Sporer, Kihn and Turner")))
+      expect(journals.all).to(
+        eq([
+               Journal.new(ISSN.new("0024-9319"), "Bartell-Collins"),
+               Journal.new(ISSN.new("0032-1478"), "Sporer, Kihn and Turner")
+           ]))
     end
   end
 
@@ -53,14 +68,12 @@ describe "Loading journals from csv files" do
           File.join(fixtures_dir, "many_journals.csv")
       )
 
-      expect(journals.first).to(
-        eq(Journal.new(ISSN.new("0378-5955"), "Bartell-Collins"))
-      )
-      expect(journals.all[1]).to(
-        eq(Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"))
-      )
-      expect(journals.last).to(
-        eq(Journal.new(ISSN.new("0032-1478"), "Durgan Group"))
+      expect(journals.all).to(
+        eq([
+               Journal.new(ISSN.new("0378-5955"), "Bartell-Collins"),
+               Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"),
+               Journal.new(ISSN.new("0032-1478"), "Durgan Group")
+           ])
       )
     end
   end
