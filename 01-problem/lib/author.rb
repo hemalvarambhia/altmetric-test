@@ -9,6 +9,10 @@ class Author
     @publications.any?
   end
 
+  def published?(doi)
+    @publications.include? doi
+  end
+
   def == other
     @publications == other.publications && @name == other.name
   end

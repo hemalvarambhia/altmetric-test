@@ -2,6 +2,7 @@ require 'json'
 require_relative './doi'
 require_relative './author'
 class Authors
+  include Enumerable
   def initialize(authors)
     @authors = authors || []
   end
@@ -18,16 +19,16 @@ class Authors
     @authors
   end
 
-  def first
-    @authors.first
-  end
-
   def last
     @authors.last
   end
 
+  def each &block
+    @authors.each &block
+  end
+
   def author_of doi
-    @authors.select{|author| author.publications.include?(doi)}
+    find_all{ |author| author.published? doi }
   end
 
   def self.load_from file_name
