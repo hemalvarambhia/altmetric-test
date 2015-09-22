@@ -18,19 +18,22 @@ describe "Loading journals from csv files" do
     end
   end
 
+  before :each do
+    @authors_file = File.join(fixtures_dir, "journals.csv")
+  end
+
   context "when the file does not exist" do
     it "raises an error" do
       expect(lambda { Journals.load_from("non_existent.csv") }).to(
-          raise_error(FileNotFound))
+      raise_error(FileNotFound))
     end
   end
 
   context "when the file has no journals (just headers)" do
     it "loads no journals" do
-      write_journals_to File.join(fixtures_dir, "journals.csv"), *[]
-      journals = Journals.load_from(
-          File.join(fixtures_dir, "journals.csv")
-      )
+      write_journals_to @authors_file, *[]
+
+      journals = Journals.load_from(@authors_file)
 
       expect(journals).to be_empty
     end
@@ -40,11 +43,11 @@ describe "Loading journals from csv files" do
     context "when the file has #{number_of} journal" do
       before :each do
         @expected_journals = Array.new(number_of){ a_journal.build }
-        write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
+        write_journals_to @authors_file, *@expected_journals
       end
 
       it "loads every article" do
-        journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
+        journals = Journals.load_from(@authors_file)
 
         expect(journals.all).to(eq(@expected_journals))
       end
