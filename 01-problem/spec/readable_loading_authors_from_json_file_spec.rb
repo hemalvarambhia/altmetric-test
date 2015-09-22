@@ -36,50 +36,20 @@ describe "Loading authors from a JSON file" do
     end
   end
 
-  context "when the file consists of 1 author" do
-    context "when that author has 1 or more publications" do
-      before :each do
-        @expected_authors = Array.new(1){ an_author.build }
-        @authors_file = File.join(fixtures_dir, "authors.json")
-        write_authors_to @authors_file, *@expected_authors
-      end
+  [1, 2, 4].each do |number_of|
+    context "when the file consists of #{number_of} author(s)" do
+      context "when the author(s) has/have 1 or more publications" do
+        before :each do
+          @expected_authors = Array.new(number_of){ an_author.build }
+          @authors_file = File.join(fixtures_dir, "authors.json")
+          write_authors_to @authors_file, *@expected_authors
+        end
 
-      it "yields every author" do
-        authors = Authors.load_from(@authors_file)
+        it "yields every author" do
+          authors = Authors.load_from(@authors_file)
 
-        expect(authors.all).to(eq(@expected_authors))
-      end
-    end
-  end
-
-  context "when the file consists of 2 authors" do
-    before :each do
-      @expected_authors = Array.new(2){ an_author.build }
-      @authors_file = File.join(fixtures_dir, "authors.json")
-      write_authors_to @authors_file, *@expected_authors
-    end
-
-    context "when the authors have 1 or more publications" do
-      it "yields every author" do
-        authors = Authors.load_from(@authors_file)
-
-        expect(authors.all).to(eq(@expected_authors))
-      end
-    end
-  end
-
-  context "when the file consists of 4 authors" do
-    before :each do
-      @expected_authors = Array.new(4){ an_author.build }
-      @authors_file = File.join(fixtures_dir, "authors.json")
-      write_authors_to @authors_file, *@expected_authors
-    end
-
-    context "when the authors have 1 or more publications" do
-      it "yields every author" do
-        authors = Authors.load_from(@authors_file)
-
-        expect(authors.all).to(eq(@expected_authors))
+          expect(authors.all).to(eq(@expected_authors))
+        end
       end
     end
   end
