@@ -3,6 +3,9 @@ require_relative './doi'
 require_relative './author'
 class Authors
   include Enumerable
+  extend Forwardable
+  def_delegator :@authors, :[]
+
   def initialize(authors)
     @authors = authors || []
   end
