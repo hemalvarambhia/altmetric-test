@@ -28,7 +28,7 @@ class Authors
   end
 
   def author_of doi
-    find_all{ |author| author.published? doi }
+    Authors.new find_all{ |author| author.published? doi }
   end
 
   def self.load_from file_name
