@@ -17,11 +17,7 @@ module JournalHelper
   end
 
   def some_journals *journal_builders
-    Journals.new(journal_builders.
-      collect {|builder|
-        builder.build
-      }
-    )
+    Journals.new(journal_builders.collect {|builder| builder.build })
   end
   
   def a_journal
