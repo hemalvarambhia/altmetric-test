@@ -41,4 +41,8 @@ class Articles
   def empty?
     @articles.empty?
   end
+
+  def size
+    @articles.size
+  end
 end
