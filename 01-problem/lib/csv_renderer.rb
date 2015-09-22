@@ -4,9 +4,7 @@ class CSVRenderer
   def render articles
     CSV.generate do |csv|
       csv << header
-      articles.all.collect{ |article|
-        csv << as_array(article)
-      }
+      articles.collect{ |article| csv << as_array(article) }
     end
   end
 
