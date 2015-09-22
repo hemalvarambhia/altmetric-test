@@ -34,10 +34,11 @@ module ArticleHelper
   class Builder
     include GenerateDOI, AuthorHelper, JournalHelper
     def initialize
+      doi = a_doi
       @attributes = {
-        doi: a_doi,
+        doi: doi,
         title: "::An Article::",
-        author: an_author,
+        author: [an_author.of_publications(doi).build.name],
         journal: a_journal
       }
     end
