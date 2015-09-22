@@ -35,42 +35,18 @@ describe "Loading journals from csv files" do
     end
   end
 
-  context "when the file has 1 journal" do
-    before :each do
-      @expected_journals = Array.new(1){ a_journal.build }
-      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
-    end
+  [1, 2, 3].each do |number_of|
+    context "when the file has #{number_of} journal" do
+      before :each do
+        @expected_journals = Array.new(number_of){ a_journal.build }
+        write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
+      end
 
-    it "loads every article" do
-      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
+      it "loads every article" do
+        journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
 
-      expect(journals.all).to(eq(@expected_journals))
-    end
-  end
-
-  context "when the file has 2 journals" do
-    before :each do
-      @expected_journals = Array.new(2){ a_journal.build }
-      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
-    end
-
-    it "loads every journals" do
-      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
-
-      expect(journals.all).to(eq(@expected_journals))
-    end
-  end
-
-  context "when the file has 3 journals" do
-    before :each do
-      @expected_journals = Array.new(3) { a_journal.build }
-      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
-    end
-
-    it "loads every journal" do
-      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
-
-      expect(journals.all).to(eq(@expected_journals))
+        expect(journals.all).to(eq(@expected_journals))
+      end
     end
   end
 end
