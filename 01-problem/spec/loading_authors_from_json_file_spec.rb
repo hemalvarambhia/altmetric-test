@@ -4,6 +4,22 @@ require_relative '../lib/authors'
 require_relative '../lib/doi'
 
 describe "Loading authors from a JSON file" do
+
+  matcher :eq do |expected|
+    match do |authors|
+      are_equal = true
+      authors.each_with_index do |author, index|
+        are_equal = are_equal && are_equal?(expected[index], author)
+      end
+
+      return expected.size == authors.size && are_equal
+    end
+
+    def are_equal?(expected, actual)
+      actual == expected
+    end
+  end
+
   before :each do
     @authors_file = File.join(fixtures_dir, "authors.json")
   end
@@ -43,14 +59,14 @@ describe "Loading authors from a JSON file" do
     context "when the file consists of #{number_of} author(s)" do
       context "when the author(s) has/have 1 or more publications" do
         before :each do
-          @expected_authors = Array.new(number_of){ an_author.build }
+          @expected_authors = some_authors *Array.new(number_of){ an_author }
           write_authors_to @authors_file, *@expected_authors
         end
 
         it "yields every author" do
           authors = Authors.load_from(@authors_file)
 
-          expect(authors.all).to(eq(@expected_authors))
+          expect(authors).to(eq(@expected_authors))
         end
       end
     end
