@@ -1,6 +1,8 @@
 require_relative '../lib/file_not_found'
 require_relative './article'
 class Articles
+  include Enumerable
+
   def initialize(articles)
     @articles = articles || []
   end
@@ -25,21 +27,16 @@ class Articles
                     ISSN.new(csv["ISSN"])))
       end
     end
-    Articles.new(
-        articles
-    )
+
+    return Articles.new(articles)
   end
 
   def all
     @articles
   end
 
-  def first
-    @articles.first
-  end
-
-  def last
-    @articles.last
+  def each &block
+    @articles.each &block
   end
 
   def empty?

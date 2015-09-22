@@ -3,26 +3,22 @@ require_relative './file_not_found'
 require_relative './journal'
 require_relative './issn'
 class Journals
+  include Enumerable
+
   def initialize journals
     @journals = journals || []
   end
 
   def find_journal_for required_issn
-    @journals.detect{|journal|
-      journal.issn == required_issn
-    }
-  end
-
-  def first
-    @journals.first
-  end
-
-  def last
-    @journals.last
+    find {|journal| journal.issn == required_issn }
   end
 
   def all
     @journals
+  end
+
+  def each &block
+    @journals.each &block
   end
 
   def empty?
