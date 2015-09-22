@@ -31,7 +31,7 @@ describe "Loading journals from csv files" do
 
   context "when the file has no journals (just headers)" do
     it "loads no journals" do
-      write_journals_to @authors_file, *[]
+      write_journals_to @authors_file
 
       journals = Journals.load_from(@authors_file)
 
