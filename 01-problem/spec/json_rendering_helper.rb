@@ -1,7 +1,7 @@
 require_relative '../lib/json_renderer'
 module JSONRenderingHelper
   def expected_format articles
-    articles.all.collect{|article|
+    articles.collect{|article|
       {
           "doi" => article.doi.to_s,
           "title" => article.title,

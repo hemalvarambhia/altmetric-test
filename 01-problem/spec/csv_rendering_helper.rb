@@ -1,7 +1,7 @@
 require_relative '../lib/csv_renderer'
 module CSVRenderingHelper
   def expected_format(articles)
-    articles.all.collect do |article|
+    articles.collect do |article|
       [
           article.doi.to_s,
           article.title,
