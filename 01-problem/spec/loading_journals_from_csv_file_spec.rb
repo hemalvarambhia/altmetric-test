@@ -37,44 +37,41 @@ describe "Loading journals from csv files" do
   end
 
   context "when the file has 1 journal" do
-    it "loads that article" do
-      journals = Journals.load_from(
-          File.join(fixtures_dir, "one_journal.csv")
-      )
+    before :each do
+      @expected_journals = Array.new(1){ a_journal.build }
+      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
+    end
 
-      expect(journals.all).to(
-        eq([Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner")])
-      )
+    it "loads every article" do
+      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
+
+      expect(journals.all).to(eq(@expected_journals))
     end
   end
 
   context "when the file has 2 journals" do
-    it "loads both journals" do
-      journals = Journals.load_from(
-          File.join(fixtures_dir, "two_journals.csv")
-      )
+    before :each do
+      @expected_journals = Array.new(2){ a_journal.build }
+      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
+    end
 
-      expect(journals.all).to(
-        eq([
-               Journal.new(ISSN.new("0024-9319"), "Bartell-Collins"),
-               Journal.new(ISSN.new("0032-1478"), "Sporer, Kihn and Turner")
-           ]))
+    it "loads every journals" do
+      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
+
+      expect(journals.all).to(eq(@expected_journals))
     end
   end
 
-  context "when the file has many journals" do
-    it "loads every journal" do
-      journals = Journals.load_from(
-          File.join(fixtures_dir, "many_journals.csv")
-      )
+  context "when the file has 3 journals" do
+    before :each do
+      @expected_journals = Array.new(3) { a_journal.build }
+      write_journals_to File.join(fixtures_dir, "journals.csv"), *@expected_journals
+    end
 
-      expect(journals.all).to(
-        eq([
-               Journal.new(ISSN.new("0378-5955"), "Bartell-Collins"),
-               Journal.new(ISSN.new("0024-9319"), "Sporer, Kihn and Turner"),
-               Journal.new(ISSN.new("0032-1478"), "Durgan Group")
-           ])
-      )
+    it "loads every journal" do
+      journals = Journals.load_from(File.join(fixtures_dir, "journals.csv"))
+
+      expect(journals.all).to(eq(@expected_journals))
     end
   end
 end
