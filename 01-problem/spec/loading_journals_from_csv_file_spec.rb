@@ -20,9 +20,8 @@ describe "Loading journals from csv files" do
 
   context "when the file does not exist" do
     it "raises an error" do
-      expect(lambda {
-               Journals.load_from("non_existent.csv")
-             }).to raise_error(FileNotFound)
+      expect(lambda { Journals.load_from("non_existent.csv") }).to(
+          raise_error(FileNotFound))
     end
   end
 
