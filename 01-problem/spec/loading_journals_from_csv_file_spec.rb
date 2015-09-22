@@ -27,8 +27,9 @@ describe "Loading journals from csv files" do
 
   context "when the file has no journals (just headers)" do
     it "loads no journals" do
+      write_journals_to File.join(fixtures_dir, "journals.csv"), *[]
       journals = Journals.load_from(
-          File.join(fixtures_dir, "no_journals.csv")
+          File.join(fixtures_dir, "journals.csv")
       )
 
       expect(journals).to be_empty
