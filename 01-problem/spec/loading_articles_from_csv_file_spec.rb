@@ -2,6 +2,26 @@ require 'spec_helper'
 require_relative '../lib/articles'
 describe "Loading articles from a CSV file" do
   include GenerateDOI
+
+  matcher :eq do |expected|
+    match do |articles|
+      are_equal = true
+      articles.each_index do |index|
+        are_equal = are_equal && are_equal?(expected[index], articles[index])
+      end
+
+      return expected.size == articles.size && are_equal
+    end
+
+    def are_equal?(expected, actual)
+      actual.doi == expected.doi &&
+          actual.title == expected.title &&
+          actual.author == expected.author &&
+          actual.journal_published_in.issn == expected.journal_published_in.issn &&
+          actual.journal_published_in.title == expected.journal_published_in.title
+    end
+  end
+
   before(:each) do
     @article_csv = File.join(fixtures_dir, "articles.csv")
   end
@@ -46,7 +66,7 @@ describe "Loading articles from a CSV file" do
     it "yields every article" do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
-      expect(articles.all).to have_loaded(@expected_articles)
+      expect(articles.all).to eq(@expected_articles)
     end
   end
 end
