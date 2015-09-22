@@ -63,7 +63,7 @@ module ArticleHelper
               doi: @doi,
               title: "::Title::",
               author: @authors.
-                  collect{|author| author.of_publications(@doi).build}.
+                  collect{|author| author.build}.
                   collect{|author| author.name},
               journal: @journal.build
           })
