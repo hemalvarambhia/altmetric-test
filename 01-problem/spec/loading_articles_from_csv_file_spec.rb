@@ -55,11 +55,10 @@ describe "Loading articles from a CSV file" do
       journals = Array.new(number_of){a_journal}
       @journals = some_journals(*journals)
       dois = Array.new(number_of){a_doi}
-      authors = dois.collect{|doi| an_author.of_publications doi }
+      authors = Array.new(number_of){|index| 
+         an_author.of_publications dois[index] }
       @authors = some_authors(*authors)
-      @expected_articles = some_articles(
-      	*Array.new(number_of){|index| [dois[index], journals[index], authors[index]]}
-      )
+      @expected_articles = some_articles(*dois.zip(journals, authors))
       write_to @article_csv, *@expected_articles
     end
 
