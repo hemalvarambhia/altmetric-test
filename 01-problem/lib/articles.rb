@@ -15,16 +15,15 @@ class Articles
     articles = []
     CSV.foreach(file_name, {headers: true}) do |csv|
       doi = DOI.new(csv["DOI"])
-      journal = journals.find_journal_for(ISSN.new(csv["ISSN"]))
+      journal = journals.find{ |journal| journal.issn == ISSN.new(csv["ISSN"])}
       article_authors = authors.author_of(doi)
       if journal and article_authors.any?
         articles << Article.new(
             doi: doi,
             title: csv["Title"],
             author: article_authors.collect{|author| author.name },
-            journal: journals.
-                find_journal_for(
-                    ISSN.new(csv["ISSN"])))
+            journal: journal
+        )
       end
     end
 
