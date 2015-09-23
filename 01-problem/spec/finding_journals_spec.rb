@@ -11,7 +11,7 @@ describe "Finding journals by ISSN" do
           a_journal
       )
 
-      journal = journals.find_journal_for(issn_to_find)
+      journal = journals.find_journal_with(issn_to_find)
 
       expect(journal).to have_issn(issn_to_find)
     end
@@ -25,7 +25,7 @@ describe "Finding journals by ISSN" do
             a_journal
         )
         
-        journal = journals.find_journal_for(issn_to_find)
+        journal = journals.find_journal_with(issn_to_find)
 
         expect(journal).to(have_issn(issn_to_find))
       end
@@ -36,7 +36,7 @@ describe "Finding journals by ISSN" do
     it "returns no journal" do
       journals = some_journals(a_journal, a_journal, a_journal)
 
-      non_existent = journals.find_journal_for(ISSN.new("0378-5955"))
+      non_existent = journals.find_journal_with(ISSN.new("0378-5955"))
 
       expect(non_existent).to be_nil
     end
