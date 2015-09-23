@@ -5,17 +5,11 @@ class Authors
   include Enumerable
   extend Forwardable
   def_delegator :@authors, :[]
+  def_delegator :@authors, :empty?
+  def_delegator :@authors, :size
 
   def initialize(authors)
     @authors = authors || []
-  end
-
-  def empty?
-    @authors.empty?
-  end
-
-  def size
-    @authors.size
   end
 
   def all

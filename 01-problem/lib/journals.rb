@@ -6,7 +6,8 @@ class Journals
   include Enumerable
   extend Forwardable
   def_delegator :@journals, :[]
-
+  def_delegator :@journals, :empty?
+  def_delegator :@journals, :size
 
   def initialize journals
     @journals = journals || []
@@ -22,14 +23,6 @@ class Journals
 
   def each &block
     @journals.each &block
-  end
-
-  def empty?
-    @journals.empty?
-  end
-
-  def size
-    @journals.size
   end
 
   def self.load_from(file_name)

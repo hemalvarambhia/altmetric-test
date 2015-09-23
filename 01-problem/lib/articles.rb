@@ -4,6 +4,9 @@ class Articles
   include Enumerable
   extend Forwardable
   def_delegator :@articles, :[]
+  def_delegator :@articles, :empty?
+  def_delegator :@articles, :size
+
 
   def initialize(articles)
     @articles = articles || []
@@ -38,13 +41,5 @@ class Articles
 
   def each &block
     @articles.each &block
-  end
-
-  def empty?
-    @articles.empty?
-  end
-
-  def size
-    @articles.size
   end
 end
