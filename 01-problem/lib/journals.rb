@@ -26,11 +26,8 @@ class Journals
       raise FileNotFound.new(file_name)
     end
 
-    journals = []
-    CSV.foreach(file_name, {headers: true}) do |csv_row|
-      journals << Journal.new(
-          ISSN.new(csv_row["ISSN"]),
-          csv_row["Title"])
+    journals = CSV.read(file_name, {headers: true}).collect do |row|
+      Journal.new(ISSN.new(row["ISSN"]), row["Title"])
     end
 
     return Journals.new(journals)
