@@ -18,7 +18,7 @@ class Articles
     end
 
     complete_rows = CSV.read(file_name, {headers: true}).select do |row|
-      complete?(row, journals, authors)
+      has_complete_information?(row, journals, authors)
     end
 
     articles = complete_rows.collect do |row|
@@ -42,9 +42,10 @@ class Articles
 
   private
 
-  def self.complete?(row, journals, authors)
+  def self.has_complete_information?(row, journals, authors)
     doi = DOI.new(row["DOI"])
-    journals.has_journal_with?(ISSN.new(row["ISSN"])) and
+    required_issn = ISSN.new(row["ISSN"])
+    journals.any?{|journal| journal.issn == required_issn} and
         authors.any? { |author| author.published?(doi) }
   end
 end
