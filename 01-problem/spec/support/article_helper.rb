@@ -1,5 +1,6 @@
 require 'csv'
 require_relative '../../lib/article'
+require_relative '../../lib/articles'
 require_relative './generate_doi'
 require_relative './author_helper'
 require_relative './journal_helper'
@@ -22,9 +23,11 @@ module ArticleHelper
   end
 
   def some_articles *article_data
-    article_data.collect { |doi, journal, author|
-      an_article.with_doi(doi).authored_by(author).published_in(journal)
-    }.collect{|article| article.build}
+    Articles.new(
+        article_data.collect { |doi, journal, author|
+          an_article.with_doi(doi).authored_by(author).published_in(journal)
+        }.collect{|article| article.build}
+    )
   end
 
   def an_article

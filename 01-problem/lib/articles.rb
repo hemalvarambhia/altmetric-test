@@ -2,6 +2,8 @@ require_relative '../lib/file_not_found'
 require_relative './article'
 class Articles
   include Enumerable
+  extend Forwardable
+  def_delegator :@articles, :[]
 
   def initialize(articles)
     @articles = articles || []
