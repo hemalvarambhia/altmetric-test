@@ -12,8 +12,7 @@ class Articles
     @articles = articles || []
   end
 
-  def self.load_from(
-      file_name, journals, authors)
+  def self.load_from(file_name, journals, authors)
     if not File.exists?(file_name)
       raise FileNotFound.new(file_name)
     end
