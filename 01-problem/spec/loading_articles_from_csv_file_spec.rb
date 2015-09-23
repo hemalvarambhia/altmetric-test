@@ -52,18 +52,16 @@ describe "Loading articles from a CSV file" do
 [1, 2, 3].each do |number_of|
   context "when the file contains #{number_of} article(s)" do
     before(:each) do
-      journals = Array.new(number_of){a_journal}
-      @journals = some_journals(*journals)
+      @journals = Array.new(number_of){a_journal}
       dois = Array.new(number_of){a_doi}
-      authors = Array.new(number_of){|index| 
+      @authors = Array.new(number_of){|index|
          an_author.of_publications dois[index] }
-      @authors = some_authors(*authors)
-      @expected_articles = some_articles(*dois.zip(journals, authors))
+      @expected_articles = some_articles(*dois.zip(@journals, @authors))
       write_to @article_csv, *@expected_articles
     end
 
     it "yields every article" do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+      articles = Articles.load_from(@article_csv, some_journals(*@journals), some_authors(*@authors))
 
       expect(articles).to eq(@expected_articles)
     end
