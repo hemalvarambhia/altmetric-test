@@ -71,17 +71,17 @@ end
   
   context "when the file contains articles with missing journals" do
     before :each do
-      missing_journal = a_journal
       @journals = some_journals(a_journal, a_journal)
+      missing_journal = a_journal
       doi = a_doi
-      author = an_author.of_publications doi
-      @authors = some_authors(author)
+      @author = an_author.of_publications doi
       write_to(
-        @article_csv, some_articles([doi, missing_journal, author]).first)
+        @article_csv, some_articles([doi, missing_journal, @author]).first)
     end
 
     it "does not include those articles" do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+      articles = Articles.load_from(
+          @article_csv, some_journals(a_journal, a_journal), some_authors(@author))
 
       expect(articles).to be_empty
     end
