@@ -17,6 +17,10 @@ class Journals
     find {|journal| journal.issn == required_issn }
   end
 
+  def has_journal_with? issn
+    any?{ |journal| journal.issn == issn }
+  end
+
   def each &block
     @journals.each &block
   end

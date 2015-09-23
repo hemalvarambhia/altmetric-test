@@ -16,22 +16,24 @@ class Articles
     if not File.exists?(file_name)
       raise FileNotFound.new(file_name)
     end
-    articles =
-        CSV.read(file_name, {headers: true}).select do |csv|
-          doi = DOI.new(csv["DOI"])
-          journals.any?{ |journal| journal.issn == ISSN.new(csv["ISSN"]) } and
+
+    complete_rows = CSV.read(file_name, {headers: true}).select do |row|
+          doi = DOI.new(row["DOI"])
+          journals.has_journal_with?(ISSN.new(row["ISSN"])) and
               authors.any?{|author| author.published?(doi) }
-        end.collect do |csv|
-          doi = DOI.new(csv["DOI"])
-          journal = journals.find_journal_with(ISSN.new(csv["ISSN"]))
-          article_authors = authors.author_of(doi).collect{|author| author.name }
-          Article.new(
-              doi: doi,
-              title: csv["Title"],
-              author: article_authors,
-              journal: journal
-          )
-        end
+    end
+
+    articles = complete_rows.collect do |row|
+      doi = DOI.new(row["DOI"])
+      journal = journals.find_journal_with(ISSN.new(row["ISSN"]))
+      article_authors = authors.author_of(doi).collect{|author| author.name }
+      Article.new(
+          doi: doi,
+          title: row["Title"],
+          author: article_authors,
+          journal: journal
+      )
+    end
 
     return Articles.new(articles)
   end
