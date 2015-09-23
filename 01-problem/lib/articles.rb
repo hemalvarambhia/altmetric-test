@@ -45,7 +45,6 @@ class Articles
   def self.has_complete_information?(row, journals, authors)
     doi = DOI.new(row["DOI"])
     required_issn = ISSN.new(row["ISSN"])
-    journals.any?{|journal| journal.issn == required_issn} and
-        authors.any? { |author| author.published?(doi) }
+    journals.has_journal_with?(required_issn) and authors.author_of(doi).any?
   end
 end
