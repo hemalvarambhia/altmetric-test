@@ -12,10 +12,6 @@ class Authors
     @authors = authors || []
   end
 
-  def all
-    @authors
-  end
-
   def each &block
     @authors.each &block
   end

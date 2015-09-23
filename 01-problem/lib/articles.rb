@@ -34,10 +34,6 @@ class Articles
     return Articles.new(articles)
   end
 
-  def all
-    @articles
-  end
-
   def each &block
     @articles.each &block
   end
