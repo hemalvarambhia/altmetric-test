@@ -61,7 +61,8 @@ describe "Loading articles from a CSV file" do
     end
 
     it "yields every article" do
-      articles = Articles.load_from(@article_csv, some_journals(*@journals), some_authors(*@authors))
+      articles = Articles.load_from(
+          @article_csv, some_journals(*@journals), some_authors(*@authors))
 
       expect(articles).to eq(@expected_articles)
     end
