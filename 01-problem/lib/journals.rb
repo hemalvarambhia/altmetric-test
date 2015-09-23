@@ -13,7 +13,7 @@ class Journals
     @journals = journals || []
   end
 
-  def find_journal_for required_issn
+  def find_journal_with required_issn
     find {|journal| journal.issn == required_issn }
   end
 
