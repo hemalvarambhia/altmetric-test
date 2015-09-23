@@ -4,6 +4,9 @@ require_relative './journal'
 require_relative './issn'
 class Journals
   include Enumerable
+  extend Forwardable
+  def_delegator :@journals, :[]
+
 
   def initialize journals
     @journals = journals || []

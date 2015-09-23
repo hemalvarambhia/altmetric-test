@@ -4,13 +4,13 @@ require_relative '../lib/file_not_found'
 
 describe "Loading journals from csv files" do
   matcher :eq do |expected|
-    match do |journal|
+    match do |journals|
       are_equal = true
-      journal.each_index do |index|
-        are_equal = are_equal && are_equal?(expected[index], journal[index])
+      journals.each_with_index do |journal, index|
+        are_equal = are_equal && are_equal?(expected[index], journals[index])
       end
 
-      return expected.size == journal.size && are_equal
+      return expected.size == journals.size && are_equal
     end
 
     def are_equal?(expected, actual)
@@ -49,7 +49,7 @@ describe "Loading journals from csv files" do
       it "loads every article" do
         journals = Journals.load_from(@authors_file)
 
-        expect(journals.all).to(eq(@expected_journals))
+        expect(journals).to(eq(@expected_journals))
       end
     end
   end
