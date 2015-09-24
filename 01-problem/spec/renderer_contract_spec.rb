@@ -45,9 +45,9 @@ shared_examples "a renderer" do
       it "renders the authors as a comma-separated string" do
         rendered_articles = render(@all_articles)
 
-        expected_authors = @multiple_authors.collect{|author| author.name}.join(", ")
+        author_names_comma_separated = @multiple_authors.collect{|author| author.name}.join(", ")
         expect(author_of_article(0, rendered_articles)).to(
-            eq(expected_authors))
+            eq(author_names_comma_separated))
       end
     end
   end
