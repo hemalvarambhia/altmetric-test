@@ -1,3 +1,4 @@
+require_relative './spec_helper'
 require_relative '../lib/doi'
 require_relative '../lib/issn'
 require_relative '../lib/journal'
@@ -20,17 +21,8 @@ shared_examples "a renderer" do
       before(:each) do
         @all_articles = Articles.new(
             [
-                Article.new(
-                    {
-                        doi: DOI.new("10.1234/altmetric0"),
-                        title: "Title of Article",
-                        author: ["Name of Author"],
-                        journal: Journal.new(
-                            ISSN.new("0378-5955"),
-                            "Name of Journal")
-                    }
-                )
-            ])
+                an_article
+            ].collect{|article| article.build})
       end
 
       it "contains the details of the article" do
@@ -46,12 +38,10 @@ shared_examples "a renderer" do
             [
                 Article.new(
                     {
-                        doi: DOI.new("10.1234/altmetric0"),
+                        doi: a_doi,
                         title: "Title of Article",
                         author: ["Author 1", "Author 2", "Author 3"],
-                        journal: Journal.new(
-                            ISSN.new("0378-5955"),
-                            "Name of Journal")
+                        journal: a_journal.build
 
                     }
                 )
@@ -71,27 +61,9 @@ shared_examples "a renderer" do
     before(:each) do
       @all_articles = Articles.new(
           [
-              Article.new(
-                  {
-                      doi: DOI.new("10.1234/altmetric0"),
-                      title: "Title of Article",
-                      author: ["Name of Author"],
-                      journal: Journal.new(
-                          ISSN.new("0378-5955"),
-                          "Name of Journal")
-                  }
-              ),
-              Article.new(
-                  {
-                      doi: DOI.new("10.1234/altmetric1"),
-                      title: "Different Title",
-                      author: ["Different Author"],
-                      journal: Journal.new(
-                          ISSN.new("0024-9319"),
-                          "Different Journal")
-                  }
-              )
-          ])
+              an_article,
+              an_article
+          ].collect{|article| article.build})
     end
 
     it "contains the details of both articles" do
@@ -105,37 +77,10 @@ shared_examples "a renderer" do
     before(:each) do
       @all_articles = Articles.new(
           [
-              Article.new(
-                  {
-                      doi: DOI.new("10.1234/altmetric0"),
-                      title: "Title of Article",
-                      author: ["Name of Author"],
-                      journal: Journal.new(
-                          ISSN.new("0378-5955"),
-                          "Name of Journal")
-                  }
-              ),
-              Article.new(
-                  {
-                      doi: DOI.new("10.1234/altmetric1"),
-                      title: "Different Title",
-                      author: ["Different Author"],
-                      journal: Journal.new(
-                          ISSN.new("0024-9319"),
-                          "Different Journal")
-                  }
-              ),
-              Article.new(
-                  {
-                      doi: DOI.new("10.1234/altmetric2"),
-                      title: "Another Title",
-                      author: ["Another Author"],
-                      journal: Journal.new(
-                          ISSN.new("0032-1478"),
-                          "Another Journal")
-                  }
-              )
-          ])
+              an_article,
+              an_article,
+              an_article
+          ].collect{|article| article.build})
     end
 
     it "contains the details of every article" do
