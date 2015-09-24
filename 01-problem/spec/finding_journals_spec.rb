@@ -5,7 +5,7 @@ describe "Finding journals by ISSN" do
   context "when the article is found" do
     it "is returned" do
       issn_to_find = ISSN.new("0032-1478")  
-      journals = some_journals(
+      journals = journals(
           a_journal,
           a_journal.with_issn(issn_to_find),
           a_journal
@@ -19,7 +19,7 @@ describe "Finding journals by ISSN" do
     context "finding a journal for a different ISSN" do
       it "is returned" do
         issn_to_find = ISSN.new("0378-5955")
-        journals = some_journals(
+        journals = journals(
             a_journal,
             a_journal.with_issn(issn_to_find),
             a_journal
@@ -34,11 +34,15 @@ describe "Finding journals by ISSN" do
 
   context "when the journal cannot be found" do
     it "returns no journal" do
-      journals = some_journals(a_journal, a_journal, a_journal)
+      journals = journals(a_journal, a_journal, a_journal)
 
       non_existent = journals.find_journal_with(ISSN.new("0378-5955"))
 
       expect(non_existent).to be_nil
     end
+  end
+
+  def journals *journal_builders
+    Journals.new(journal_builders.collect {|builder| builder.build })
   end
 end
