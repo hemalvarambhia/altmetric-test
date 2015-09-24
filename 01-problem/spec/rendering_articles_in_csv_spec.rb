@@ -1,3 +1,4 @@
+require_relative 'spec_helper'
 require 'csv'
 require_relative './csv_rendering_helper'
 
@@ -26,15 +27,8 @@ describe "Rendering articles to CSV" do
     before(:each) do
       @all_articles = Articles.new(
           [
-              Article.new(
-                  doi: DOI.new("10.1234/altmetric52"),
-                  title: "Title of Article",
-                  author: ["Name of Author"],
-                  journal: Journal.new(
-                      ISSN.new("0032-1478"),
-                      "Title of Journal")
-              )
-          ])
+              an_article
+          ].collect{|article| article.build})
     end
 
     it "has a header" do
