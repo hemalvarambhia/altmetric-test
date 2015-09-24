@@ -68,7 +68,7 @@ end
       @journals = journals(3)
       doi = a_doi
       missing_author = an_author.who_published(doi).build
-      @authors = some_authors(an_author, an_author)
+      @authors = authors(3)
       write_to(
         @article_csv,
         *an_article_authored_by(missing_author, @journals.first)
