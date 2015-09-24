@@ -45,4 +45,10 @@ describe "Finding journals by ISSN" do
   def journals *journal_builders
     Journals.new(journal_builders.collect {|builder| builder.build })
   end
+
+  RSpec::Matchers.define :have_issn do |expected_issn|
+    match do |journal|
+      journal.issn == expected_issn
+    end
+  end
 end

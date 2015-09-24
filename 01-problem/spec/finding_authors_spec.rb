@@ -66,4 +66,11 @@ describe "Finding authors by their publications" do
   def authors(*builders)
     Authors.new builders.collect{|builder| builder.build}
   end
+
+  RSpec::Matchers.define :have_published do |publication|
+    match do |authors|
+      authors.size > 0 &&
+          authors.all?{|author| author.publications.include?(publication)}
+    end
+  end
 end
