@@ -76,4 +76,18 @@ describe "Loading authors from a JSON file" do
   def authors(*authors)
     Authors.new(authors.collect{|author| author.build})
   end
+
+  def write_authors_to authors_file, *authors
+    File.delete(authors_file) if File.exists?(authors_file)
+    authors_to_hash = authors.collect { |author|
+      {
+          "name" => author.name,
+          "articles" => author.publications
+      }
+    }
+
+    File.open(authors_file, "w") do |file|
+      file.puts authors_to_hash.to_json
+    end
+  end
 end
