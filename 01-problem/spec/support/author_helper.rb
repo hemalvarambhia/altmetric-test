@@ -32,7 +32,13 @@ module AuthorHelper
     end
 
     def of_publications(*dois)
-      @publications = dois.to_a
+      @publications += dois.to_a
+
+      self
+    end
+
+    def with_no_publications
+      @publications = []
 
       self
     end

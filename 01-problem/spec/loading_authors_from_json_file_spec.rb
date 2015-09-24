@@ -44,7 +44,7 @@ describe "Loading authors from a JSON file" do
 
   context "when an author has no publications" do
     before :each do
-      authors = Array.new(1){ an_author.of_publications(*[]).build }
+      authors = Array.new(1){ an_author.with_no_publications.build }
       write_authors_to @authors_file, *authors
     end
 
