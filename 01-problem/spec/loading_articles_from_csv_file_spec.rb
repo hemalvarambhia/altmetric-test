@@ -71,7 +71,7 @@ end
       @authors = some_authors(an_author, an_author)
       write_to(
         @article_csv,
-        an_article_authored_by(missing_author, @journals.first)
+        *an_article_authored_by(missing_author, @journals.first)
       )
     end
 
