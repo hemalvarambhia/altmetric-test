@@ -8,7 +8,7 @@ class Articles
   def_delegator :@articles, :size
 
 
-  def initialize(articles)
+  def initialize(articles = [])
     @articles = articles || []
   end
 

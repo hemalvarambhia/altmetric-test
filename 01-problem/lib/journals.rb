@@ -9,7 +9,7 @@ class Journals
   def_delegator :@journals, :empty?
   def_delegator :@journals, :size
 
-  def initialize journals
+  def initialize(journals = [])
     @journals = journals || []
   end
 
