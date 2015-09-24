@@ -16,10 +16,6 @@ module AuthorHelper
     end
   end
 
-  def some_authors(*builders)
-    Authors.new builders.collect{|builder| builder.build}
-  end
-
   def an_author
     Builder.new
   end
