@@ -26,7 +26,7 @@ class Journals
   end
 
   def self.load_from(file_name)
-    if not File.exists?(file_name)
+    unless File.exists?(file_name)
       raise FileNotFound.new(file_name)
     end
 
