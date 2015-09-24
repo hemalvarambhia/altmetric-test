@@ -62,8 +62,7 @@ end
     end
 
     it "does not include those articles" do
-      articles = Articles.load_from(
-          @article_csv, some_journals(a_journal, a_journal), some_authors(@author))
+      articles = Articles.load_from(@article_csv, @journals, some_authors(@author))
 
       expect(articles).to be_empty
     end
