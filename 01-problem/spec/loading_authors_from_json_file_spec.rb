@@ -5,21 +5,6 @@ require_relative '../lib/doi'
 
 describe "Loading authors from a JSON file" do
 
-  matcher :eq do |expected|
-    match do |authors|
-      are_equal = true
-      authors.each_with_index do |author, index|
-        are_equal = are_equal && are_equal?(expected[index], author)
-      end
-
-      return expected.size == authors.size && are_equal
-    end
-
-    def are_equal?(expected, actual)
-      actual == expected
-    end
-  end
-
   before :each do
     @authors_file = File.join(fixtures_dir, "authors.json")
   end
@@ -88,6 +73,21 @@ describe "Loading authors from a JSON file" do
 
     File.open(authors_file, "w") do |file|
       file.puts authors_to_hash.to_json
+    end
+  end
+
+  matcher :eq do |expected|
+    match do |authors|
+      are_equal = true
+      authors.each_with_index do |author, index|
+        are_equal = are_equal && are_equal?(expected[index], author)
+      end
+
+      return expected.size == authors.size && are_equal
+    end
+
+    def are_equal?(expected, actual)
+      actual == expected
     end
   end
 end
