@@ -13,9 +13,7 @@ class Articles
   end
 
   def self.load_from(file_name, journals, authors)
-    unless File.exists?(file_name)
-      raise FileNotFound.new(file_name)
-    end
+    raise FileNotFound.new(file_name) unless File.exists?(file_name)
 
     complete_rows = CSV.read(file_name, {headers: true}).select do |row|
       has_complete_information?(row, journals, authors)

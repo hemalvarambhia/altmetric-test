@@ -21,9 +21,7 @@ class Authors
   end
 
   def self.load_from file_name
-    unless File.exists?(file_name)
-      raise FileNotFound.new(file_name)
-    end
+    raise FileNotFound.new(file_name) unless File.exists?(file_name)
 
     authors_as_json = JSON.parse(
         File.open(file_name, "r").read)

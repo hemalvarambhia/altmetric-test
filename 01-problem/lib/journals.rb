@@ -26,9 +26,7 @@ class Journals
   end
 
   def self.load_from(file_name)
-    unless File.exists?(file_name)
-      raise FileNotFound.new(file_name)
-    end
+    raise FileNotFound.new(file_name) unless File.exists?(file_name)
 
     journals = CSV.read(file_name, {headers: true}).collect do |row|
       Journal.new(ISSN.new(row["ISSN"]), row["Title"])
