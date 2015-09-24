@@ -44,7 +44,7 @@ describe "Loading authors from a JSON file" do
 
   context "when an author has no publications" do
     before :each do
-      authors = some_authors an_author.with_no_publications
+      authors = authors an_author.with_no_publications
       write_authors_to @authors_file, *authors
     end
 
@@ -59,16 +59,21 @@ describe "Loading authors from a JSON file" do
     context "when the file consists of #{number_of} author(s)" do
       context "when the author(s) has/have 1 or more publications" do
         before :each do
-          @expected_authors = some_authors *Array.new(number_of){ an_author }
+          @expected_authors = authors *Array.new(number_of){ an_author }
           write_authors_to @authors_file, *@expected_authors
         end
 
         it "yields every author" do
           authors = Authors.load_from(@authors_file)
 
+          expect(authors.size).to be == number_of
           expect(authors).to(eq(@expected_authors))
         end
       end
     end
+  end
+
+  def authors(*authors)
+    Authors.new(authors.collect{|author| author.build})
   end
 end
