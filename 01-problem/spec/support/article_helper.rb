@@ -14,8 +14,8 @@ module ArticleHelper
     include GenerateDOI, AuthorHelper, JournalHelper
     def initialize
       @doi = a_doi
-      @authors = [an_author.of_publications(@doi)]
-      @journal = a_journal
+      @authors = [an_author.of_publications(@doi).build]
+      @journal = a_journal.build
     end
 
     def with_doi doi
@@ -24,14 +24,14 @@ module ArticleHelper
       self
     end
 
-    def authored_by *author_builders
-      @authors = author_builders
+    def authored_by *author
+      @authors = author
 
       self
     end
 
-    def published_in journal_builder
-      @journal = journal_builder
+    def published_in journal
+      @journal = journal
 
       self
     end
@@ -41,10 +41,8 @@ module ArticleHelper
           {
               doi: @doi,
               title: "::Title::",
-              author: @authors.
-                  collect{|author| author.build}.
-                  collect{|author| author.name},
-              journal: @journal.build
+              author: @authors.collect{|author| author.name},
+              journal: @journal
           })
     end
   end

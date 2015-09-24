@@ -33,16 +33,14 @@ describe "Loading articles from a CSV file" do
 [1, 2, 3].each do |number_of|
   context "when the file contains #{number_of} article(s)" do
     before(:each) do
-      @journals = Array.new(number_of){a_journal}
-      dois = Array.new(number_of){a_doi}
-      @authors = authors_of dois
-      @expected_articles = some_articles(dois)
+      @journals = journals(number_of)
+      @authors = authors(number_of)
+      @expected_articles = articles(@authors, @journals.first).first(number_of)
       write_to @article_csv, *@expected_articles
     end
 
     it "yields every article" do
-      articles = Articles.load_from(
-          @article_csv, some_journals(*@journals), some_authors(*@authors))
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to eq(@expected_articles)
     end
@@ -51,15 +49,11 @@ end
   
   context "when the file contains articles with missing journals" do
     before :each do
-      @journals = some_journals(a_journal, a_journal)
-      missing_journal = a_journal
-      doi = a_doi
-      article_authors = authors_of([doi])
-      @authors = some_authors *article_authors
-      write_to(
-        @article_csv,
-        an_article.with_doi(doi).authored_by(*article_authors).published_in(missing_journal).build
-      )
+      @journals = journals(3)
+      missing_journal = a_journal.build
+      @authors = authors(3)
+      articles = articles(@authors, missing_journal)
+      write_to(@article_csv, *articles)
     end
 
     it "does not include those articles" do
@@ -71,14 +65,13 @@ end
 
   context "when the file contains article with no authors" do
     before(:each) do
-      journal = a_journal
-      @journals = some_journals journal
+      @journals = journals(3)
       doi = a_doi
-      missing_author = an_author.of_publications(doi)
+      missing_author = an_author.of_publications(doi).build
       @authors = some_authors(an_author, an_author)
       write_to(
         @article_csv,
-        an_article.with_doi(doi).authored_by(missing_author).published_in(journal).build
+        an_article_authored_by(missing_author, @journals.first)
       )
     end
 
@@ -126,16 +119,31 @@ end
     end
   end
 
-  def some_articles dois
-    article_data = dois.zip(@journals, @authors)
+  def journals(number)
+    Journals.new(Array.new(number){a_journal.build})
+  end
+
+  def authors(number)
+     Authors.new(Array.new(number){an_author.build})
+  end
+
+  def articles authors, journal
     Articles.new(
-        article_data.collect { |doi, journal, author|
-          an_article.with_doi(doi).authored_by(author).published_in(journal)
-        }.collect{|article| article.build}
+        authors.collect{ |author|
+          author.publications.collect{ |doi|
+          an_article.with_doi(doi).authored_by(author).published_in(journal).build }
+        }.flatten
     )
   end
 
-  def authors_of publications
-    Array.new(publications.size){|index| an_author.of_publications publications[index] }
+  def an_article_authored_by(author, journal)
+    Articles.new(
+        [
+            an_article.
+                with_doi(author.publications.sample).
+                authored_by(author).
+                published_in(journal).build
+        ]
+    )
   end
 end
