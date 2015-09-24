@@ -14,7 +14,7 @@ module ArticleHelper
     include GenerateDOI, AuthorHelper, JournalHelper
     def initialize
       @doi = a_doi
-      @authors = [an_author.of_publications(@doi).build]
+      @authors = [an_author.who_published(@doi).build]
       @journal = a_journal.build
     end
 

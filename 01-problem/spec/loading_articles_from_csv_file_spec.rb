@@ -67,7 +67,7 @@ end
     before(:each) do
       @journals = journals(3)
       doi = a_doi
-      missing_author = an_author.of_publications(doi).build
+      missing_author = an_author.who_published(doi).build
       @authors = some_authors(an_author, an_author)
       write_to(
         @article_csv,

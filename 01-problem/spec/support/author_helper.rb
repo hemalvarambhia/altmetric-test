@@ -31,7 +31,7 @@ module AuthorHelper
       @publications = Array.new(3){|index| a_doi}
     end
 
-    def of_publications(*dois)
+    def who_published(*dois)
       @publications += dois.to_a
 
       self

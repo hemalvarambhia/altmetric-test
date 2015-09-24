@@ -11,7 +11,7 @@ describe "Finding authors by their publications" do
       authors = some_authors(
         an_author,
         an_author,
-        an_author.of_publications(publication)
+        an_author.who_published(publication)
       )
       
       authors = authors.author_of publication
@@ -26,7 +26,7 @@ describe "Finding authors by their publications" do
       authors = some_authors(
         an_author,
         an_author,
-        an_author.of_publications(publication)
+        an_author.who_published(publication)
       )
       
       authors = authors.author_of publication
@@ -39,9 +39,9 @@ describe "Finding authors by their publications" do
     it "yields them all" do
       publication = DOI.new("10.1234/altmetric171")
       authors = some_authors(
-        an_author.of_publications(a_doi, publication),
-        an_author.of_publications(publication),
-        an_author.of_publications(a_doi, publication, a_doi),
+        an_author.who_published(a_doi, publication),
+        an_author.who_published(publication),
+        an_author.who_published(a_doi, publication, a_doi),
         an_author
       )
 
