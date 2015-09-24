@@ -1,5 +1,4 @@
 require_relative '../../lib/author'
-require_relative '../../lib/authors'
 require_relative './generate_doi'
 module AuthorHelper
   def an_author

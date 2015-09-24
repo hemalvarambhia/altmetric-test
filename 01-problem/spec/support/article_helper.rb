@@ -1,6 +1,4 @@
-require 'csv'
 require_relative '../../lib/article'
-require_relative '../../lib/articles'
 require_relative './generate_doi'
 require_relative './author_helper'
 require_relative './journal_helper'
