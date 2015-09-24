@@ -49,6 +49,7 @@ describe "Loading journals from csv files" do
       it "loads every article" do
         journals = Journals.load_from(@authors_file)
 
+        expect(journals.size).to be == number_of
         expect(journals).to(eq(@expected_journals))
       end
     end
