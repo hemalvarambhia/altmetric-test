@@ -6,30 +6,6 @@ require_relative './author_helper'
 require_relative './journal_helper'
 
 module ArticleHelper
-  def write_to(file, *articles)
-    File.delete(file) if File.exists?(file)
-    CSV.open(file, "w") do |csv|
-      csv << ["DOI", "Title", "Author", "Journal", "ISSN"]
-      articles.each do |article|
-        csv << [
-          article.doi,
-          article.title,
-          article.author.join(", "),
-          article.journal_published_in.title,
-          article.journal_published_in.issn
-        ]
-      end
-    end
-  end
-
-  def some_articles *article_data
-    Articles.new(
-        article_data.collect { |doi, journal, author|
-          an_article.with_doi(doi).authored_by(author).published_in(journal)
-        }.collect{|article| article.build}
-    )
-  end
-
   def an_article
     Builder.new
   end

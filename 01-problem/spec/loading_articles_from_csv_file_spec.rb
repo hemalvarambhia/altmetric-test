@@ -35,9 +35,8 @@ describe "Loading articles from a CSV file" do
     before(:each) do
       @journals = Array.new(number_of){a_journal}
       dois = Array.new(number_of){a_doi}
-      @authors = Array.new(number_of){|index|
-         an_author.of_publications dois[index] }
-      @expected_articles = some_articles(*dois.zip(@journals, @authors))
+      @authors = authors_of dois
+      @expected_articles = some_articles(dois)
       write_to @article_csv, *@expected_articles
     end
 
@@ -57,7 +56,9 @@ end
       doi = a_doi
       @author = an_author.of_publications doi
       write_to(
-        @article_csv, some_articles([doi, missing_journal, @author]).first)
+        @article_csv,
+        an_article.with_doi(doi).authored_by(@author).published_in(missing_journal).build
+      )
     end
 
     it "does not include those articles" do
@@ -76,7 +77,9 @@ end
       missing_author = an_author.of_publications(doi)
       @authors = some_authors(an_author, an_author)
       write_to(
-        @article_csv, some_articles([doi, journal, missing_author]).first)
+        @article_csv,
+        an_article.with_doi(doi).authored_by(missing_author).published_in(journal).build
+      )
     end
 
     it "excludes those articles" do
@@ -103,5 +106,36 @@ end
           actual.journal_published_in.issn == expected.journal_published_in.issn &&
           actual.journal_published_in.title == expected.journal_published_in.title
     end
+  end
+
+  private
+
+  def write_to(file, *articles)
+    File.delete(file) if File.exists?(file)
+    CSV.open(file, "w") do |csv|
+      csv << ["DOI", "Title", "Author", "Journal", "ISSN"]
+      articles.each do |article|
+        csv << [
+            article.doi,
+            article.title,
+            article.author.join(", "),
+            article.journal_published_in.title,
+            article.journal_published_in.issn
+        ]
+      end
+    end
+  end
+
+  def some_articles dois
+    article_data = dois.zip(@journals, @authors)
+    Articles.new(
+        article_data.collect { |doi, journal, author|
+          an_article.with_doi(doi).authored_by(author).published_in(journal)
+        }.collect{|article| article.build}
+    )
+  end
+
+  def authors_of publications
+    Array.new(publications.size){|index| an_author.of_publications publications[index] }
   end
 end
