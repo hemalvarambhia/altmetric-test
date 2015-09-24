@@ -54,4 +54,17 @@ describe "Loading journals from csv files" do
       end
     end
   end
+
+  def write_journals_to(file, *journals)
+    File.delete(file) if File.exists?(file)
+    CSV.open(file, "w") do |csv|
+      csv << ["Title", "ISSN"]
+      journals.each do |journal|
+        csv << [
+            journal.title,
+            journal.issn
+        ]
+      end
+    end
+  end
 end

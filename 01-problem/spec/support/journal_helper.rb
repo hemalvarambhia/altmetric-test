@@ -3,19 +3,6 @@ require_relative './generate_issn'
 module JournalHelper
   include GenerateISSN
 
-  def write_journals_to(file, *journals)
-    File.delete(file) if File.exists?(file)
-    CSV.open(file, "w") do |csv|
-      csv << ["Title", "ISSN"]
-      journals.each do |journal|
-        csv << [
-            journal.title,
-            journal.issn
-        ]
-      end
-    end
-  end
-  
   def a_journal
     Builder.new(an_issn, "::Academic Journal::")
   end
