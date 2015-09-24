@@ -7,22 +7,7 @@ describe "Finding authors by their publications" do
   include GenerateDOI
   context "when there is 1 author of the publication" do
     it "yields the author" do
-      publication = DOI.new("10.1234/altmetric101")
-      authors = authors(
-        an_author,
-        an_author,
-        an_author.who_published(publication)
-      )
-      
-      authors = authors.author_of publication
-
-      expect(authors).to have_published publication
-    end
-  end
-
-  context "when there is another author for a different publication" do
-    it "yields that author" do
-      publication = DOI.new("10.1234/altmetric171")
+      publication = a_doi
       authors = authors(
         an_author,
         an_author,
