@@ -1,4 +1,4 @@
-require_relative '../../lib/journals'
+require_relative '../../lib/journal'
 require_relative './generate_issn'
 module JournalHelper
   include GenerateISSN
