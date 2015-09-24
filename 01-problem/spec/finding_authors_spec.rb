@@ -22,7 +22,7 @@ describe "Finding authors by their publications" do
 
   context "when there are several authors of the publication" do
     it "yields them all" do
-      publication = DOI.new("10.1234/altmetric171")
+      publication = a_doi
       authors = authors(
         an_author.who_published(a_doi, publication),
         an_author.who_published(publication),
@@ -39,7 +39,7 @@ describe "Finding authors by their publications" do
 
   context "when there are no authors of the publication" do
     it "yields none" do
-      publication = DOI.new("10.1234/altmetric999")
+      publication = a_doi
       authors = authors(an_author, an_author, an_author)
 
       author = authors.author_of publication
