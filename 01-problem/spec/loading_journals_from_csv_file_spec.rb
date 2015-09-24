@@ -3,21 +3,6 @@ require_relative '../lib/journals'
 require_relative '../lib/file_not_found'
 
 describe "Loading journals from csv files" do
-  matcher :eq do |expected|
-    match do |journals|
-      are_equal = true
-      journals.each_with_index do |journal, index|
-        are_equal = are_equal && are_equal?(expected[index], journals[index])
-      end
-
-      return expected.size == journals.size && are_equal
-    end
-
-    def are_equal?(expected, actual)
-      actual.issn == expected.issn && actual.title == expected.title
-    end
-  end
-
   before :each do
     @authors_file = File.join(fixtures_dir, "journals.csv")
   end
@@ -65,6 +50,21 @@ describe "Loading journals from csv files" do
             journal.issn
         ]
       end
+    end
+  end
+
+  matcher :eq do |expected|
+    match do |journals|
+      are_equal = true
+      journals.each_with_index do |journal, index|
+        are_equal = are_equal && are_equal?(expected[index], journals[index])
+      end
+
+      return expected.size == journals.size && are_equal
+    end
+
+    def are_equal?(expected, actual)
+      actual.issn == expected.issn && actual.title == expected.title
     end
   end
 end
