@@ -30,8 +30,8 @@ class Authors
     authors = authors_as_json.collect do |author_as_json|
       publications = author_as_json["articles"].collect{ |doi| DOI.new(doi) }
       Author.new(author_as_json["name"], publications)
-    end.select{|author| author.has_publications?}
+    end
 
-    return Authors.new(authors)
+    return Authors.new(authors.select{|author| author.has_publications?})
   end
 end
