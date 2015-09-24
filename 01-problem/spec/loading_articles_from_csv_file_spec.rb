@@ -54,15 +54,16 @@ end
       @journals = some_journals(a_journal, a_journal)
       missing_journal = a_journal
       doi = a_doi
-      @author = an_author.of_publications doi
+      article_authors = authors_of([doi])
+      @authors = some_authors *article_authors
       write_to(
         @article_csv,
-        an_article.with_doi(doi).authored_by(@author).published_in(missing_journal).build
+        an_article.with_doi(doi).authored_by(*article_authors).published_in(missing_journal).build
       )
     end
 
     it "does not include those articles" do
-      articles = Articles.load_from(@article_csv, @journals, some_authors(@author))
+      articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to be_empty
     end
