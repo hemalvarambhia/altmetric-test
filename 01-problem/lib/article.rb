@@ -1,3 +1,4 @@
+# Models the concept of an academic article published in a journal
 class Article
   attr_reader :title, :author, :doi, :journal
   def initialize(hash)
