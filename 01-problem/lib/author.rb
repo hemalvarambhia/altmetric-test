@@ -1,3 +1,4 @@
+# Model the author of articles
 class Author
   attr_reader :name, :publications
   def initialize(name, publications)
@@ -13,7 +14,7 @@ class Author
     @publications.include? doi
   end
 
-  def == other
+  def ==(other)
     @publications == other.publications && @name == other.name
   end
 end
