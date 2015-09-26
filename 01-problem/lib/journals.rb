@@ -19,7 +19,7 @@ class Journals
     find { |journal| journal.issn == required_issn }
   end
 
-  def has_journal_with?(issn)
+  def journal_with?(issn)
     any? { |journal| journal.issn == issn }
   end
 

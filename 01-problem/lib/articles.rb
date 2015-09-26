@@ -43,6 +43,6 @@ class Articles
   def self.complete_information?(row, journals, authors)
     doi = DOI.new(row['DOI'])
     required_issn = ISSN.new(row['ISSN'])
-    journals.has_journal_with?(required_issn) and authors.author_of(doi).any?
+    journals.journal_with?(required_issn) and authors.author_of(doi).any?
   end
 end
