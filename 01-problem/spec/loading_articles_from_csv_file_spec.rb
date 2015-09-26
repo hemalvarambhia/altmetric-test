@@ -98,17 +98,20 @@ end
 
     def are_equal?(expected, actual)
       actual.doi == expected.doi &&
-          actual.title == expected.title &&
-          actual.author == expected.author &&
-          actual.journal_published_in.issn == expected.journal_published_in.issn &&
-          actual.journal_published_in.title == expected.journal_published_in.title
+        actual.title == expected.title &&
+        actual.author == expected.author &&
+        actual.journal_published_in.issn ==
+        expected.journal_published_in.issn &&
+        actual.journal_published_in.title ==
+        expected.journal_published_in.title
     end
   end
-
+    
   private
 
   def write_to(file, *articles)
     File.delete(file) if File.exist?(file)
+
     CSV.open(file, 'w') do |csv|
       csv << ['DOI', 'Title', 'Author', 'Journal', 'ISSN']
       articles.each do |article|
