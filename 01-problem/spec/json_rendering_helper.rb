@@ -1,15 +1,17 @@
 require_relative '../lib/json_renderer'
+# Helper class that converts the articles to the expected
+# parsed format
 module JSONRenderingHelper
-  def expected_format articles
-    articles.collect{|article|
+  def expected_format(articles)
+    articles.map do |article|
       {
-          "doi" => article.doi.to_s,
-          "title" => article.title,
-          "author" => article.author.join(","),
-          "journal" => article.journal_published_in.title,
-          "issn" => article.journal_published_in.issn.to_s
+        'doi' => article.doi.to_s,
+        'title' => article.title,
+        'author' => article.author.join(','),
+        'journal' => article.journal_published_in.title,
+        'issn' => article.journal_published_in.issn.to_s
       }
-    }
+    end
   end
 
   def render(all_articles)
@@ -17,6 +19,6 @@ module JSONRenderingHelper
   end
 
   def author_of_article(index, rendered_articles)
-    rendered_articles[index]["author"]
+    rendered_articles[index]['author']
   end
 end
