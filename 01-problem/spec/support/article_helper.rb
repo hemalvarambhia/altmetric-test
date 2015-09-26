@@ -7,7 +7,7 @@ module ArticleHelper
   def an_article
     Builder.new
   end
-  # Builder class to build articles in a readable way
+  # Builder class to build Article in a way
   # that emphasises what is important in the test
   class Builder
     include GenerateDOI, AuthorHelper, JournalHelper
