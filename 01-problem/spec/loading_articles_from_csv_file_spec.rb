@@ -128,16 +128,16 @@ end
      Authors.new(Array.new(number) { an_author.build })
   end
 
-  def articles authors, journal
+  def articles(authors, journal)
     Articles.new(
-        authors.map { |author|
-          author.publications.map { |doi|
+        authors.map do |author|
+          author.publications.map do |doi|
             an_article
               .with_doi(doi)
               .authored_by(author)
               .published_in(journal).build
-          }
-        }.flatten
+          end
+        end.flatten
     )
   end
 
