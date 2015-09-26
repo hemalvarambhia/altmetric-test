@@ -114,7 +114,7 @@ describe 'Loading articles from a CSV file' do
     File.delete(file) if File.exist?(file)
 
     CSV.open(file, 'w') do |csv|
-      csv << ['DOI', 'Title', 'Author', 'Journal', 'ISSN']
+      csv << %w(DOI Title Author Journal ISSN)
       articles.each do |article|
         csv << [
           article.doi,
