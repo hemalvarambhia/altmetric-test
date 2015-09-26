@@ -9,5 +9,3 @@ RSpec.configure do |config|
   config.include AuthorHelper
   config.include ArticleHelper
 end
-
-
