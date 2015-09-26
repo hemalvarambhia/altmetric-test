@@ -6,10 +6,6 @@ class Author
     @publications = publications
   end
 
-  def has_publications?
-    @publications.any?
-  end
-
   def published?(doi)
     @publications.include? doi
   end
