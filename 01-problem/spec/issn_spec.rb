@@ -32,14 +32,14 @@ describe 'ISSNs' do
   end
 
   describe 'an ISSN with the dash in the wrong position' do
-    it "is invalid" do
+    it 'is invalid' do
       expect(lambda { ISSN.new('037-85955') }).to raise_error(InvalidISSN)
     end
   end
 
   describe 'an 8-digit ISSN without the dash' do
     it 'is valid' do
-       expect(lambda { ISSN.new('03785955') }).not_to raise_error
+      expect(lambda { ISSN.new('03785955') }).not_to raise_error
     end
 
     it 'includes the dash at instanciation' do
