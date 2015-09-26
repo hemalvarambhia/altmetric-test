@@ -33,7 +33,6 @@ describe 'Loading articles from a CSV file' do
     end
   end
 
-
   [1, 2, 3].each do |number_of|
     context "when the file contains #{number_of} article(s)" do
       before(:each) do
@@ -52,7 +51,7 @@ describe 'Loading articles from a CSV file' do
       end
     end
   end
-  
+
   context 'when the file contains articles with missing journals' do
     before :each do
       @journals = journals(3)
@@ -108,7 +107,7 @@ describe 'Loading articles from a CSV file' do
         expected.journal_published_in.title
     end
   end
-    
+
   private
 
   def write_to(file, *articles)
@@ -118,11 +117,11 @@ describe 'Loading articles from a CSV file' do
       csv << ['DOI', 'Title', 'Author', 'Journal', 'ISSN']
       articles.each do |article|
         csv << [
-            article.doi,
-            article.title,
-            article.author.join(', '),
-            article.journal_published_in.title,
-            article.journal_published_in.issn
+          article.doi,
+          article.title,
+          article.author.join(', '),
+          article.journal_published_in.title,
+          article.journal_published_in.issn
         ]
       end
     end
