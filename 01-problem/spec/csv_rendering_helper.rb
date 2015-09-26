@@ -1,13 +1,14 @@
 require_relative '../lib/csv_renderer'
+# Converts articles to the expected (CSV) format
 module CSVRenderingHelper
   def expected_format(articles)
-    articles.collect do |article|
+    articles.map do |article|
       [
-          article.doi.to_s,
-          article.title,
-          article.author.join(", "),
-          article.journal_published_in.title,
-          article.journal_published_in.issn.to_s
+        article.doi.to_s,
+        article.title,
+        article.author.join(', '),
+        article.journal_published_in.title,
+        article.journal_published_in.issn.to_s
       ]
     end
   end
