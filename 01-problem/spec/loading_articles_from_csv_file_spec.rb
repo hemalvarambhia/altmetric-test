@@ -1,29 +1,29 @@
 require 'spec_helper'
 require_relative '../lib/articles'
-describe "Loading articles from a CSV file" do
+describe 'Loading articles from a CSV file' do
   include GenerateDOI
 
   before(:each) do
-    @article_csv = File.join(fixtures_dir, "articles.csv")
+    @article_csv = File.join(fixtures_dir, 'articles.csv')
   end
   
-  context "when the file does not exist" do
-    it "raises an error" do
-      journals = double("Journals")
-      author_publications = double("Authors")
+  context 'when the file does not exist' do
+    it 'raises an error' do
+      journals = double('Journals')
+      author_publications = double('Authors')
       expect(lambda {Articles.load_from(
-                 "non_existent.csv",
+                 'non_existent.csv',
                  journals,
                  author_publications)}).to raise_error(FileNotFound)
     end
   end
 
-  context "when the file has no articles (just headers)" do
+  context 'when the file has no articles (just headers)' do
     before :each do
       write_to @article_csv
     end
     
-    it "yields no articles" do
+    it 'yields no articles' do
       articles = Articles.load_from(@article_csv, Journals.new, Articles.new)
 
       expect(articles).to be_empty
@@ -39,7 +39,7 @@ describe "Loading articles from a CSV file" do
       write_to @article_csv, *@expected_articles
     end
 
-    it "yields every article" do
+    it 'yields every article' do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles.size).to be == number_of
@@ -48,7 +48,7 @@ describe "Loading articles from a CSV file" do
   end
 end
   
-  context "when the file contains articles with missing journals" do
+  context 'when the file contains articles with missing journals' do
     before :each do
       @journals = journals(3)
       missing_journal = a_journal.build
@@ -57,14 +57,14 @@ end
       write_to(@article_csv, *articles)
     end
 
-    it "does not include those articles" do
+    it 'does not include those articles' do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to be_empty
     end
   end
 
-  context "when the file contains article with no authors" do
+  context 'when the file contains article with no authors' do
     before(:each) do
       @journals = journals(3)
       doi = a_doi
@@ -76,7 +76,7 @@ end
       )
     end
 
-    it "excludes those articles" do
+    it 'excludes those articles' do
       articles = Articles.load_from(@article_csv, @journals, @authors)
 
       expect(articles).to be_empty
@@ -106,8 +106,8 @@ end
 
   def write_to(file, *articles)
     File.delete(file) if File.exists?(file)
-    CSV.open(file, "w") do |csv|
-      csv << ["DOI", "Title", "Author", "Journal", "ISSN"]
+    CSV.open(file, 'w') do |csv|
+      csv << ['DOI', 'Title', 'Author', 'Journal', 'ISSN']
       articles.each do |article|
         csv << [
             article.doi,
@@ -121,30 +121,34 @@ end
   end
 
   def journals(number)
-    Journals.new(Array.new(number){a_journal.build})
+    Journals.new(Array.new(number) { a_journal.build })
   end
 
   def authors(number)
-     Authors.new(Array.new(number){an_author.build})
+     Authors.new(Array.new(number) { an_author.build })
   end
 
   def articles authors, journal
     Articles.new(
-        authors.collect{ |author|
-          author.publications.collect{ |doi|
-          an_article.with_doi(doi).authored_by(author).published_in(journal).build }
+        authors.map { |author|
+          author.publications.map { |doi|
+            an_article
+              .with_doi(doi)
+              .authored_by(author)
+              .published_in(journal).build
+          }
         }.flatten
     )
   end
 
   def an_article_authored_by(author, journal)
     Articles.new(
-        [
-            an_article.
-                with_doi(author.publications.sample).
-                authored_by(author).
-                published_in(journal).build
-        ]
+      [
+        an_article
+        .with_doi(author.publications.sample)
+        .authored_by(author)
+        .published_in(journal).build
+      ]
     )
   end
 end
