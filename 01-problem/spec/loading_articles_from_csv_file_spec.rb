@@ -11,10 +11,13 @@ describe 'Loading articles from a CSV file' do
     it 'raises an error' do
       journals = double('Journals')
       author_publications = double('Authors')
-      expect(lambda {Articles.load_from(
+      expect(lambda do
+               Articles.load_from(
                  'non_existent.csv',
                  journals,
-                 author_publications)}).to raise_error(FileNotFound)
+                 author_publications)
+             end
+            ).to raise_error(FileNotFound)
     end
   end
 
@@ -105,14 +108,14 @@ end
   private
 
   def write_to(file, *articles)
-    File.delete(file) if File.exists?(file)
+    File.delete(file) if File.exist?(file)
     CSV.open(file, 'w') do |csv|
       csv << ['DOI', 'Title', 'Author', 'Journal', 'ISSN']
       articles.each do |article|
         csv << [
             article.doi,
             article.title,
-            article.author.join(", "),
+            article.author.join(', '),
             article.journal_published_in.title,
             article.journal_published_in.issn
         ]
@@ -125,7 +128,7 @@ end
   end
 
   def authors(number)
-     Authors.new(Array.new(number) { an_author.build })
+    Authors.new(Array.new(number) { an_author.build })
   end
 
   def articles(authors, journal)
