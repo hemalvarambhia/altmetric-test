@@ -6,7 +6,7 @@ describe 'Loading articles from a CSV file' do
   before(:each) do
     @article_csv = File.join(fixtures_dir, 'articles.csv')
   end
-  
+
   context 'when the file does not exist' do
     it 'raises an error' do
       journals = double('Journals')
@@ -25,7 +25,7 @@ describe 'Loading articles from a CSV file' do
     before :each do
       write_to @article_csv
     end
-    
+
     it 'yields no articles' do
       articles = Articles.load_from(@article_csv, Journals.new, Articles.new)
 
@@ -33,23 +33,25 @@ describe 'Loading articles from a CSV file' do
     end
   end
 
-[1, 2, 3].each do |number_of|
-  context "when the file contains #{number_of} article(s)" do
-    before(:each) do
-      @journals = journals(number_of)
-      @authors = authors(number_of)
-      @expected_articles = articles(@authors, @journals.first).first(number_of)
-      write_to @article_csv, *@expected_articles
-    end
 
-    it 'yields every article' do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+  [1, 2, 3].each do |number_of|
+    context "when the file contains #{number_of} article(s)" do
+      before(:each) do
+        @journals = journals(number_of)
+        @authors = authors(number_of)
+        @expected_articles = articles(@authors, @journals.first)
+                             .first(number_of)
+        write_to @article_csv, *@expected_articles
+      end
 
-      expect(articles.size).to be == number_of
-      expect(articles).to eq(@expected_articles)
+      it 'yields every article' do
+        articles = Articles.load_from(@article_csv, @journals, @authors)
+
+        expect(articles.size).to be == number_of
+        expect(articles).to eq(@expected_articles)
+      end
     end
   end
-end
   
   context 'when the file contains articles with missing journals' do
     before :each do
@@ -90,7 +92,7 @@ end
     match do |articles|
       are_equal = true
       articles.each_with_index do |article, index|
-        are_equal = are_equal && are_equal?(expected[index], article)
+        are_equal &&= are_equal?(expected[index], article)
       end
 
       return expected.size == articles.size && are_equal
