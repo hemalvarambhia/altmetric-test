@@ -88,7 +88,31 @@ describe 'Loading articles from a CSV file' do
   end
 
   context "when an article has multiple authors" do
-    it "gathers all the authors in the loaded article"
+    before :each do
+      journal = a_journal.build
+      @journals = Journals.new([journal])
+      doi = a_doi
+      @multiple_authors = [
+        an_author.who_published(doi),
+        an_author.who_published(doi)
+      ].map { |author| author.build }
+      @authors = Authors.new(@multiple_authors)
+      articles = Articles.new(
+        [
+          an_article
+          .with_doi(doi)
+          .authored_by(*@multiple_authors)
+          .published_in(journal).build])
+      write_to @article_csv, *articles
+    end
+
+    it 'records all the authors of the article' do
+      articles = Articles.load_from(@article_csv, @journals, @authors)
+
+      article = articles.first
+      expect(article.author)
+        .to be == @multiple_authors.map { |author| author.name }
+    end
   end
 
   matcher :eq do |expected|
@@ -160,6 +184,16 @@ describe 'Loading articles from a CSV file' do
         .authored_by(author)
         .published_in(journal).build
       ]
+    )
+  end
+
+  def an_article_with_multiple_authors(doi, authors, journal)
+    Articles.new(
+      [
+        an_article
+        .with_doi(doi)
+        .authored_by(*authors)
+        .published_in(journal).build]
     )
   end
 end
