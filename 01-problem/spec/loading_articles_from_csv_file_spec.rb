@@ -87,6 +87,10 @@ describe 'Loading articles from a CSV file' do
     end
   end
 
+  context "when an article has multiple authors" do
+    it "gathers all the authors in the loaded article"
+  end
+
   matcher :eq do |expected|
     match do |articles|
       are_equal = true
