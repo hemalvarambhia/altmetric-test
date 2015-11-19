@@ -27,7 +27,7 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'yields no articles' do
-      articles = Articles.load_from(@article_csv, Journals.new, Articles.new)
+      articles = Articles.load_from(@article_csv, Journals.new, Authors.new)
 
       expect(articles).to be_empty
     end
