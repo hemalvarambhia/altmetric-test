@@ -8,8 +8,10 @@ class Articles
   def_delegator :@articles, :empty?
   def_delegator :@articles, :size
 
-  def initialize(articles = [])
+  def initialize(articles = [], journals = [], authors = [])
     @articles = articles || []
+    @journals = journals
+    @authors = authors
   end
 
   def self.load_from(file_name, journals, authors)
