@@ -47,15 +47,10 @@ class Articles
   end
 
   private
+
   def complete_information?(row)
     doi = DOI.new(row['DOI'])
     required_issn = ISSN.new(row['ISSN'])
     @journals.journal_with?(required_issn) and @authors.author_of(doi).any?
-  end
-
-  def self.complete_information?(row, journals, authors)
-    doi = DOI.new(row['DOI'])
-    required_issn = ISSN.new(row['ISSN'])
-    journals.journal_with?(required_issn) and authors.author_of(doi).any?
   end
 end
