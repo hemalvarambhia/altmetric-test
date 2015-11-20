@@ -1,12 +1,14 @@
 require_relative '../lib/file_not_found'
 require_relative './article'
+require_relative '../lib/journals'
+require_relative '../lib/authors'
 # Here we model the concept of a collection of articles
 class Articles
   include Enumerable
   extend Forwardable
   def_delegators :@articles, :[], :empty?, :size, :<<
 
-  def initialize(articles = [], journals = [], authors = [])
+  def initialize(articles = [], journals = Journals.new, authors = Authors.new)
     @articles = articles || []
     @journals = journals
     @authors = authors
