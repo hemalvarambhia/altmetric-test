@@ -14,6 +14,10 @@ class Articles
     @authors = authors
   end
 
+  def load_from(file_name)
+    fail FileNotFound, file_name unless File.exist?(file_name)
+  end
+
   def self.load_from(file_name, journals, authors)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
