@@ -4,9 +4,7 @@ require_relative './article'
 class Articles
   include Enumerable
   extend Forwardable
-  def_delegator :@articles, :[]
-  def_delegator :@articles, :empty?
-  def_delegator :@articles, :size
+  def_delegators :@articles, :[], :empty?, :size, :<<
 
   def initialize(articles = [], journals = [], authors = [])
     @articles = articles || []
