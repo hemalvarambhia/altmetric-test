@@ -35,13 +35,6 @@ class Articles
     end
   end
 
-  def self.load_from(file_name, journals, authors)
-    articles = Articles.new([], journals, authors)
-    articles.load_from(file_name)
-    
-    articles
-  end
-
   def each(&block)
     @articles.each(&block)
   end
