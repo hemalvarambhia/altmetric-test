@@ -18,7 +18,7 @@ describe 'Loading articles from a CSV file' do
 
   context 'when the file has no articles (just headers)' do
     before :each do
-      write_to @article_csv
+      write_to_file
     end
 
     it 'yields no articles' do
@@ -38,7 +38,7 @@ describe 'Loading articles from a CSV file' do
         
         @expected_articles = articles(@authors, @journals.first)
                              .first(number_of)
-        write_to @article_csv, *@expected_articles
+        write_to_file *@expected_articles
       end
 
       it 'yields every article' do
@@ -58,7 +58,7 @@ describe 'Loading articles from a CSV file' do
       missing_journal = a_journal.build
       @authors = authors(3)
       articles = articles(@authors, missing_journal)
-      write_to(@article_csv, *articles)
+      write_to_file(*articles)
     end
 
     it 'does not include those articles' do
@@ -76,8 +76,7 @@ describe 'Loading articles from a CSV file' do
       doi = a_doi
       missing_author = an_author.who_published(doi).build
       @authors = authors(3)
-      write_to(
-        @article_csv,
+      write_to_file(
         *an_article_authored_by(missing_author, @journals.first)
       )
     end
@@ -106,7 +105,7 @@ describe 'Loading articles from a CSV file' do
           .with_doi(doi)
           .authored_by(*@multiple_authors)
           .published_in(journal).build])
-      write_to @article_csv, *articles
+      write_to_file(*articles)
     end
 
     it 'records all the authors of the article' do
@@ -143,10 +142,10 @@ describe 'Loading articles from a CSV file' do
 
   private
 
-  def write_to(file, *articles)
-    File.delete(file) if File.exist?(file)
+  def write_to_file(*articles)
+    File.delete(@article_csv) if File.exist?(@article_csv)
 
-    CSV.open(file, 'w') do |csv|
+    CSV.open(@article_csv, 'w') do |csv|
       csv << %w(DOI Title Author Journal ISSN)
       articles.each do |article|
         csv << [
