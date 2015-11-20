@@ -9,15 +9,10 @@ describe 'Loading articles from a CSV file' do
 
   context 'when the file does not exist' do
     it 'raises an error' do
-      journals = double('Journals')
-      author_publications = double('Authors')
-      expect(lambda do
-               Articles.load_from(
-                 'non_existent.csv',
-                 journals,
-                 author_publications)
-             end
-            ).to raise_error(FileNotFound)
+      articles = Articles.new([], Journals.new, Authors.new)
+
+      expect(-> { articles.load_from('non_existent.csv') }).to(
+        raise_error(FileNotFound))
     end
   end
 
@@ -27,7 +22,9 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'yields no articles' do
-      articles = Articles.load_from(@article_csv, Journals.new, Authors.new)
+      articles = Articles.new([], Journals.new, Authors.new)
+       
+      articles.load_from(@article_csv)
 
       expect(articles).to be_empty
     end
@@ -38,13 +35,16 @@ describe 'Loading articles from a CSV file' do
       before(:each) do
         @journals = journals(number_of)
         @authors = authors(number_of)
+        
         @expected_articles = articles(@authors, @journals.first)
                              .first(number_of)
         write_to @article_csv, *@expected_articles
       end
 
       it 'yields every article' do
-        articles = Articles.load_from(@article_csv, @journals, @authors)
+        articles = Articles.new([], @journals, @authors)
+        
+        articles.load_from(@article_csv)
 
         expect(articles.size).to be == number_of
         expect(articles).to eq(@expected_articles)
@@ -62,7 +62,9 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'does not include those articles' do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+      articles = Articles.new([], @journals, @authors)
+      
+      articles.load_from(@article_csv)
 
       expect(articles).to be_empty
     end
@@ -81,7 +83,8 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'excludes those articles' do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+      articles = Articles.new([], @journals, @authors)
+      articles.load_from(@article_csv)
 
       expect(articles).to be_empty
     end
@@ -107,7 +110,9 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'records all the authors of the article' do
-      articles = Articles.load_from(@article_csv, @journals, @authors)
+      articles = Articles.new([], @journals, @authors)
+    
+      articles.load_from(@article_csv)
 
       article = articles.first
       expect(article.author)
