@@ -16,28 +16,30 @@ class Articles
 
   def load_from(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
+
+    complete_rows = CSV.read(file_name, headers: true).select do |row|
+      complete_information?(row)
+    end
+
+    complete_rows.map do |row|
+      doi = DOI.new(row['DOI'])
+      journal = @journals.find_journal_with(ISSN.new(row['ISSN']))
+      article_authors = @authors.author_of(doi).map { |author| author.name }
+      @articles << 
+        Article.new(
+          doi: doi,
+          title: row['Title'],
+          author: article_authors,
+          journal: journal
+        )
+    end
   end
 
   def self.load_from(file_name, journals, authors)
-    fail FileNotFound, file_name unless File.exist?(file_name)
-
-    complete_rows = CSV.read(file_name, headers: true).select do |row|
-      complete_information?(row, journals, authors)
-    end
-
-    articles = complete_rows.map do |row|
-      doi = DOI.new(row['DOI'])
-      journal = journals.find_journal_with(ISSN.new(row['ISSN']))
-      article_authors = authors.author_of(doi).map { |author| author.name }
-      Article.new(
-        doi: doi,
-        title: row['Title'],
-        author: article_authors,
-        journal: journal
-      )
-    end
-
-    Articles.new(articles)
+    articles = Articles.new([], journals, authors)
+    articles.load_from(file_name)
+    
+    articles
   end
 
   def each(&block)
@@ -45,6 +47,11 @@ class Articles
   end
 
   private
+  def complete_information?(row)
+    doi = DOI.new(row['DOI'])
+    required_issn = ISSN.new(row['ISSN'])
+    @journals.journal_with?(required_issn) and @authors.author_of(doi).any?
+  end
 
   def self.complete_information?(row, journals, authors)
     doi = DOI.new(row['DOI'])
