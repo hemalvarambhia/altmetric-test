@@ -9,7 +9,9 @@ describe 'Loading articles from a CSV file' do
 
   context 'when the file does not exist' do
     it 'raises an error' do
-      articles = Articles.new([], Journals.new, Authors.new)
+      @journals = Journals.new
+      @authors = Authors.new
+      articles = collection_of_articles
 
       expect(-> { articles.load_from('non_existent.csv') }).to(
         raise_error(FileNotFound))
@@ -22,7 +24,9 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'yields no articles' do
-      articles = Articles.new([], Journals.new, Authors.new)
+      @journals = Journals.new
+      @authors = Authors.new
+      articles = collection_of_articles
        
       articles.load_from(@article_csv)
 
@@ -42,7 +46,7 @@ describe 'Loading articles from a CSV file' do
       end
 
       it 'yields every article' do
-        articles = Articles.new([], @journals, @authors)
+        articles = collection_of_articles
         
         articles.load_from(@article_csv)
 
@@ -57,12 +61,13 @@ describe 'Loading articles from a CSV file' do
       @journals = journals(3)
       missing_journal = a_journal.build
       @authors = authors(3)
-      articles = articles(@authors, missing_journal)
+      articles = collection_of_articles
+      articles << (an_article.published_in(missing_journal).build)
       write_to_file(*articles)
     end
 
     it 'does not include those articles' do
-      articles = Articles.new([], @journals, @authors)
+      articles = collection_of_articles
       
       articles.load_from(@article_csv)
 
@@ -82,7 +87,8 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'excludes those articles' do
-      articles = Articles.new([], @journals, @authors)
+      articles = collection_of_articles
+
       articles.load_from(@article_csv)
 
       expect(articles).to be_empty
@@ -109,7 +115,7 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'records all the authors of the article' do
-      articles = Articles.new([], @journals, @authors)
+      articles = collection_of_articles
     
       articles.load_from(@article_csv)
 
@@ -141,6 +147,10 @@ describe 'Loading articles from a CSV file' do
   end
 
   private
+
+  def collection_of_articles
+    Articles.new([], @journals, @authors)
+  end
 
   def write_to_file(*articles)
     File.delete(@article_csv) if File.exist?(@article_csv)
