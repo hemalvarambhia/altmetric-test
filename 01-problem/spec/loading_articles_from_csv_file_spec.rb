@@ -105,12 +105,11 @@ describe 'Loading articles from a CSV file' do
         an_author.who_published(doi)
       ].map { |author| author.build }
       @authors = Authors.new(@multiple_authors)
-      articles = Articles.new(
-        [
-          an_article
-          .with_doi(doi)
-          .authored_by(*@multiple_authors)
-          .published_in(journal).build])
+      articles = Articles.new([], @journals, @authors)
+      articles << an_article.
+                 with_doi(doi).
+                 authored_by(*@multiple_authors).
+                 published_in(journal).build
       write_to_file(*articles)
     end
 
@@ -120,8 +119,8 @@ describe 'Loading articles from a CSV file' do
       articles.load_from(@article_csv)
 
       article = articles.first
-      expect(article.author)
-        .to be == @multiple_authors.map { |author| author.name }
+      expect(article.author).to(
+        be == @multiple_authors.map { |author| author.name })
     end
   end
 
