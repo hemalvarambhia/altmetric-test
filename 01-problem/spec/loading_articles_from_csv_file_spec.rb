@@ -39,9 +39,9 @@ describe 'Loading articles from a CSV file' do
       before(:each) do
         @journals = journals(number_of)
         @authors = authors(number_of)
-        
-        @expected_articles = articles(@authors, @journals.first)
-                             .first(number_of)
+        @expected_articles = Articles.new([], @journals, @authors)
+        articles(@authors, @journals.first).
+          first(number_of).each {|article| @expected_articles << article }
         write_to_file *@expected_articles
       end
 
@@ -177,16 +177,16 @@ describe 'Loading articles from a CSV file' do
   end
 
   def articles(authors, journal)
-    Articles.new(
-        authors.map do |author|
-          author.publications.map do |doi|
-            an_article
-              .with_doi(doi)
-              .authored_by(author)
-              .published_in(journal).build
-          end
-        end.flatten
-    )
+    authors.map do |author|
+      author.publications.map do |doi|
+        an_article.
+          with_doi(doi).
+          authored_by(author).
+          published_in(journal).
+          build
+
+      end
+    end.flatten
   end
 
   def an_article_authored_by(author, journal)
