@@ -84,8 +84,7 @@ describe 'Loading articles from a CSV file' do
   context 'when the file contains article with no authors' do
     before(:each) do
       @journals = journals(3)
-      doi = a_doi
-      missing_author = an_author.who_published(doi).build
+      missing_author = an_author.build
       @authors = authors(3)
       write_to_file(
         *an_article_authored_by(missing_author, @journals.first)
