@@ -25,7 +25,7 @@ class Articles
       complete_rows.map do |row|
         doi = DOI.new(row['DOI'])
         journal = @journals.find_journal_with(ISSN.new(row['ISSN']))
-        article_authors = @authors.author_of(doi).map { |author| author.name } 
+        article_authors = @authors.author_of(doi) 
           Article.new(
             doi: doi,
             title: row['Title'],

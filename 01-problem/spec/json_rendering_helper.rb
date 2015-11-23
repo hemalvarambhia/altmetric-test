@@ -7,7 +7,7 @@ module JSONRenderingHelper
       {
         'doi' => article.doi.to_s,
         'title' => article.title,
-        'author' => article.author.join(','),
+        'author' => article.author.map { |author| author.name }.join(','),
         'journal' => article.journal_published_in.title,
         'issn' => article.journal_published_in.issn.to_s
       }

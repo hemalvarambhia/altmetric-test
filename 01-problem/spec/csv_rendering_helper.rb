@@ -6,7 +6,7 @@ module CSVRenderingHelper
       [
         article.doi.to_s,
         article.title,
-        article.author.join(', '),
+        article.author.map{ |author| author.name }.join(', '),
         article.journal_published_in.title,
         article.journal_published_in.issn.to_s
       ]

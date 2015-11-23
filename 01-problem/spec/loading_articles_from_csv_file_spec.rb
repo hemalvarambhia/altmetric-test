@@ -47,7 +47,7 @@ describe 'Loading articles from a CSV file' do
         @authors = authors(number_of)
         @expected_articles = Articles.new(
           articles(@authors, @journals.first).first(number_of), 
-          @journals, 
+          @journals,
           @authors)
         write_to_file *@expected_articles
       end
@@ -118,7 +118,8 @@ describe 'Loading articles from a CSV file' do
 
       article = articles.first
       expect(article.author).to(
-        be == @co_authors.map { |author| author.name })
+        be == @co_authors
+      )
     end
   end
 

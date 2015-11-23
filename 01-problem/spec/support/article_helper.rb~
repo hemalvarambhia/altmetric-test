@@ -39,7 +39,7 @@ module ArticleHelper
       Article.new(
         doi: @doi,
         title: '::Title::',
-        author: @authors,
+        author: @authors.map { |author| author.name },
         journal: @journal
       )
     end

@@ -5,9 +5,7 @@ require_relative './author'
 class Authors
   include Enumerable
   extend Forwardable
-  def_delegator :@authors, :[]
-  def_delegator :@authors, :empty?
-  def_delegator :@authors, :size
+  def_delegators :@authors, :[], :empty?, :size
 
   def initialize(authors = [])
     @authors = authors || []
@@ -18,7 +16,7 @@ class Authors
   end
 
   def author_of(doi)
-    Authors.new select { |author| author.published? doi }
+    @authors.select { |author| author.published? doi }
   end
 
   def self.load_from(file_name)
