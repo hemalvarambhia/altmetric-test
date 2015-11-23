@@ -67,12 +67,20 @@ describe 'Loading articles from a CSV file' do
     before :each do
       @journals = journals(3)
       missing_journal = a_journal.build
-      @authors = authors(3)
-      articles = Articles.new(
-        [ an_article.published_in(missing_journal).build ],
-        @journals,
-        @authors
-      )
+      doi = a_doi
+      author = an_author.who_published(doi)
+      @authors = 
+         Authors.new(
+            [ an_author, 
+              an_author, 
+              author ].map {|author| author.build })
+      articles =
+        [ 
+           an_article.
+           with_doi(doi).
+           published_in(missing_journal).
+           authored_by(author.build).build 
+        ]
       write_to_file(*articles)
     end
 
@@ -202,27 +210,24 @@ describe 'Loading articles from a CSV file' do
   end
 
   def an_article_authored_by(author, journal)
-    articles = Articles.new([], @journals, @authors)
-    [
-      an_article
-      .with_doi(author.publications.sample)
-      .authored_by(author)
-      .published_in(journal).build
-    ].each { |article| articles << article }
-
+    articles = 
+      [
+        an_article
+        .with_doi(author.publications.sample)
+        .authored_by(author)
+        .published_in(journal).build
+      ]
     articles
   end
 
   def an_article_with_multiple_authors(doi, authors, journal)
     articles = 
-      Articles.new(
-        [
-          an_article.
-          with_doi(doi).
-          authored_by(*authors).
-          published_in(journal).build
-        ], @journals, @authors)
-
+      [
+        an_article.
+        with_doi(doi).
+        authored_by(*authors).
+        published_in(journal).build
+      ]
     articles
   end
 end
