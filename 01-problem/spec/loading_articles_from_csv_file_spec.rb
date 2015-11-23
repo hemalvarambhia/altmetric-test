@@ -72,7 +72,7 @@ describe 'Loading articles from a CSV file' do
       write_to_file(*articles)
     end
 
-    it 'does not include those articles' do
+    it 'excludes those articles' do
       articles = collection_of_articles
       
       articles.load_from(@article_csv)
