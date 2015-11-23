@@ -4,8 +4,11 @@ describe 'Loading articles from a CSV file' do
   include GenerateDOI
 
   before(:each) do
+    FileUtils.mkdir(fixtures_dir)
     @article_csv = File.join(fixtures_dir, 'articles.csv')
   end
+
+  after(:each) { FileUtils.rm_r(File.join('spec', 'fixtures')) }
 
   context 'when the file does not exist' do
     it 'raises an error' do

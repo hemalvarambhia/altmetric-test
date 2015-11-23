@@ -3,9 +3,12 @@ require_relative '../lib/journals'
 require_relative '../lib/file_not_found'
 
 describe 'Loading journals from csv files' do
-  before :each do
+  before(:each) do
+    FileUtils.mkdir(fixtures_dir)
     @authors_file = File.join(fixtures_dir, 'journals.csv')
   end
+
+  after(:each) { FileUtils.rm_r(fixtures_dir) }
 
   context 'when the file does not exist' do
     it 'raises an error' do

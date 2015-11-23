@@ -8,7 +8,7 @@ require_relative '../lib/articles'
 shared_examples 'a renderer' do
   describe 'Rendering no articles' do
     it 'contains nothing' do
-      no_articles = Articles.new([])
+      no_articles = Articles.new
 
       rendered_articles = render(no_articles)
 
@@ -81,6 +81,11 @@ shared_examples 'a renderer' do
   end
 
   def articles(number)
-    Articles.new Array.new(number) { an_article.build }
+    articles = Articles.new 
+    Array.new(number) { an_article.build }.each do |article|
+      articles << article
+    end
+
+    articles
   end
 end

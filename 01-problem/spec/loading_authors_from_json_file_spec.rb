@@ -5,9 +5,12 @@ require_relative '../lib/doi'
 
 describe 'Loading authors from a JSON file' do
 
-  before :each do
+  before(:each) do
+    FileUtils.mkdir(fixtures_dir)
     @authors_file = File.join(fixtures_dir, 'authors.json')
   end
+
+  after(:each) { FileUtils.rm_r(File.join('spec', 'fixtures')) }
 
   context 'when the file does not exist' do
     it 'raises an error' do
