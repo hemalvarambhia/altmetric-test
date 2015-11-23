@@ -15,7 +15,7 @@ describe 'Loading journals from csv files' do
 
   context 'when the file does not exist' do
     it 'raises an error' do
-      expect(lambda { Journals.load_from('non_existent.csv') })
+      expect(lambda { Journals.new.load_from('non_existent.csv') })
         .to(raise_error(FileNotFound))
     end
   end
@@ -24,7 +24,7 @@ describe 'Loading journals from csv files' do
     it 'loads no journals' do
       write_journals_to @journals_file
 
-      journals = Journals.load_from(@journals_file)
+      journals = Journals.new.load_from(@journals_file)
 
       expect(journals).to be_empty
     end
@@ -38,7 +38,7 @@ describe 'Loading journals from csv files' do
       end
 
       it 'loads every journal' do
-        journals = Journals.load_from(@journals_file)
+        journals = Journals.new.load_from(@journals_file)
 
         expect(journals.size).to be == number_of
         expect(journals).to(eq(@expected_journals))

@@ -25,13 +25,11 @@ class Journals
     @journals.each(&block)
   end
 
-  def self.load_from(file_name)
+  def load_from(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
-    journals = CSV.read(file_name, headers: true).map do |row|
+    @journals = CSV.read(file_name, headers: true).map do |row|
       Journal.new(ISSN.new(row['ISSN']), row['Title'])
     end
-
-    Journals.new(journals)
   end
 end
