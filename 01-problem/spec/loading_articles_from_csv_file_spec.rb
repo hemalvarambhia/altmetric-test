@@ -45,10 +45,11 @@ describe 'Loading articles from a CSV file' do
       before(:each) do
         @journals = journals(number_of)
         @authors = authors(number_of)
-        @expected_articles = Articles.new(
-          articles(@authors, @journals.first).first(number_of), 
-          @journals,
-          @authors)
+        @expected_articles = 
+          Articles.new(
+            articles(@authors, @journals.first).first(number_of), 
+            @journals,
+            @authors)
         write_to_file *@expected_articles
       end
 
