@@ -25,7 +25,7 @@ describe 'Loading authors from a JSON file' do
 
   context 'when the file has no authors' do
     it 'yields no authors' do
-      write_authors_to @authors_file
+      write_authors
 
       authors = Authors.load_from(@authors_file)
 
@@ -36,7 +36,7 @@ describe 'Loading authors from a JSON file' do
   context 'when an author has no publications' do
     before :each do
       authors = authors an_author.with_no_publications
-      write_authors_to @authors_file, *authors
+      write_authors *authors
     end
 
     it 'yields no authors' do
@@ -51,7 +51,7 @@ describe 'Loading authors from a JSON file' do
       context 'when the author(s) has/have 1 or more publications' do
         before :each do
           @expected_authors = authors(*Array.new(number_of) { an_author })
-          write_authors_to @authors_file, *@expected_authors
+          write_authors *@expected_authors
         end
 
         it 'yields every author' do
@@ -68,8 +68,7 @@ describe 'Loading authors from a JSON file' do
     Authors.new(authors.map { |author| author.build })
   end
 
-  def write_authors_to(authors_file, *authors)
-    File.delete(authors_file) if File.exist?(authors_file)
+  def write_authors(*authors)
     authors_to_hash = authors.map do |author|
       {
         'name' => author.name,
@@ -77,7 +76,7 @@ describe 'Loading authors from a JSON file' do
       }
     end
 
-    File.open(authors_file, 'w') do |file|
+    File.open(@authors_file, 'w') do |file|
       file.puts authors_to_hash.to_json
     end
   end
