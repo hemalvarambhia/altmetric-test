@@ -117,7 +117,7 @@ describe 'Loading articles from a CSV file' do
       articles.load_from(@article_csv)
 
       article = articles.first
-      expect(article.author).to(
+      expect(article.authors).to(
         be == @co_authors
       )
     end
@@ -136,7 +136,7 @@ describe 'Loading articles from a CSV file' do
     def are_equal?(expected, actual)
       actual.doi == expected.doi &&
         actual.title == expected.title &&
-        actual.author == expected.author &&
+        actual.authors == expected.authors &&
         actual.journal_published_in.issn ==
         expected.journal_published_in.issn &&
         actual.journal_published_in.title ==
@@ -157,7 +157,7 @@ describe 'Loading articles from a CSV file' do
         csv << [
           article.doi,
           article.title,
-          article.author.map{|author| author.name }.join(', '),
+          article.authors.map{|author| author.name }.join(', '),
           article.journal_published_in.title,
           article.journal_published_in.issn
         ]
