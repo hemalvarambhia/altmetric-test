@@ -67,8 +67,6 @@ describe 'Loading articles from a CSV file' do
     before :each do
       @journals = journals(3)
       missing_journal = a_journal.build
-      doi = a_doi
-      author = an_author.who_published(doi)
       @authors = authors(3)
       articles = articles(@authors, missing_journal)
       write_to_file(*articles)
