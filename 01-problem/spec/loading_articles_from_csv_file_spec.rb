@@ -8,7 +8,10 @@ describe 'Loading articles from a CSV file' do
     @article_csv = File.join(fixtures_dir, 'articles.csv')
   end
 
-  after(:each) { FileUtils.rm_r(File.join('spec', 'fixtures')) }
+  after(:each) do 
+    FileUtils.rm(@article_csv) if File.exists?(@article_csv)
+    FileUtils.rm_r(fixtures_dir)
+  end
 
   context 'when the file does not exist' do
     it 'raises an error' do

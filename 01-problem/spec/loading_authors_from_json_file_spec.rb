@@ -10,7 +10,10 @@ describe 'Loading authors from a JSON file' do
     @authors_file = File.join(fixtures_dir, 'authors.json')
   end
 
-  after(:each) { FileUtils.rm_r(File.join('spec', 'fixtures')) }
+  after(:each) do 
+    FileUtils.rm(@authors_file) if File.exists?(@authors_file)
+    FileUtils.rm_r(File.join('spec', 'fixtures')) 
+  end
 
   context 'when the file does not exist' do
     it 'raises an error' do

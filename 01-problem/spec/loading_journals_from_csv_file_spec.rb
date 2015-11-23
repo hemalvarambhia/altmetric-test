@@ -5,10 +5,13 @@ require_relative '../lib/file_not_found'
 describe 'Loading journals from csv files' do
   before(:each) do
     FileUtils.mkdir(fixtures_dir)
-    @authors_file = File.join(fixtures_dir, 'journals.csv')
+    @journals_file = File.join(fixtures_dir, 'journals.csv')
   end
 
-  after(:each) { FileUtils.rm_r(fixtures_dir) }
+  after(:each) do
+    FileUtils.rm(@journals_file) if File.exists?(@journals_file) 
+    FileUtils.rm_r(fixtures_dir) 
+  end
 
   context 'when the file does not exist' do
     it 'raises an error' do
@@ -19,9 +22,9 @@ describe 'Loading journals from csv files' do
 
   context 'when the file has no journals (just headers)' do
     it 'loads no journals' do
-      write_journals_to @authors_file
+      write_journals_to @journals_file
 
-      journals = Journals.load_from(@authors_file)
+      journals = Journals.load_from(@journals_file)
 
       expect(journals).to be_empty
     end
@@ -31,11 +34,11 @@ describe 'Loading journals from csv files' do
     context "when the file has #{number_of} journal(s)" do
       before :each do
         @expected_journals = Array.new(number_of) { a_journal.build }
-        write_journals_to @authors_file, *@expected_journals
+        write_journals_to @journals_file, *@expected_journals
       end
 
       it 'loads every journal' do
-        journals = Journals.load_from(@authors_file)
+        journals = Journals.load_from(@journals_file)
 
         expect(journals.size).to be == number_of
         expect(journals).to(eq(@expected_journals))
