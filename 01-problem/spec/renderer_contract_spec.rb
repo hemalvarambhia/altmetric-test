@@ -37,11 +37,11 @@ shared_examples 'a renderer' do
           an_author.who_published(doi),
           an_author.who_published(doi)
         ].map { |author| author.build }
-        @all_articles = Articles.new
-        [
-          an_article.with_doi(doi)
-          .authored_by(*@multiple_authors).build
-        ].each { |article| @all_articles << article } 
+        @all_articles = Articles.new(
+          [
+            an_article.with_doi(doi)
+            .authored_by(*@multiple_authors).build
+          ]) 
       end
 
       it 'renders the authors as a comma-separated string' do

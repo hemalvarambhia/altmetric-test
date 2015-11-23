@@ -8,8 +8,8 @@ class Articles
   extend Forwardable
   def_delegators :@articles, :[], :empty?, :size, :<<
 
-  def initialize(journals = Journals.new, authors = Authors.new)
-    @articles = []
+  def initialize(articles = [], journals = Journals.new, authors = Authors.new)
+    @articles = articles
     @journals = journals
     @authors = authors
   end
