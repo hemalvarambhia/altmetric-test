@@ -157,7 +157,7 @@ describe 'Loading articles from a CSV file' do
         csv << [
           article.doi,
           article.title,
-          article.author.join(', '),
+          article.author.map{|author| author.name }.join(', '),
           article.journal_published_in.title,
           article.journal_published_in.issn
         ]
