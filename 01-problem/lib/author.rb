@@ -10,6 +10,10 @@ class Author
     @publications.include? doi
   end
 
+  def has_publications?
+    @publications.any?
+  end
+
   def ==(other)
     @publications == other.publications && @name == other.name
   end

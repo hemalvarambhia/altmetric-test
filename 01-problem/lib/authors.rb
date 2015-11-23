@@ -19,13 +19,6 @@ class Authors
     @authors.select { |author| author.published? doi }
   end
 
-  def self.load_from(file_name)
-    authors = Authors.new
-    authors.load_from(file_name)
-
-    authors
-  end
-
   def load_from(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
@@ -36,6 +29,6 @@ class Authors
       Author.new(author_as_json['name'], publications)
     end
 
-    @authors = authors.select { |author| author.publications.any? }
+    @authors = authors.select { |author| author.has_publications? }
   end
 end

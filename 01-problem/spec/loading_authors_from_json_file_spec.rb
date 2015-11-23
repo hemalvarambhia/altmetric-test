@@ -18,7 +18,7 @@ describe 'Loading authors from a JSON file' do
   context 'when the file does not exist' do
     it 'raises an error' do
       expect(
-        lambda { Authors.load_from('non_existent.json') }
+        lambda { Authors.new.load_from('non_existent.json') }
       ).to raise_error(FileNotFound)
     end
   end
@@ -27,7 +27,8 @@ describe 'Loading authors from a JSON file' do
     it 'yields no authors' do
       write_authors
 
-      authors = Authors.load_from(@authors_file)
+      authors = Authors.new
+      authors.load_from(@authors_file)
 
       expect(authors).to be_empty
     end
@@ -40,7 +41,9 @@ describe 'Loading authors from a JSON file' do
     end
 
     it 'yields no authors' do
-      authors = Authors.load_from(@authors_file)
+      authors = Authors.new
+      
+      authors.load_from(@authors_file)
 
       expect(authors).to be_empty
     end
@@ -55,7 +58,9 @@ describe 'Loading authors from a JSON file' do
         end
 
         it 'yields every author' do
-          authors = Authors.load_from(@authors_file)
+          authors = Authors.new
+    
+          authors.load_from(@authors_file)
 
           expect(authors.size).to be == number_of
           expect(authors).to(eq(@expected_authors))
