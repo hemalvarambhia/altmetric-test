@@ -7,7 +7,7 @@ module AuthorHelper
   end
 
   def co_authors_of(publication)
-     Array.new(4){ an_author.who_published(doi) }
+     Array.new(4){ an_author.who_published(publication) }
   end
 
   # Builder class for building Author in a way
