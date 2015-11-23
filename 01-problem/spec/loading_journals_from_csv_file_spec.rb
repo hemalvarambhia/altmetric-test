@@ -23,7 +23,7 @@ describe 'Loading journals from csv files' do
 
   context 'when the file has no journals (just headers)' do
     it 'loads no journals' do
-      write_journals_to @journals_file
+      write_journals
 
       @journals.load_from(@journals_file)
 
@@ -35,7 +35,7 @@ describe 'Loading journals from csv files' do
     context "when the file has #{number_of} journal(s)" do
       before :each do
         @expected_journals = Array.new(number_of) { a_journal.build }
-        write_journals_to @journals_file, *@expected_journals
+        write_journals *@expected_journals
       end
 
       it 'loads every journal' do
@@ -47,9 +47,9 @@ describe 'Loading journals from csv files' do
     end
   end
 
-  def write_journals_to(file, *journals)
-    File.delete(file) if File.exist?(file)
-    CSV.open(file, 'w') do |csv|
+  def write_journals(*journals)
+    File.delete(@journals_file) if File.exist?(@journals_file)
+    CSV.open(@journals_file, 'w') do |csv|
       csv << %w(Title ISSN)
       journals.each do |journal|
         csv << [
