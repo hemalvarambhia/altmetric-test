@@ -67,8 +67,8 @@ describe 'Loading articles from a CSV file' do
   context 'when the file contains articles with missing journals' do
     before :each do
       @journals = journals(3)
-      missing_journal = a_journal.build
       @authors = authors(3)
+      missing_journal = a_journal.build
       articles = articles(@authors, missing_journal)
       write_to_file(*articles)
     end
@@ -85,8 +85,8 @@ describe 'Loading articles from a CSV file' do
   context 'when the file contains article with no authors' do
     before(:each) do
       @journals = journals(3)
-      missing_author = an_author.build
       @authors = authors(3)
+      missing_author = an_author.build
       write_to_file(
         *an_article_authored_by(missing_author, @journals.first)
       )
@@ -106,7 +106,7 @@ describe 'Loading articles from a CSV file' do
       journal = a_journal.build
       @journals = Journals.new([journal])
       doi = a_doi
-      @co_authors = co_authors_of(doi).map {|co_author| co_author.build }
+      @co_authors = co_authors_of(doi)
       @authors = Authors.new(@co_authors)
       articles = article_co_authored_by(doi, @co_authors, journal)
       write_to_file(*articles)
