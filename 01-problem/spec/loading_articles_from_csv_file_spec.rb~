@@ -69,8 +69,18 @@ describe 'Loading articles from a CSV file' do
       missing_journal = a_journal.build
       doi = a_doi
       author = an_author.who_published(doi)
-      @authors = authors(3)
-      articles = articles(@authors, missing_journal)
+      @authors = 
+         Authors.new(
+            [ an_author, 
+              an_author, 
+              author ].map {|author| author.build })
+      articles =
+        [ 
+           an_article.
+           with_doi(doi).
+           published_in(missing_journal).
+           authored_by(author.build).build 
+        ]
       write_to_file(*articles)
     end
 
