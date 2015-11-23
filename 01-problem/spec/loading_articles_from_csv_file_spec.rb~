@@ -192,7 +192,7 @@ describe 'Loading articles from a CSV file' do
       an_article.
       with_doi(author.publications.sample).
       authored_by(author).
-      published_in(journal).build
+      published_in(journal)
     ]
   end
 
