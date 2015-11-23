@@ -106,20 +106,11 @@ describe 'Loading articles from a CSV file' do
       journal = a_journal.build
       @journals = Journals.new([journal])
       doi = a_doi
-      @multiple_authors = [
-        an_author.who_published(doi),
-        an_author.who_published(doi)
-      ].map { |author| author.build }
-      @authors = Authors.new(@multiple_authors)
-      articles = 
-        Articles.new(
-          [ an_article.
-              with_doi(doi).
-              authored_by(*@multiple_authors).
-              published_in(journal).build 
-          ], 
-          @journals, 
-          @authors)
+      @co_authors = 
+        Array.new(2){ an_author.who_published(doi) }.
+          map { |author| author.build }
+      @authors = Authors.new(@co_authors)
+      articles = article_co_authored_by(doi, @co_authors, journal)
       write_to_file(*articles)
     end
 
@@ -130,7 +121,7 @@ describe 'Loading articles from a CSV file' do
 
       article = articles.first
       expect(article.author).to(
-        be == @multiple_authors.map { |author| author.name })
+        be == @co_authors.map { |author| author.name })
     end
   end
 
@@ -208,14 +199,12 @@ describe 'Loading articles from a CSV file' do
     articles
   end
 
-  def an_article_with_multiple_authors(doi, authors, journal)
-    articles = 
-      [
-        an_article.
-        with_doi(doi).
-        authored_by(*authors).
-        published_in(journal).build
-      ]
-    articles
+  def article_co_authored_by(doi, co_authors, journal)
+    [ 
+      an_article.
+      with_doi(doi).
+      authored_by(*co_authors).
+      published_in(journal).build
+    ]
   end
 end
