@@ -20,6 +20,13 @@ class Authors
   end
 
   def self.load_from(file_name)
+    authors = Authors.new
+    authors.load_from(file_name)
+
+    authors
+  end
+
+  def load_from(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     authors_as_json = JSON.parse(
@@ -29,6 +36,6 @@ class Authors
       Author.new(author_as_json['name'], publications)
     end
 
-    Authors.new(authors.select { |author| author.publications.any? })
+    @authors = authors.select { |author| author.publications.any? }
   end
 end
