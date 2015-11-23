@@ -195,11 +195,9 @@ describe 'Loading articles from a CSV file' do
   end
 
   def article_co_authored_by(doi, co_authors, journal)
-    [ 
       an_article.
       with_doi(doi).
       authored_by(*co_authors).
       published_in(journal).build
-    ]
   end
 end
