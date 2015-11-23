@@ -158,8 +158,6 @@ describe 'Loading articles from a CSV file' do
   end
 
   def write_to_file(*articles)
-    File.delete(@article_csv) if File.exist?(@article_csv)
-
     CSV.open(@article_csv, 'w') do |csv|
       csv << %w(DOI Title Author Journal ISSN)
       articles.each do |article|
