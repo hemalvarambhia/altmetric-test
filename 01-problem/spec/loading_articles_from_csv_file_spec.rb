@@ -106,9 +106,7 @@ describe 'Loading articles from a CSV file' do
       journal = a_journal.build
       @journals = Journals.new([journal])
       doi = a_doi
-      @co_authors = 
-        Array.new(2){ an_author.who_published(doi) }.
-          map { |author| author.build }
+      @co_authors = co_authors_of(doi).map {|co_author| co_author.build }
       @authors = Authors.new(@co_authors)
       articles = article_co_authored_by(doi, @co_authors, journal)
       write_to_file(*articles)

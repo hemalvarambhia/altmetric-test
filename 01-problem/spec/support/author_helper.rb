@@ -5,6 +5,11 @@ module AuthorHelper
   def an_author
     Builder.new
   end
+
+  def co_authors_of(publication)
+     Array.new(4){ an_author.who_published(doi) }
+  end
+
   # Builder class for building Author in a way
   # that emphasises what is important in a test
   class Builder
