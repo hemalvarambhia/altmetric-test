@@ -96,17 +96,16 @@ describe 'Loading articles from a CSV file' do
       doi = a_doi
       @co_authors = co_authors_of(doi)
       @authors = Authors.new(@co_authors)
-      articles = article_co_authored_by(doi, @co_authors, @journals.first)
-      write_to_file(*articles)
+      write_to_file(
+        article_co_authored_by(doi, @co_authors, @journals.first)
+      )
     end
 
     it 'records all the authors of the article' do
       articles = load_articles
 
       article = articles.first
-      expect(article.authors).to(
-        be == @co_authors
-      )
+      expect(article.authors).to be == @co_authors
     end
   end
 
