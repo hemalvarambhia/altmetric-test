@@ -27,9 +27,11 @@ RSpec.describe(DateRangeFormatter) do
   end 
 
   context "when the range begins and ends on the same date" do
-    it "publishes the ordinal correctly" do
-      formatter = DateRangeFormatter.new("2009-11-21", "2009-11-21")
-      expect(formatter.to_s).to eq("21st November 2009")
+    context "when neither times are known" do
+      it "formats only the date" do
+        formatter = DateRangeFormatter.new("2009-11-21", "2009-11-21")
+        expect(formatter.to_s).to eq("21st November 2009")
+      end
     end
   end
 
