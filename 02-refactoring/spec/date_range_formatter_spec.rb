@@ -1,15 +1,7 @@
 require "date_range_formatter"
 
 RSpec.describe(DateRangeFormatter) do
-
-  context "when the range begins and ends on the same date" do
-    context "when the times are not specified" do
-      it "formats only the date" do
-        formatter = DateRangeFormatter.new("2009-11-1", "2009-11-1")
-        expect(formatter.to_s).to eq("1st November 2009")
-      end
-    end
-
+  describe "ordinalising" do
     context "when it is the 2nd day of the month" do
       it "publishes the ordinal correctly" do
         formatter = DateRangeFormatter.new("2009-11-2", "2009-11-2")
@@ -17,11 +9,27 @@ RSpec.describe(DateRangeFormatter) do
       end
     end
 
-    context "when it is after the 3rd day of the month" do
+    context "when it is between the 4th and 10th day of the month" do
       it "publishes the ordinal correctly" do
-        formatter = DateRangeFormatter.new("2009-11-5", "2009-11-5")
-        expect(formatter.to_s).to include("5th")
+        day = rand(4..10)
+        formatter = DateRangeFormatter.new("2009-11-#{day}", "2009-11-#{day}")
+        expect(formatter.to_s).to include("#{day}th")
       end
+    end
+
+    context "when it is between the 11th and 13th day of the month" do
+      it "publishes the ordinal correctly" do
+        day = rand(11..13)
+        formatter = DateRangeFormatter.new("2009-11-#{day}", "2009-11-#{day}")
+        expect(formatter.to_s).to include("#{day}th")
+      end
+    end
+  end 
+
+  context "when the range begins and ends on the same date" do
+    it "publishes the ordinal correctly" do
+      formatter = DateRangeFormatter.new("2009-11-21", "2009-11-21")
+      expect(formatter.to_s).to eq("21st November 2009")
     end
   end
 
