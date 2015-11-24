@@ -58,12 +58,12 @@ describe 'Loading articles from a CSV file' do
     end
   end
 
-  context 'when the file contains articles with missing journals' do
+  context 'when the file contains articles published in unknown journals' do
     before :each do
       @journals = journals(3)
       @authors = authors(3)
-      missing_journal = a_journal.build
-      write_to_file(*articles_authored_by(@authors, missing_journal))
+      unknown_journal = a_journal.build
+      write_to_file(*articles_authored_by(@authors, unknown_journal))
     end
 
     it 'excludes those articles' do
@@ -73,13 +73,13 @@ describe 'Loading articles from a CSV file' do
     end
   end
 
-  context 'when the file contains article with no authors' do
+  context 'when the file contains articles by unknown authors' do
     before(:each) do
       @journals = journals(3)
       @authors = authors(3)
-      missing_author = an_author.build
+      unknown_author = an_author.build
       write_to_file(
-        *an_article_authored_by(missing_author, @journals.first)
+        *an_article_authored_by(unknown_author, @journals.first)
       )
     end
 
