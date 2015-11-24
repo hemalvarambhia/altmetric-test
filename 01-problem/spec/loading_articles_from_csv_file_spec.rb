@@ -32,9 +32,8 @@ describe 'Loading articles from a CSV file' do
     it 'yields no articles' do
       @journals = Journals.new
       @authors = Authors.new
-      articles = collection_of_articles
        
-      articles.load_from(@article_csv)
+      articles = load_articles
 
       expect(articles).to be_empty
     end
@@ -51,9 +50,7 @@ describe 'Loading articles from a CSV file' do
       end
 
       it 'yields every article' do
-        articles = collection_of_articles
-        
-        articles.load_from(@article_csv)
+        articles = load_articles
 
         expect(articles.size).to be == number_of
         expect(articles).to eq(@expected_articles)
@@ -71,9 +68,7 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'excludes those articles' do
-      articles = collection_of_articles
-      
-      articles.load_from(@article_csv)
+      articles = load_articles
 
       expect(articles).to be_empty
     end
@@ -90,9 +85,7 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'excludes those articles' do
-      articles = collection_of_articles
-
-      articles.load_from(@article_csv)
+      articles = load_articles
 
       expect(articles).to be_empty
     end
@@ -110,9 +103,7 @@ describe 'Loading articles from a CSV file' do
     end
 
     it 'records all the authors of the article' do
-      articles = collection_of_articles
-    
-      articles.load_from(@article_csv)
+      articles = load_articles
 
       article = articles.first
       expect(article.authors).to(
@@ -143,6 +134,14 @@ describe 'Loading articles from a CSV file' do
   end
 
   private
+
+  def load_articles
+    articles = collection_of_articles
+
+    articles.load_from(@article_csv)
+
+    articles
+  end
 
   def collection_of_articles
     Articles.new([], @journals, @authors)
