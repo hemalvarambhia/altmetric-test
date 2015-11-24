@@ -26,5 +26,13 @@ describe Fixnum do
         end
       end
     end
+
+    [11, 12, 13].each do |number|
+      context "when it is the number #{number}" do
+        it "returns #{number}th" do
+          expect(number.ordinalize).to eq("#{number}th")
+        end
+      end
+    end
   end
 end
