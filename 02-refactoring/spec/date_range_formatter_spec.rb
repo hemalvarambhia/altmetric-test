@@ -1,9 +1,21 @@
 require "date_range_formatter"
 
 RSpec.describe(DateRangeFormatter) do
-  it "formats a date range for the same day" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2009-11-1")
-    expect(formatter.to_s).to eq("1st November 2009")
+
+  context "when the range begins and ends on the same date" do
+    context "when the times are not specified" do
+      it "formats only the date" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2009-11-1")
+        expect(formatter.to_s).to eq("1st November 2009")
+      end
+    end
+
+    context "when it is the 2nd day of the month" do
+      it "publishes the ordinal correctly" do
+        formatter = DateRangeFormatter.new("2009-11-2", "2009-11-2")
+        expect(formatter.to_s).to include("2nd")
+      end
+    end
   end
 
   it "formats a date range for the same day with starting time" do
