@@ -93,12 +93,11 @@ describe 'Loading articles from a CSV file' do
 
   context "when an article has multiple authors" do
     before :each do
-      journal = a_journal.build
-      @journals = Journals.new([journal])
+      @journals = journals(3)
       doi = a_doi
       @co_authors = co_authors_of(doi)
       @authors = Authors.new(@co_authors)
-      articles = article_co_authored_by(doi, @co_authors, journal)
+      articles = article_co_authored_by(doi, @co_authors, @journals.first)
       write_to_file(*articles)
     end
 
