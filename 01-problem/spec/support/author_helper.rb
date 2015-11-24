@@ -17,7 +17,7 @@ module AuthorHelper
   class Builder
     include GenerateDOI
     def initialize
-      @name = '::Author::'
+      @name = '::Author %d::' % rand(1000)
       @publications = Array.new(3) { a_doi }
     end
 
