@@ -137,9 +137,7 @@ describe 'Loading articles from a CSV file' do
 
   def load_articles
     articles = collection_of_articles
-
     articles.load_from(@article_csv)
-
     articles
   end
 
