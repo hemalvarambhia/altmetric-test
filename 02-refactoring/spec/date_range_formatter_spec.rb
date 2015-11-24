@@ -16,6 +16,13 @@ RSpec.describe(DateRangeFormatter) do
         expect(formatter.to_s).to include("2nd")
       end
     end
+
+    context "when it is after the 3rd day of the month" do
+      it "publishes the ordinal correctly" do
+        formatter = DateRangeFormatter.new("2009-11-5", "2009-11-5")
+        expect(formatter.to_s).to include("5th")
+      end
+    end
   end
 
   it "formats a date range for the same day with starting time" do
