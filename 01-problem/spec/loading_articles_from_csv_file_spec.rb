@@ -45,11 +45,8 @@ describe 'Loading articles from a CSV file' do
       before(:each) do
         @journals = journals(number_of)
         @authors = authors(number_of)
-        @expected_articles = 
-          Articles.new(
-            articles_authored_by(@authors, @journals.first).first(number_of), 
-            @journals,
-            @authors)
+        @expected_articles =
+           generate_articles_from(@authors, @journals).first(number_of)
         write_to_file *@expected_articles
       end
 
@@ -185,6 +182,12 @@ describe 'Loading articles from a CSV file' do
 
       end
     end.flatten
+  end
+
+  def generate_articles_from(authors, journals)
+     journals.map do |journal| 
+       articles_authored_by(authors, journal) 
+     end.flatten
   end
 
   def an_article_authored_by(author, journal)
