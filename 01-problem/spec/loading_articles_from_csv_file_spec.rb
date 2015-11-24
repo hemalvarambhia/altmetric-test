@@ -63,8 +63,7 @@ describe 'Loading articles from a CSV file' do
       @journals = journals(3)
       @authors = authors(3)
       missing_journal = a_journal.build
-      articles = articles_authored_by(@authors, missing_journal)
-      write_to_file(*articles)
+      write_to_file(*articles_authored_by(@authors, missing_journal))
     end
 
     it 'excludes those articles' do
