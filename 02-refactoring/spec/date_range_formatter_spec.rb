@@ -34,7 +34,7 @@ RSpec.describe(DateRangeFormatter) do
 
   context 'when the range begins and end within the same year and month' do
     context 'when neither times are known' do
-      it "takes the form of ordinalized <start day> - <end day> <month> <year>" do
+      it "takes the form of <start day> - <end day> <month> <year>" do
         formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3")
         expect(formatter.to_s).to eq("1st - 3rd November 2009")
       end
