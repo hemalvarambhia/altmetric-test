@@ -32,7 +32,7 @@ RSpec.describe(DateRangeFormatter) do
     end
   end
 
-  context 'when the range begins and end within the same year and month' do
+  context 'when the range begins and end with the same month' do
     context 'when neither times are specified' do
       it "takes the form of '<start day> - <end day> <month> <year>'" do
         formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3")
