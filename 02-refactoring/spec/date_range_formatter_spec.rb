@@ -92,19 +92,34 @@ RSpec.describe(DateRangeFormatter) do
     end
   end
 
-  it "formats a date range for different year" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1")
-    expect(formatter.to_s).to eq("1st November 2009 - 1st December 2010")
-  end
+  context 'when the date range spans more than 1 year' do
+    context 'when neither times are specified' do
+      it "takes the form '<start date> - <end date>'" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1")
+        expect(formatter.to_s).to eq("1st November 2009 - 1st December 2010")
+      end
+    end
 
-  it "formats a date range for different year with starting time" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1", "10:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2010")
-  end
+    context 'when only the start time is specified' do
+      it "takes the form '<start date> at <start time> - <end date>'" do
+        formatter = DateRangeFormatter.new("2009-11-11", "2010-12-13", "10:00")
+        expect(formatter.to_s).to eq("11th November 2009 at 10:00 - 13th December 2010")
+      end
+    end
 
-  it "formats a date range for different year with starting and ending times" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1", "10:00", "11:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2010 at 11:00")
+    context 'when only the end time is specified' do
+      it "takes the form '<start date> - <end date> at <end time>'" do
+        formatter = DateRangeFormatter.new("2005-11-11", "2008-12-1", nil, "15:00")
+        expect(formatter.to_s).to eq("11th November 2005 - 1st December 2008 at 15:00")
+      end
+    end
+
+    context 'when both times are specified' do
+      it "takes the form '<start date> at <start time> - <end date> at <end time>'" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2010-12-1", "10:00", "11:00")
+        expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2010 at 11:00")
+      end
+    end
   end
 end
 
