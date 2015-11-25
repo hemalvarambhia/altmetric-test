@@ -18,7 +18,7 @@ RSpec.describe(DateRangeFormatter) do
     end
 
     context 'when only the end time is specified' do
-      it "formats the date with starting time" do
+      it "formats the date with end time" do
         formatter = DateRangeFormatter.new("2010-11-3", "2010-11-3", nil, "13:00")
         expect(formatter.to_s).to eq("3rd November 2010 until 13:00")
       end
