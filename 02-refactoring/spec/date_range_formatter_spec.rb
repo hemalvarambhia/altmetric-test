@@ -83,11 +83,13 @@ RSpec.describe(DateRangeFormatter) do
         expect(formatter.to_s).to eq("2nd October 2009 - 5th December 2009 at 11:00")
       end
     end
-  end
 
-  it "formats a date range for the same year with starting and ending times" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2009-12-1", "10:00", "11:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2009 at 11:00")
+    context 'when both times are specified' do
+      it "takes the form '<start date> at <start time> - <end date> at <end time>'" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2009-12-1", "10:00", "11:00")
+        expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 1st December 2009 at 11:00")
+      end
+    end
   end
 
   it "formats a date range for different year" do
