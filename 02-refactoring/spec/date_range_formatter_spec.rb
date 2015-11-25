@@ -9,11 +9,13 @@ RSpec.describe(DateRangeFormatter) do
         expect(formatter.to_s).to eq("1st November 2009")
       end
     end
-  end
 
-  it "formats a date range for the same day with starting time" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2009-11-1", "10:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00")
+    context 'when only the start time is specified' do
+      it "formats the date with starting time" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2009-11-1", "10:00")
+        expect(formatter.to_s).to eq("1st November 2009 at 10:00")
+      end
+    end
   end
 
   it "formats a date range for the same day with starting and ending times" do
