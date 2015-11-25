@@ -40,29 +40,26 @@ RSpec.describe(DateRangeFormatter) do
       end
     end
 
-    context 'when only the start time is known' do
+    context 'when only the start time is specified known' do
       it "takes the form of <start date> at <start time> - <end date>" do
         formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3", "10:00")
         expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 3rd November 2009")
       end
     end
 
-    context 'when only the end time is known' do
+    context 'when only the end time is specified' do
       it "takes the form of <start date> - <end date> at <end time>" do
         formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3", nil, "14:00")
         expect(formatter.to_s).to eq("1st November 2009 - 3rd November 2009 at 14:00")
       end
     end
-  end
 
-  it "formats a date range for the same month with starting time" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3", "10:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 3rd November 2009")
-  end
-
-  it "formats a date range for the same month with starting and ending times" do
-    formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3", "10:00", "11:00")
-    expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 3rd November 2009 at 11:00")
+    context 'when both times are specified' do
+      it "formats a start and end dates alongside the start and end times" do
+        formatter = DateRangeFormatter.new("2009-11-1", "2009-11-3", "10:00", "11:00")
+        expect(formatter.to_s).to eq("1st November 2009 at 10:00 - 3rd November 2009 at 11:00")
+      end
+    end
   end
 
   it "formats a date range for the same year" do
