@@ -13,35 +13,31 @@ class DateRangeFormatter
     if @start_time && @end_time
       return full_format
     end
+
+    if @start_time
+      return format_with_start_time
+    end
     
     if @start_date == @end_date
-      if @start_time
-        "#{full_start_date} at #{@start_time}"
-      elsif @end_time
+      if @end_time
         "#{full_start_date} until #{@end_time}"
       else
         full_start_date
       end
     elsif @start_date.month == @end_date.month
-      if @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
+      if @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         @start_date.strftime("#{@start_date.day.ordinalize} - #{@end_date.day.ordinalize} %B %Y")
       end
     elsif @start_date.year == @end_date.year
-      if @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
+      if @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         @start_date.strftime("#{@start_date.day.ordinalize} %B - ") + @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
       end
     else
-      if @start_time
-        "#{full_start_date} at #{@start_time} - #{full_end_date}"
-      elsif @end_time
+      if @end_time
         "#{full_start_date} - #{full_end_date} at #{@end_time}"
       else
         "#{full_start_date} - #{full_end_date}"
@@ -57,6 +53,12 @@ class DateRangeFormatter
     end
     
     "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
+  end
+
+  def format_with_start_time
+    return "#{full_start_date} at #{@start_time}" if @start_date == @end_date
+
+    "#{full_start_date} at #{@start_time} - #{full_end_date}"
   end
 
   def full_start_date
