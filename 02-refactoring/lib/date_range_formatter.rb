@@ -11,8 +11,7 @@ class DateRangeFormatter
 
   def to_s
     if @start_time && @end_time
-      return  "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
-      return full_format
+       return full_format
     end
     
     if @start_date == @end_date
@@ -53,6 +52,8 @@ class DateRangeFormatter
   private
 
   def full_format
+    return  "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
+    
     "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
   end
 
