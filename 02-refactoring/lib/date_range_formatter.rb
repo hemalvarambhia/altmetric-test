@@ -10,13 +10,10 @@ class DateRangeFormatter
   end
 
   def to_s
-    if @start_time && @end_time
-      return full_format
-    end
+    return full_format if @start_time && @end_time
 
-    if @start_time
-      return format_with_start_time
-    end
+    return format_with_start_time if @start_time
+
     
     if @start_date == @end_date
       if @end_time
