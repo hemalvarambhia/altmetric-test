@@ -12,9 +12,7 @@ class DateRangeFormatter
   def to_s
     if @start_time && @end_time
       return  "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
-      return  "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}" if @start_date.month == @end_date.month
-      return  "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}" if @start_date.year == @end_date.year
-      return "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
+      return full_format
     end
     
     if @start_date == @end_date
@@ -53,6 +51,10 @@ class DateRangeFormatter
   end
 
   private
+
+  def full_format
+    "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
+  end
 
   def full_start_date
     @start_date.strftime("#{@start_date.day.ordinalize} %B %Y")
