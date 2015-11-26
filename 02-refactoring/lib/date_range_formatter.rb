@@ -52,7 +52,9 @@ class DateRangeFormatter
   private
 
   def full_format
-    return  "#{full_start_date} at #{@start_time} to #{@end_time}" if @start_date == @end_date
+    if @start_date == @end_date
+      return  "#{full_start_date} at #{@start_time} to #{@end_time}"
+    end
     
     "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
   end
