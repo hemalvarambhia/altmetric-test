@@ -31,22 +31,26 @@ class DateRangeFormatter
 
   def full_format
     if @start_date == @end_date
-      return "#{full_start_date} at #{@start_time} to #{@end_time}"
+      return "#{format_prefix} to #{@end_time}"
     end
     
-    "#{full_start_date} at #{@start_time} - #{full_end_date} at #{@end_time}"
+    "#{format_prefix} - #{full_end_date} at #{@end_time}"
   end
 
   def format_with_start_time
-    return "#{full_start_date} at #{@start_time}" if @start_date == @end_date
+    return "#{format_prefix}" if @start_date == @end_date
 
-    "#{full_start_date} at #{@start_time} - #{full_end_date}"
+    "#{format_prefix} - #{full_end_date}"
   end
 
   def format_with_end_time
     return "#{full_start_date} until #{@end_time}" if @start_date == @end_date
 
     "#{full_start_date} - #{full_end_date} at #{@end_time}"
+  end
+
+  def format_prefix
+    "#{full_start_date} at #{@start_time}"
   end
 
   def full_start_date
