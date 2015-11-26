@@ -44,12 +44,14 @@ class DateRangeFormatter
   end
 
   def format_with_end_time
-    return "#{full_start_date} until #{@end_time}" if @start_date == @end_date
+    return "#{format_prefix} until #{@end_time}" if @start_date == @end_date
 
-    "#{full_start_date} - #{full_end_date} at #{@end_time}"
+    "#{format_prefix} - #{full_end_date} at #{@end_time}"
   end
 
   def format_prefix
+    return full_start_date if @start_time.nil?
+
     "#{full_start_date} at #{@start_time}"
   end
 
