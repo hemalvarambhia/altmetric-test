@@ -28,15 +28,17 @@ class DateRangeFormatter
   private
 
   def format_prefix
-    return in_full(@start_date) if @start_time.nil?
-
-    "#{in_full(@start_date)} at #{@start_time}"
+    return section(@start_date, @start_time)
   end
 
   def format_suffix
-    return in_full(@end_date) if @end_time.nil?
+    return section(@end_date, @end_time)
+  end
 
-    "#{in_full(@end_date)} at #{@end_time}"
+  def section(date, time)
+    return in_full(date) if time.nil?
+
+    "#{in_full(date)} at #{time}"
   end
 
   def in_full(date)
