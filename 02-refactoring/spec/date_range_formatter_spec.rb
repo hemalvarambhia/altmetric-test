@@ -121,5 +121,12 @@ RSpec.describe(DateRangeFormatter) do
       end
     end
   end
+
+  context 'when only the month is the same' do
+    it "takes the form ''<start date> - <end date>'" do
+      formatter = DateRangeFormatter.new("2009-11-1", "2010-11-3", nil, nil)
+      expect(formatter.to_s).to eq("1st November 2009 - 3rd November 2010")
+    end
+  end
 end
 
