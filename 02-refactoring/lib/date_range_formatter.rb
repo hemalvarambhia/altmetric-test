@@ -19,8 +19,8 @@ class DateRangeFormatter
 
     if @start_time.nil? and @end_time.nil?
       if @start_date.year == @end_date.year
-        return @start_date.strftime("#{@start_date.day.ordinalize}") +" - "+ full_end_date if @start_date.month == @end_date.month
-        return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + full_end_date
+        return @start_date.strftime("#{@start_date.day.ordinalize}") +" - "+ format_suffix if @start_date.month == @end_date.month
+        return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + format_suffix
       end
     end
 
