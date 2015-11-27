@@ -22,14 +22,10 @@ class DateRangeFormatter
       return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + full_end_date if @start_date.year == @end_date.year
     end
 
-    full_format
+    "#{format_prefix} - #{format_suffix}"
   end
 
   private
-
-  def full_format
-    "#{format_prefix} - #{format_suffix}"
-  end
 
   def format_prefix
     return full_start_date if @start_time.nil?
