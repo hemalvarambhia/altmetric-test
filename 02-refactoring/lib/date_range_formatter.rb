@@ -12,9 +12,8 @@ class DateRangeFormatter
   def to_s
     if @start_date == @end_date
       return "#{format_prefix} to #{@end_time}" if @start_time && @end_time
-      return "#{format_prefix}" if @start_time
       return "#{format_prefix} until #{@end_time}" if @end_time
-      return format_suffix
+      return format_prefix
     end
 
     if @start_time.nil? and @end_time.nil? and @start_date.year == @end_date.year
