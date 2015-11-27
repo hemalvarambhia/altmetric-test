@@ -23,7 +23,7 @@ class DateRangeFormatter
     return @start_date.strftime("#{@start_date.day.ordinalize}") +" - "+ full_end_date if @start_date.month == @end_date.month
     return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + full_end_date if @start_date.year == @end_date.year
 
-    return"#{format_prefix} - #{format_suffix}"
+    return full_format
   end
 
   private
