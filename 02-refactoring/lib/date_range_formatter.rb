@@ -30,23 +30,19 @@ class DateRangeFormatter
   private
 
   def format_prefix
-    return start_date_in_full if @start_time.nil?
+    return in_full(@start_date) if @start_time.nil?
 
-    "#{start_date_in_full} at #{@start_time}"
+    "#{in_full(@start_date)} at #{@start_time}"
   end
 
   def format_suffix
-    return end_date_in_full if @end_time.nil?
+    return in_full(@end_date) if @end_time.nil?
 
-    "#{end_date_in_full} at #{@end_time}"
+    "#{in_full(@end_date)} at #{@end_time}"
   end
 
-  def start_date_in_full
-    @start_date.strftime("#{@start_date.day.ordinalize} %B %Y")
-  end
-
-  def end_date_in_full
-    @end_date.strftime("#{@end_date.day.ordinalize} %B %Y")
+  def in_full(date)
+    date.strftime("#{date.day.ordinalize} %B %Y")
   end
 end
 
