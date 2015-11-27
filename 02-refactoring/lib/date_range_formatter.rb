@@ -11,11 +11,8 @@ class DateRangeFormatter
 
   def to_s
     return full_format if @start_time && @end_time
-
     return format_with_start_time if @start_time
-
     return format_with_end_time if @end_time
-
     return format_suffix if @start_date == @end_date
     return @start_date.strftime("#{@start_date.day.ordinalize}") +" - "+ full_end_date if @start_date.month == @end_date.month
     return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + full_end_date if @start_date.year == @end_date.year
