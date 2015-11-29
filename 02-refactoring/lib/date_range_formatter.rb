@@ -17,8 +17,9 @@ class DateRangeFormatter
     end
 
     if @start_time.nil? and @end_time.nil? and same_year?
-      return @start_date.day.ordinalize+" - "+format_suffix if @start_date.month == @end_date.month
-      return @start_date.strftime("#{@start_date.day.ordinalize} %B") + " - " + format_suffix
+      return @start_date.day.ordinalize+" - "+format_suffix if same_month?
+      day_and_month = @start_date.strftime("#{@start_date.day.ordinalize} %B")
+      return day_and_month + " - " + format_suffix
     end
 
     "#{format_prefix} - #{format_suffix}"
@@ -46,6 +47,10 @@ class DateRangeFormatter
 
   def same_year?
     @start_date.year == @end_date.year
+  end
+
+  def same_month?
+    @start_date.month == @end_date.month
   end
 end
 
