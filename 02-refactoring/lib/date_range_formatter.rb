@@ -11,9 +11,9 @@ class DateRangeFormatter
 
   def to_s
     if @start_date == @end_date
-      return "#{format_prefix} to #{@end_time}" if @start_time && @end_time
-      return "#{format_prefix} until #{@end_time}" if @end_time
-      return format_prefix
+      return "#{prefix} to #{@end_time}" if @start_time && @end_time
+      return "#{prefix} until #{@end_time}" if @end_time
+      return prefix
     end
 
     if @start_time.nil? and @end_time.nil? and same_year?
@@ -22,12 +22,12 @@ class DateRangeFormatter
       return day_and_month + " - " + format_suffix
     end
 
-    "#{format_prefix} - #{format_suffix}"
+    "#{prefix} - #{format_suffix}"
   end
 
   private
 
-  def format_prefix
+  def prefix
     return section(@start_date, @start_time)
   end
 
