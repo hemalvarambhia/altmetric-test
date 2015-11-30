@@ -132,13 +132,9 @@ describe 'Loading articles from a CSV file' do
   private
 
   def load_articles
-    articles = collection_of_articles
+    articles = Articles.new([],  @journals, @authors)
     articles.load_from(@article_csv)
     articles
-  end
-
-  def collection_of_articles
-    Articles.new([], @journals, @authors)
   end
 
   def write_to_file(*articles)
