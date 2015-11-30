@@ -77,11 +77,6 @@ shared_examples 'a renderer' do
   end
 
   def articles(number)
-    articles = Articles.new 
-    Array.new(number) { an_article.build }.each do |article|
-      articles << article
-    end
-
-    articles
+    Articles.new(Array.new(number) { an_article.build })
   end
 end
