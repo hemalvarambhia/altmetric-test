@@ -1,7 +1,7 @@
-require_relative '../lib/file_not_found'
+require_relative './file_not_found'
 require_relative './article'
-require_relative '../lib/journals'
-require_relative '../lib/authors'
+require_relative './journals'
+require_relative './authors'
 # Here we model the concept of a collection of articles
 class Articles
   include Enumerable
