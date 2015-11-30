@@ -7,19 +7,12 @@ describe 'Rendering articles to CSV' do
   it_behaves_like 'a renderer'
 
   describe 'Rendering no articles in CSV' do
-    it 'has the headers' do
+    it 'has just the headers' do
       articles = Articles.new
 
       rendered_articles = CSV.parse(CSVRenderer.new.render(articles))
       expect(rendered_articles.first).to(
-          eq(
-              [
-                'DOI',
-                'Title',
-                'Author',
-                'Journal Title',
-                'ISSN'
-              ]))
+          eq(required_headers))
     end
   end
 
@@ -34,15 +27,17 @@ describe 'Rendering articles to CSV' do
     it 'has a header' do
       rendered_articles = CSV.parse(CSVRenderer.new.render(@all_articles))
       expect(rendered_articles[0]).to(
-          eq(
-              [
-                'DOI',
-                'Title',
-                'Author',
-                'Journal Title',
-                'ISSN'
-              ]))
-
+          eq(required_headers))
     end
+  end
+
+  def required_headers
+    [
+      'DOI',
+      'Article title',
+      'Author name',
+      'Journal title',
+      'Journal ISSN'
+    ]
   end
 end

@@ -11,7 +11,7 @@ class CSVRenderer
   private
 
   def header
-    ['DOI', 'Title', 'Author', 'Journal Title', 'ISSN']
+    ['DOI', 'Article title', 'Author name', 'Journal title', 'Journal ISSN']
   end
 
   def as_array(article)
