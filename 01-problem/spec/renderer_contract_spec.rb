@@ -32,11 +32,8 @@ shared_examples 'a renderer' do
     context 'when the article has multiple authors' do
       before(:each) do
         doi = a_doi
-        @multiple_authors = [
-          an_author.who_published(doi),
-          an_author.who_published(doi),
-          an_author.who_published(doi)
-        ].map { |author| author.build }
+        @multiple_authors = Array.new(3){ an_author.who_published(doi) }.
+          map { |author| author.build }
         @all_articles = Articles.new(
           [
             an_article.with_doi(doi)
