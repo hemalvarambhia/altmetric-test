@@ -2,7 +2,7 @@ require 'json'
 # Converts articles to JSON format
 class JSONRenderer
   def render(articles)
-    articles.map { |article| as_hash(article) }.to_json
+    JSON.pretty_generate(articles.map { |article| as_hash(article) })
   end
 
   private
