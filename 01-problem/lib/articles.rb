@@ -12,7 +12,7 @@ class Articles
     @articles = articles
   end
 
-  def self.load_from(file_name, journals = Journals.new, authors = Authors.new)
+  def self.load_from(file_name, journals, authors)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     complete_rows = CSV.read(file_name, headers: true).select do |row|
