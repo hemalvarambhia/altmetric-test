@@ -19,7 +19,7 @@ class DateRangeFormatter
     if @start_time.nil? and @end_time.nil? and same_year?
       return "#{@start_date.day.ordinalize} - #{suffix}" if same_month?
       day_and_month = @start_date.strftime("#{@start_date.day.ordinalize} %B")
-      return day_and_month + " - " + suffix
+      return "#{day_and_month} - #{suffix}"
     end
 
     "#{prefix} - #{suffix}"
