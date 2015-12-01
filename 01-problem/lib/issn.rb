@@ -1,23 +1,15 @@
-# A domain-level exception for badly formatted ISSNs
-class InvalidISSN < Exception
-  def initialize(issn)
-    message = "Invalid ISSN '#{issn}'. ISSNs take the form dddd-dddd."
-    super message
-  end
-end
-
 # Class that models a domain value, the ISSN
 class ISSN
   def initialize(issn_string)
     @issn = (issn_string || '').strip
 
-    fail InvalidISSN, @issn if @issn.empty?
+    fail Malformed, @issn if @issn.empty?
 
-    fail InvalidISSN, @issn if digits.size != 8
+    fail Malformed, @issn if digits.size != 8
 
     @issn = @issn.insert(4, '-') unless @issn.include?('-')
 
-    fail InvalidISSN, @issn  unless @issn =~ /^\d{4}-\d{4}$/
+    fail Malformed, @issn  unless @issn =~ /^\d{4}-\d{4}$/
   end
 
   def to_s
@@ -32,5 +24,13 @@ class ISSN
 
   def digits
     @issn.scan(/\d/).map { |digit| digit.to_i }
+  end
+
+  # A domain-level exception for badly formatted ISSNs
+  class Malformed < Exception
+    def initialize(issn)
+      message = "Invalid ISSN '#{issn}'. ISSNs take the form dddd-dddd."
+      super message
+    end
   end
 end

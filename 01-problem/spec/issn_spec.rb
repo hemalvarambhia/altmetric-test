@@ -2,21 +2,21 @@ require_relative '../lib/issn'
 describe 'ISSNs' do
   describe 'a blank ISSN' do
     it 'is invalid' do
-      expect(lambda { ISSN.new('') }).to raise_error(InvalidISSN)
-      expect(lambda { ISSN.new(nil) }).to raise_error(InvalidISSN)
+      expect(lambda { ISSN.new('') }).to raise_error(ISSN::Malformed)
+      expect(lambda { ISSN.new(nil) }).to raise_error(ISSN::Malformed)
     end
   end
 
   describe 'an ISSN with fewer than 8 digits' do
     it 'is invalid' do
-      expect(lambda { ISSN.new('1234-56') }).to raise_error(InvalidISSN)
-      expect(lambda { ISSN.new('1514') }).to raise_error(InvalidISSN)
+      expect(lambda { ISSN.new('1234-56') }).to raise_error(ISSN::Malformed)
+      expect(lambda { ISSN.new('1514') }).to raise_error(ISSN::Malformed)
     end
   end
 
   describe 'an ISSN with more than 8 digits' do
     it 'is invalid' do
-      expect(lambda { ISSN.new('43565-32932') }).to raise_error(InvalidISSN)
+      expect(lambda { ISSN.new('43565-32932') }).to raise_error(ISSN::Malformed)
     end
   end
 
@@ -33,7 +33,7 @@ describe 'ISSNs' do
 
   describe 'an ISSN with the dash in the wrong position' do
     it 'is invalid' do
-      expect(lambda { ISSN.new('037-85955') }).to raise_error(InvalidISSN)
+      expect(lambda { ISSN.new('037-85955') }).to raise_error(ISSN::Malformed)
     end
   end
 
@@ -49,7 +49,7 @@ describe 'ISSNs' do
 
   describe 'an ISSN with only letter characters' do
     it 'is invalid' do
-      expect(lambda { ISSN.new('aybc-riet') }).to raise_error(InvalidISSN)
+      expect(lambda { ISSN.new('aybc-riet') }).to raise_error(ISSN::Malformed)
     end
   end
 
