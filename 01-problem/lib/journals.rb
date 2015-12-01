@@ -13,6 +13,13 @@ class Journals
     @journals = journals || []
   end
 
+  def self.load_from(file_name)
+    journals = Journals.new
+    journals.load_from(file_name)
+   
+    journals
+  end
+
   def find_journal_with(required_issn)
     find { |journal| journal.issn == required_issn }
   end

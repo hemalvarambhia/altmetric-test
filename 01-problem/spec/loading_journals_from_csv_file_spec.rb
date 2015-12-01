@@ -47,10 +47,7 @@ describe 'Loading journals from csv files' do
   end
 
   def load_from_file
-    journals = Journals.new
-    journals.load_from(@journals_file)
-    
-    journals
+    Journals.load_from(@journals_file)
   end
 
   def write_journals(*journals)
