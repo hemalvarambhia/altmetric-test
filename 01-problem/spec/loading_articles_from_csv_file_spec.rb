@@ -132,7 +132,7 @@ describe 'Loading articles from a CSV file' do
   private
 
   def load_articles
-    Articles.load_from(@article_csv, @journals, @authors)
+    Articles.from_file(@article_csv, @journals, @authors)
   end
 
   def write_to_file(*articles)
