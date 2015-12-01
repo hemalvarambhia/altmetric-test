@@ -20,8 +20,7 @@ journals = Journals.new
 journals.load_from(journal_csv)
 authors = Authors.new
 authors.load_from(authors_json)
-articles = Articles.new([], journals, authors)
-articles.load_from(articles_csv)
+articles = Articles.load_from(articles_csv, journals, authors)
 rendering_factory = RenderingFactory.new
 renderer = rendering_factory.renderer_for format
 puts renderer.render articles
