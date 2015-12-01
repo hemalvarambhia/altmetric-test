@@ -8,7 +8,6 @@ describe 'Loading authors from a JSON file' do
   before(:each) do
     FileUtils.mkdir(fixtures_dir)
     @authors_file = File.join(fixtures_dir, 'authors.json')
-    @authors = Authors.new
   end
 
   after(:each) do 
@@ -19,7 +18,7 @@ describe 'Loading authors from a JSON file' do
   context 'when the file does not exist' do
     it 'raises an error' do
       expect(
-        lambda { @authors.load_from('non_existent.json') }
+        lambda { load_from_file }
       ).to raise_error(FileNotFound)
     end
   end
@@ -28,7 +27,7 @@ describe 'Loading authors from a JSON file' do
     it 'yields no authors' do
       write_authors
 
-      @authors.load_from(@authors_file)
+      authors = load_from_file
 
       expect(authors).to be_empty
     end
@@ -41,9 +40,9 @@ describe 'Loading authors from a JSON file' do
     end
 
     it 'yields no authors' do
-      @authors.load_from(@authors_file)
+      authors = load_from_file
 
-      expect(@authors).to be_empty
+      expect(authors).to be_empty
     end
   end
 
@@ -56,17 +55,20 @@ describe 'Loading authors from a JSON file' do
         end
 
         it 'yields every author' do
-          @authors.load_from @authors_file
+          authors = load_from_file
 
-          expect(@authors.size).to be == number_of
-          expect(@authors).to(eq(@expected_authors))
+          expect(authors.size).to be == number_of
+          expect(authors).to(eq(@expected_authors))
         end
       end
     end
   end
 
   def load_from_file
+    authors = Authors.new
+    authors.load_from(@authors_file)
     
+    authors
   end
 
   def authors(*authors)
