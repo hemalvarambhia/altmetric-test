@@ -14,10 +14,13 @@ class Journals
   end
 
   def self.load_from(file_name)
-    journals = Journals.new
-    journals.load_from(file_name)
-   
-    journals
+    fail FileNotFound, file_name unless File.exist?(file_name)
+
+    journals = CSV.read(file_name, headers: true).map do |row|
+      Journal.new(ISSN.new(row['ISSN']), row['Title'])
+    end
+
+    Journals.new(journals)
   end
 
   def find_journal_with(required_issn)
@@ -30,13 +33,5 @@ class Journals
 
   def each(&block)
     @journals.each(&block)
-  end
-
-  def load_from(file_name)
-    fail FileNotFound, file_name unless File.exist?(file_name)
-
-    CSV.read(file_name, headers: true).each do |row|
-      @journals << Journal.new(ISSN.new(row['ISSN']), row['Title'])
-    end
   end
 end
