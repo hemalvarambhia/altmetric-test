@@ -13,7 +13,7 @@ class Journals
     @journals = journals || []
   end
 
-  def self.load_from(file_name)
+  def self.from_file(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     journals = CSV.read(file_name, headers: true).map do |row|
