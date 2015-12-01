@@ -11,6 +11,13 @@ class Authors
     @authors = authors || []
   end
 
+  def self.load_from(file_name)
+    authors = Authors.new
+    authors.load_from(file_name)   
+
+    authors
+  end
+
   def each(&block)
     @authors.each(&block)
   end
