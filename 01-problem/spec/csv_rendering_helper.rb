@@ -13,13 +13,13 @@ module CSVRenderingHelper
     end
   end
 
-  def without_header(csv_rows)
-    csv_rows.drop(1)
-  end
-
   def render(all_articles)
     without_header(
         CSV.parse(RenderingArticles::AsCSV.new.render(all_articles)))
+  end
+
+  def without_header(csv_rows)
+    csv_rows.drop(1)
   end
 
   def author_of_article(index, rendered_articles)
