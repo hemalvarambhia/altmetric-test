@@ -16,8 +16,7 @@ end.parse!
 format = options[:format]
 journal_csv, articles_csv, authors_json = [ARGV[0], ARGV[1], ARGV[2]] 
 
-journals = Journals.new
-journals.load_from(journal_csv)
+journals = Journals.load_from(journal_csv)
 authors = Authors.new
 authors.load_from(authors_json)
 articles = Articles.load_from(articles_csv, journals, authors)
