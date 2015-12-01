@@ -15,12 +15,12 @@ class Articles
   def self.load_from(file_name, journals, authors)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
-    complete_rows = CSV.read(file_name, headers: true).select do |row|
-      accurate_information?(row, journals, authors)
+    correct_rows = CSV.read(file_name, headers: true).select do |row|
+      correct_information?(row, journals, authors)
     end
 
     articles = 
-      complete_rows.map do |row|
+      correct_rows.map do |row|
         doi = DOI.new(row['DOI'])
         journal = journals.find_journal_with(ISSN.new(row['ISSN']))
         article_authors = authors.author_of(doi)
@@ -41,7 +41,7 @@ class Articles
 
   private
 
-  def self.accurate_information?(row, journals, authors)
+  def self.correct_information?(row, journals, authors)
     doi = DOI.new(row['DOI'])
     required_issn = ISSN.new(row['ISSN'])
     journals.journal_with?(required_issn) and authors.author_of(doi).any?
