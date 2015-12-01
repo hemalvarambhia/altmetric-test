@@ -43,7 +43,7 @@ describe 'Loading authors from a JSON file' do
     it 'yields no authors' do
       @authors.load_from(@authors_file)
 
-      expect(authors).to be_empty
+      expect(@authors).to be_empty
     end
   end
 
@@ -63,6 +63,10 @@ describe 'Loading authors from a JSON file' do
         end
       end
     end
+  end
+
+  def load_from_file
+    
   end
 
   def authors(*authors)
