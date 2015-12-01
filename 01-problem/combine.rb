@@ -1,7 +1,7 @@
 require_relative './lib/journals'
 require_relative './lib/authors'
 require_relative './lib/articles'
-require_relative './lib/rendering'
+require_relative './lib/rendering_articles'
 
 require 'optparse'
 
