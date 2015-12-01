@@ -6,9 +6,11 @@ describe 'Rendering articles to CSV' do
   include CSVRenderingHelper
   it_behaves_like 'a renderer'
 
+  before(:each) { @rendering_articles_as_csv = RenderingArticles::AsCSV.new }
+
   describe 'Rendering no articles in CSV' do
     it 'has just the headers' do
-      rendered_articles = CSV.parse(RenderingArticles::AsCSV.new.render(articles(0)))
+      rendered_articles = CSV.parse(@rendering_articles_as_csv.render(articles(0)))
 
       expect(rendered_articles.first).to(
           eq(required_headers))
@@ -21,7 +23,7 @@ describe 'Rendering articles to CSV' do
     end
 
     it 'has a header' do
-      rendered_articles = CSV.parse(RenderingArticles::AsCSV.new.render(@all_articles))
+      rendered_articles = CSV.parse(@rendering_articles_as_csv.render(@all_articles))
       expect(rendered_articles[0]).to(
           eq(required_headers))
     end
