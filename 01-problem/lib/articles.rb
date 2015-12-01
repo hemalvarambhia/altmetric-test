@@ -8,30 +8,31 @@ class Articles
   extend Forwardable
   def_delegators :@articles, :[], :empty?, :size, :<<
 
-  def initialize(articles = [], journals = Journals.new, authors = Authors.new)
+  def initialize(articles = [])
     @articles = articles
-    @journals = journals
-    @authors = authors
   end
 
-  def load_from(file_name)
+  def self.load_from(file_name, journals = Journals.new, authors = Authors.new)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     complete_rows = CSV.read(file_name, headers: true).select do |row|
-      accurate_information?(row)
+      accurate_information?(row, journals, authors)
     end
 
-    complete_rows.each do |row|
-      doi = DOI.new(row['DOI'])
-      journal = @journals.find_journal_with(ISSN.new(row['ISSN']))
-      article_authors = @authors.author_of(doi) 
-        @articles << Article.new(
-          doi: doi,
-          title: row['Title'],
-          author: article_authors,
-          journal: journal
-        )
-    end
+    articles = 
+      complete_rows.map do |row|
+        doi = DOI.new(row['DOI'])
+        journal = journals.find_journal_with(ISSN.new(row['ISSN']))
+        article_authors = authors.author_of(doi)
+          Article.new(
+            doi: doi,
+            title: row['Title'],
+            author: article_authors,
+            journal: journal
+          )
+      end
+
+    Articles.new(articles)
   end
 
   def each(&block)
@@ -40,9 +41,9 @@ class Articles
 
   private
 
-  def accurate_information?(row)
+  def self.accurate_information?(row, journals, authors)
     doi = DOI.new(row['DOI'])
     required_issn = ISSN.new(row['ISSN'])
-    @journals.journal_with?(required_issn) and @authors.author_of(doi).any?
+    journals.journal_with?(required_issn) and authors.author_of(doi).any?
   end
 end
