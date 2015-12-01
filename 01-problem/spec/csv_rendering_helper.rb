@@ -1,4 +1,4 @@
-require_relative '../lib/rendering'
+require_relative '../lib/rendering_articles'
 # Converts articles to the expected (CSV) format
 module CSVRenderingHelper
   def expected_format(articles)
@@ -19,7 +19,7 @@ module CSVRenderingHelper
 
   def render(all_articles)
     without_header(
-        CSV.parse(Rendering::AsCSV.new.render(all_articles)))
+        CSV.parse(RenderingArticles::AsCSV.new.render(all_articles)))
   end
 
   def author_of_article(index, rendered_articles)

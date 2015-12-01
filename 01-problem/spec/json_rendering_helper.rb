@@ -1,4 +1,4 @@
-require_relative '../lib/rendering'
+require_relative '../lib/rendering_articles'
 # Helper class that converts the articles to the expected
 # parsed format
 module JSONRenderingHelper
@@ -15,7 +15,7 @@ module JSONRenderingHelper
   end
 
   def render(all_articles)
-    JSON.parse(Rendering::AsJSON.new.render(all_articles))
+    JSON.parse(RenderingArticles::AsJSON.new.render(all_articles))
   end
 
   def author_of_article(index, rendered_articles)

@@ -19,5 +19,5 @@ journal_csv, articles_csv, authors_json = [ARGV[0], ARGV[1], ARGV[2]]
 journals = Journals.from_file(journal_csv)
 authors = Authors.from_file(authors_json)
 articles = Articles.from_file(articles_csv, journals, authors)
-renderer = Rendering.renderer_for format
+renderer = RenderingArticles.renderer_for format
 puts renderer.render articles
