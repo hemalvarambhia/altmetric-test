@@ -8,9 +8,8 @@ describe 'Rendering articles to CSV' do
 
   describe 'Rendering no articles in CSV' do
     it 'has just the headers' do
-      articles = Articles.new
+      rendered_articles = CSV.parse(CSVRenderer.new.render(articles(0)))
 
-      rendered_articles = CSV.parse(CSVRenderer.new.render(articles))
       expect(rendered_articles.first).to(
           eq(required_headers))
     end
@@ -18,10 +17,7 @@ describe 'Rendering articles to CSV' do
 
   describe 'Rendering 1 article in CSV' do
     before(:each) do
-      @all_articles = Articles.new(
-          [
-            an_article
-          ].map { |article| article.build })
+      @all_articles = articles(1)
     end
 
     it 'has a header' do
@@ -39,5 +35,9 @@ describe 'Rendering articles to CSV' do
       'Journal title',
       'Journal ISSN'
     ]
+  end
+
+  def articles(number)
+    Articles.new(Array.new(number) { an_article.build })
   end
 end

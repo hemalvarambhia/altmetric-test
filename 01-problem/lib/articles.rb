@@ -21,18 +21,17 @@ class Articles
       accurate_information?(row)
     end
 
-    @articles = 
-      complete_rows.map do |row|
-        doi = DOI.new(row['DOI'])
-        journal = @journals.find_journal_with(ISSN.new(row['ISSN']))
-        article_authors = @authors.author_of(doi) 
-          Article.new(
-            doi: doi,
-            title: row['Title'],
-            author: article_authors,
-            journal: journal
-          )
-      end
+    complete_rows.each do |row|
+      doi = DOI.new(row['DOI'])
+      journal = @journals.find_journal_with(ISSN.new(row['ISSN']))
+      article_authors = @authors.author_of(doi) 
+        @articles << Article.new(
+          doi: doi,
+          title: row['Title'],
+          author: article_authors,
+          journal: journal
+        )
+    end
   end
 
   def each(&block)

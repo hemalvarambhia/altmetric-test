@@ -17,9 +17,8 @@ describe 'Loading articles from a CSV file' do
     it 'raises an error' do
       @journals = Journals.new
       @authors = Authors.new
-      articles = collection_of_articles
-
-      expect(-> { articles.load_from('non_existent.csv') }).to(
+      
+      expect(-> { load_articles }).to(
         raise_error(FileNotFound))
     end
   end
@@ -133,13 +132,9 @@ describe 'Loading articles from a CSV file' do
   private
 
   def load_articles
-    articles = collection_of_articles
+    articles = Articles.new([],  @journals, @authors)
     articles.load_from(@article_csv)
     articles
-  end
-
-  def collection_of_articles
-    Articles.new([], @journals, @authors)
   end
 
   def write_to_file(*articles)
