@@ -1,4 +1,4 @@
-require_relative '../lib/json_renderer'
+require_relative '../lib/rendering'
 # Helper class that converts the articles to the expected
 # parsed format
 module JSONRenderingHelper

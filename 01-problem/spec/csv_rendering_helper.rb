@@ -1,4 +1,4 @@
-require_relative '../lib/csv_renderer'
+require_relative '../lib/rendering'
 # Converts articles to the expected (CSV) format
 module CSVRenderingHelper
   def expected_format(articles)
