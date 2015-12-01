@@ -1,16 +1,9 @@
-# Exceptions for when DOI are badly formed
-class InvalidDOI < Exception
-  def initialize(doi)
-    super "Invalid DOI '#{doi}'. DOIs take the form 10.1234/abcdefg"
-  end
-end
-
 # Class to model the concept of a DOI (Digital Object Identifier)
 # (see en.wikipedia.org/digital_object_identifier)
 class DOI
   def initialize(doi_string)
     @doi = doi_string || ''
-    fail InvalidDOI, @doi unless valid?
+    fail Malformed, @doi unless valid?
   end
 
   def ==(other)
@@ -49,5 +42,12 @@ class DOI
     @doi.split('/')
       .map { |component| component.strip }
       .map { |component| component.gsub(/\s+/, '') }
+  end
+
+  # Exceptions for when DOI are badly formed
+  class Malformed < Exception
+    def initialize(doi)
+      super "Invalid DOI '#{doi}'. DOIs take the form 10.1234/abcdefg"
+    end
   end
 end
