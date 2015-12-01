@@ -6,7 +6,6 @@ describe 'Loading journals from csv files' do
   before(:each) do
     FileUtils.mkdir(fixtures_dir)
     @journals_file = File.join(fixtures_dir, 'journals.csv')
-    @journals = Journals.new
   end
 
   after(:each) do
@@ -16,7 +15,7 @@ describe 'Loading journals from csv files' do
 
   context 'when the file does not exist' do
     it 'raises an error' do
-      expect(lambda { @journals.load_from('non_existent.csv') })
+      expect(lambda { load_from_file })
         .to(raise_error(FileNotFound))
     end
   end
@@ -25,9 +24,9 @@ describe 'Loading journals from csv files' do
     it 'loads no journals' do
       write_journals
 
-      @journals.load_from(@journals_file)
+      journals = load_from_file
 
-      expect(@journals).to be_empty
+      expect(journals).to be_empty
     end
   end
 
@@ -39,12 +38,19 @@ describe 'Loading journals from csv files' do
       end
 
       it 'loads every journal' do
-        @journals.load_from(@journals_file)
+        journals = load_from_file
 
-        expect(@journals.size).to be == number_of
-        expect(@journals).to(eq(@expected_journals))
+        expect(journals.size).to be == number_of
+        expect(journals).to(eq(@expected_journals))
       end
     end
+  end
+
+  def load_from_file
+    journals = Journals.new
+    journals.load_from(@journals_file)
+    
+    journals
   end
 
   def write_journals(*journals)
