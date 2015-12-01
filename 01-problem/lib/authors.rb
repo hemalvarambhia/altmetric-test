@@ -12,21 +12,6 @@ class Authors
   end
 
   def self.load_from(file_name)
-    authors = Authors.new
-    authors.load_from(file_name)   
-
-    authors
-  end
-
-  def each(&block)
-    @authors.each(&block)
-  end
-
-  def author_of(doi)
-    @authors.select { |author| author.published? doi }
-  end
-
-  def load_from(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     authors_as_json = JSON.parse(
@@ -36,6 +21,15 @@ class Authors
       Author.new(author_as_json['name'], publications)
     end
 
-    @authors = authors.select { |author| author.has_publications? }
+    Authors.new(authors.select { |author| author.has_publications? })
+
+  end
+
+  def each(&block)
+    @authors.each(&block)
+  end
+
+  def author_of(doi)
+    @authors.select { |author| author.published? doi }
   end
 end
