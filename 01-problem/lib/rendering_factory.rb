@@ -5,9 +5,9 @@ class RenderingFactory
   def renderer_for(format)
     case format
     when 'json'
-      return JSONRenderer.new
+      return Rendering::AsJSON.new
     when 'csv'
-      return CSVRenderer.new
+      return Rendering::AsCSV.new
     end
   end
 end
