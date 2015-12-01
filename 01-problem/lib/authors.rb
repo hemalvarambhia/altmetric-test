@@ -11,7 +11,7 @@ class Authors
     @authors = authors || []
   end
 
-  def self.load_from(file_name)
+  def self.from_file(file_name)
     fail FileNotFound, file_name unless File.exist?(file_name)
 
     authors_as_json = JSON.parse(

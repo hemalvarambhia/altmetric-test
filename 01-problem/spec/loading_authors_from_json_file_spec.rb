@@ -65,7 +65,7 @@ describe 'Loading authors from a JSON file' do
   end
 
   def load_from_file
-    Authors.load_from(@authors_file)
+    Authors.from_file(@authors_file)
   end
 
   def authors(*authors)
