@@ -34,7 +34,7 @@ module AuthorHelper
     end
 
     def build
-      Author.new(@name, @publications)
+      Research::Author.new(@name, @publications)
     end
   end
 end
