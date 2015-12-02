@@ -1,20 +1,22 @@
 # Model the author of articles
-class Author
-  attr_reader :name, :publications
-  def initialize(name, publications)
-    @name = name
-    @publications = publications
-  end
+module AcademicResearch
+  class Author
+    attr_reader :name, :publications
+    def initialize(name, publications)
+      @name = name
+      @publications = publications
+    end
 
-  def published?(doi)
-    @publications.include? doi
-  end
+    def published?(doi)
+      @publications.include? doi
+    end
 
-  def has_publications?
-    @publications.any?
-  end
+    def has_publications?
+      @publications.any?
+    end
 
-  def ==(other)
-    @publications == other.publications && @name == other.name
+    def ==(other)
+      @publications == other.publications && @name == other.name
+    end
   end
 end
