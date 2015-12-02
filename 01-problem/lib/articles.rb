@@ -24,7 +24,7 @@ class Articles
         doi = DOI.new(row['DOI'])
         journal = journals.find_journal_with(ISSN.new(row['ISSN']))
         article_authors = authors.author_of(doi)
-          AcademicResearch::Article.new(
+          Article.new(
             doi: doi,
             title: row['Title'],
             author: article_authors,
