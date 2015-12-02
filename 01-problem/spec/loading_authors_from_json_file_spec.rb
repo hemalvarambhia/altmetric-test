@@ -65,11 +65,11 @@ describe 'Loading authors from a JSON file' do
   end
 
   def load_from_file
-    Authors.from_file(@authors_file)
+    Research::Authors.from_file(@authors_file)
   end
 
   def authors(*authors)
-    Authors.new(authors.map { |author| author.build })
+    Research::Authors.new(authors.map { |author| author.build })
   end
 
   def write_authors(*authors)

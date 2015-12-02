@@ -16,7 +16,7 @@ describe 'Loading articles from a CSV file' do
   context 'when the file does not exist' do
     it 'raises an error' do
       @journals = Journals.new
-      @authors = Authors.new
+      @authors = Research::Authors.new
       
       expect(-> { load_articles }).to(
         raise_error(FileNotFound))
@@ -30,7 +30,7 @@ describe 'Loading articles from a CSV file' do
 
     it 'yields no articles' do
       @journals = Journals.new
-      @authors = Authors.new
+      @authors = Research::Authors.new
        
       articles = load_articles
 
@@ -94,7 +94,7 @@ describe 'Loading articles from a CSV file' do
       @journals = journals(3)
       doi = a_doi
       @co_authors = co_authors_of(doi)
-      @authors = Authors.new(@co_authors)
+      @authors = Research::Authors.new(@co_authors)
       write_to_file(
         article_co_authored_by(doi, @co_authors, @journals.first)
       )
@@ -155,7 +155,7 @@ describe 'Loading articles from a CSV file' do
   end
 
   def authors(number)
-    Authors.new(Array.new(number) { an_author.build })
+    Research::Authors.new(Array.new(number) { an_author.build })
   end
 
   def articles_authored_by(authors, journal)

@@ -49,7 +49,7 @@ describe 'Finding authors by their publications' do
   end
 
   def authors(*builders)
-    Authors.new builders.map { |builder| builder.build }
+    Research::Authors.new builders.map { |builder| builder.build }
   end
 
   RSpec::Matchers.define :have_published do |publication|
