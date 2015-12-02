@@ -3,19 +3,19 @@ require_relative '../lib/doi'
 
 describe 'Equating Authors' do
   it 'is reflexive' do
-    author = AcademicResearch::Author.new(
+    author = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')])
 
     expect(author).to eq(author)
   end
 
   it 'is transitive' do
-    author_1 = AcademicResearch::Author.new(
+    author_1 = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')])
-    author_2 = AcademicResearch::Author.new(
+    author_2 = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')]
     )
-    author_3 = AcademicResearch::Author.new(
+    author_3 = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')]
     )
 
@@ -25,9 +25,9 @@ describe 'Equating Authors' do
   end
 
   it 'is symmetric' do
-    author_1 = AcademicResearch::Author.new(
+    author_1 = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')])
-    author_2 = AcademicResearch::Author.new(
+    author_2 = Author.new(
         'Author', [DOI.new('10.1234/altmetric007')]
     )
 
@@ -37,9 +37,9 @@ describe 'Equating Authors' do
 
   context 'authors with a different names but same publications' do
     it 'confirms them as not being the same' do
-      author = AcademicResearch::Author.new(
+      author = Author.new(
           'Author', [DOI.new('10.1234/altmetric007')])
-      collaborator = AcademicResearch::Author.new(
+      collaborator = Author.new(
           'Collaborator', [DOI.new('10.1234/altmetric007')]
       )
 
@@ -49,9 +49,9 @@ describe 'Equating Authors' do
 
   context 'authors with the same name but different publications' do
     it 'confirms them as not being the same' do
-      author = AcademicResearch::Author.new(
+      author = Author.new(
           'Jonathan Davis', [DOI.new('10.1234/altmetric127')])
-      different_author_same_name = AcademicResearch::Author.new(
+      different_author_same_name = Author.new(
           'Jonathan Davis', [DOI.new('10.1234/altmetric489')]
       )
 
