@@ -3,9 +3,9 @@ module RenderingArticles
   def self.renderer_for(format)
     case format
       when 'json'
-        return RenderingArticles::AsJSON.new
+        return AsJSON.new
       when 'csv'
-        return RenderingArticles::AsCSV.new
+        return AsCSV.new
     end
   end
 
