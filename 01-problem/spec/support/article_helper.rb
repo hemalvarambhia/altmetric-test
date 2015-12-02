@@ -36,7 +36,7 @@ module ArticleHelper
     end
 
     def build
-      Article.new(
+      AcademicResearch::Article.new(
         doi: @doi,
         title: '::Title::',
         author: @authors,
