@@ -13,7 +13,7 @@ class Articles
   end
 
   def self.from_file(file_name, journals, authors)
-    fail FileNotFound, file_name unless File.exist?(file_name)
+    fail FileNotFound, file_name if not File.exist?(file_name)
 
     correct_rows = CSV.read(file_name, headers: true).select do |row|
       correct_information?(row, journals, authors)

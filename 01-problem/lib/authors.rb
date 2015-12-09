@@ -13,7 +13,7 @@ module Research
     end
 
     def self.from_file(file_name)
-      fail FileNotFound, file_name unless File.exist?(file_name)
+      fail FileNotFound, file_name if not File.exist?(file_name)
 
       authors_as_json = JSON.parse(
           File.open(file_name, 'r').read)
